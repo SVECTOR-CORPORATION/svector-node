@@ -5,25 +5,31 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Node.js Version](https://img.shields.io/badge/node-%3E%3D18.0.0-brightgreen.svg)](https://nodejs.org/)
 
-The official TypeScript and JavaScript SDK for **SVECTOR AI Models**. Build powerful AI applications with advanced conversational AI and language models.
+The official TypeScript and JavaScript SDK for SVECTOR AI Models. Build powerful AI applications with advanced conversational AI and language models.R SDK
+
+[![npm version](https://badge.fury.io/js/svector.svg)](https://badge.fury.io/js/svector)
+[![TypeScript](https://img.shields.io/badge/TypeScript-Ready-blue.svg)](https://www.typescriptlang.org)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![Node.js Version](https://img.shields.io/badge/node-%3E%3D18.0.0-brightgreen.svg)](https://nodejs.org/)
+
+The official TypeScript and JavaScript SDK for SVECTOR AI Models. Build applications with advanced conversational AI and language models.
 
 ```bash
 npm install svector-sdk
 ```
 
-## ✨ Features
+## Features
 
-- 🤖 **Chat Completions** - Full support for SVECTOR's advanced Spec-Chat models
-- 🌊 **Streaming Support** - Real-time streaming responses with Server-Sent Events
-- 📁 **File Management** - Easy file uploads for RAG functionality  
-- 🧠 **Knowledge Collections** - Organize and manage document collections
-- 🔒 **Type Safety** - Complete TypeScript support with comprehensive type definitions
-- ⚡ **Automatic Retries** - Built-in retry logic with exponential backoff
-- 🌐 **Multi-platform** - Works in Node.js, browsers, Deno, Bun, and Cloudflare Workers
-- 🛡️ **Error Handling** - Comprehensive error types and handling
-- 🔧 **OpenAI Compatible** - Familiar API design for easy migration
+- Chat Completions - Full support for SVECTOR's advanced AI models
+- Streaming Support - Real-time streaming responses with Server-Sent Events  
+- File Management - Easy file uploads for document processing
+- Knowledge Collections - Organize and manage document collections
+- Type Safety - Complete TypeScript support with comprehensive type definitions
+- Automatic Retries - Built-in retry logic with exponential backoff
+- Multi-platform - Works in Node.js, browsers, Deno, Bun, and Cloudflare Workers
+- Error Handling - Comprehensive error types and handling
 
-## 🚀 Quick Start
+## Quick Start
 
 ### Installation
 
@@ -71,7 +77,7 @@ for await (const event of stream) {
 }
 ```
 
-## 📋 Table of Contents
+## Table of Contents
 
 - [Installation](#installation)
 - [Authentication](#authentication)
@@ -80,16 +86,15 @@ for await (const event of stream) {
   - [Models](#models)
   - [File Management](#file-management)
   - [Knowledge Collections](#knowledge-collections)
-- [RAG (Retrieval Augmented Generation)](#rag-retrieval-augmented-generation)
 - [Error Handling](#error-handling)
 - [Advanced Usage](#advanced-usage)
 - [Environment Support](#environment-support)
 - [Examples](#examples)
 - [Contributing](#contributing)
 
-## 🔐 Authentication
+## Authentication
 
-Get your API key from the [SVECTOR Dashboard](https://www.svector.co.in/dashboard) and set it as an environment variable:
+Get your API key from the SVECTOR Dashboard and set it as an environment variable:
 
 ```bash
 export SVECTOR_API_KEY="your-api-key-here"
@@ -103,7 +108,7 @@ const client = new SVECTOR({
 });
 ```
 
-## 📚 API Reference
+## API Reference
 
 ### Chat Completions
 
@@ -159,7 +164,7 @@ console.log(models.models);
 
 ### File Management
 
-Upload files for use with RAG (Retrieval Augmented Generation):
+Upload files for use with document processing:
 
 ```typescript
 // From file (Node.js)
@@ -172,22 +177,22 @@ const fileResponse = await client.files.create(
 
 // From Buffer (Node.js)
 const buffer = fs.readFileSync('document.pdf');
-const fileResponse = await client.files.create(buffer, 'rag', 'document.pdf');
+const fileResponse = await client.files.create(buffer, 'files', 'document.pdf');
 
 // From File object (Browser)
 const file = document.getElementById('fileInput').files[0];
-const fileResponse = await client.files.create(file, 'rag');
+const fileResponse = await client.files.create(file, 'files');
 
 // From string content
 const text = 'This is my document content...';
-const fileResponse = await client.files.create(text, 'rag', 'document.txt');
+const fileResponse = await client.files.create(text, 'files', 'document.txt');
 
 console.log(`File uploaded: ${fileResponse.file_id}`);
 ```
 
 ### Knowledge Collections
 
-Organize files into collections for better RAG performance:
+Organize files into collections for better performance:
 
 ```typescript
 // Add a file to a knowledge collection
@@ -198,61 +203,7 @@ const result = await client.knowledge.addFile(
 console.log(result.status); // 'success'
 ```
 
-## 🧠 RAG (Retrieval Augmented Generation)
-
-SVECTOR's RAG capabilities allow you to enhance AI responses with your own documents and knowledge bases.
-
-### Using Individual Files
-
-```typescript
-// Upload a document
-const fileResponse = await client.files.create(documentContent, 'rag');
-
-// Use the document in a chat completion
-const response = await client.chat.create({
-  model: 'spec-3-turbo:latest',
-  messages: [
-    { role: 'user', content: 'Summarize the key points from this document' }
-  ],
-  files: [
-    { type: 'file', id: fileResponse.file_id }
-  ],
-});
-```
-
-### Using Knowledge Collections
-
-```typescript
-// Use a knowledge collection (contains multiple related documents)
-const response = await client.chat.create({
-  model: 'spec-3-turbo:latest',
-  messages: [
-    { role: 'user', content: 'What insights can you provide from the research papers?' }
-  ],
-  files: [
-    { type: 'collection', id: 'your-collection-id' }
-  ],
-});
-```
-
-### Multi-file RAG
-
-```typescript
-// Use multiple files at once
-const response = await client.chat.create({
-  model: 'spec-3-turbo:latest',
-  messages: [
-    { role: 'user', content: 'Compare the information across these documents' }
-  ],
-  files: [
-    { type: 'file', id: 'file-1' },
-    { type: 'file', id: 'file-2' },
-    { type: 'collection', id: 'collection-1' }
-  ],
-});
-```
-
-## 🛡️ Error Handling
+## Error Handling
 
 The SDK provides comprehensive error handling with specific error types:
 
@@ -295,7 +246,7 @@ try {
 - `APIConnectionError` - Network connection issues
 - `APIConnectionTimeoutError` - Request timeout
 
-## ⚙️ Advanced Usage
+## Advanced Usage
 
 ### Client Configuration
 
@@ -362,7 +313,7 @@ console.log('Headers:', response.headers);
 console.log('Message:', data.choices[0].message.content);
 ```
 
-## 🌐 Environment Support
+## Environment Support
 
 The SVECTOR SDK works across multiple JavaScript environments:
 
@@ -409,7 +360,7 @@ export default {
 };
 ```
 
-## 📝 Examples
+## Examples
 
 ### Chatbot with Conversation History
 
@@ -526,7 +477,7 @@ async function streamingChat(userMessage: string) {
 await streamingChat('Explain quantum computing in simple terms');
 ```
 
-## 🧪 Testing Your Integration
+## Testing Your Integration
 
 Validate your SVECTOR SDK setup:
 
@@ -542,13 +493,13 @@ npm install svector
 npx svector-validate
 ```
 
-## 📖 More Resources
+## More Resources
 
 - � **[Complete API Documentation](./API.md)** - Detailed API reference
-- 🌐 **[SVECTOR Website](https://www.svector.co.in)** - Official website
-- 📚 **[Examples Repository](./examples/)** - More usage examples
-- 🛠️ **[API Playground](https://spec-chat.tech/docs)** - Interactive API testing
-- 📧 **[Support](mailto:support@svector.co.in)** - Technical support
+- **SVECTOR Website** - Official website
+- **Examples Repository** - More usage examples  
+- **API Documentation** - Interactive API testing
+- **Support** - Technical support
 
 ## 🤝 Contributing
 
@@ -563,7 +514,7 @@ We welcome contributions! Please see our [Contributing Guide](./CONTRIBUTING.md)
 
 This project is licensed under the MIT License - see the [LICENSE](./LICENSE) file for details.
 
-## 🚀 What's Next?
+## What's Next?
 
 - Check out our [examples](./examples/) for more advanced use cases
 - Read the [API documentation](./API.md) for complete reference
@@ -572,6 +523,6 @@ This project is licensed under the MIT License - see the [LICENSE](./LICENSE) fi
 
 ---
 
-**Happy coding with SVECTOR! 🎉**
+Thank you for using SVECTOR SDK!
 
 For support: [support@svector.co.in](mailto:support@svector.co.in) | [Website](https://www.svector.co.in) | [Dashboard](https://www.svector.co.in/dashboard)

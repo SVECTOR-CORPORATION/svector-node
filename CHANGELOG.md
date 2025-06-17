@@ -8,11 +8,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [1.0.0] - 2024-12-17
 
 ### Added
-- 🎉 Initial release of SVECTOR SDK
-- 💬 Chat completions API with full OpenAI-compatible interface
-- 🌊 Streaming support for real-time responses
-- 📁 File upload functionality for RAG (Retrieval Augmented Generation)
-- 🧠 Knowledge collection management
+- Initial release of SVECTOR SDK
+- Chat completions API with full type definitions
+- Streaming support for real-time responses
+- File upload functionality for document processing
+- Knowledge collection management
 - 🔒 Comprehensive TypeScript support with full type definitions
 - ⚡ Automatic retry logic with exponential backoff
 - 🛡️ Robust error handling with specific error types

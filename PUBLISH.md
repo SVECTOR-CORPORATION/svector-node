@@ -125,7 +125,7 @@ git push origin main --tags
 - ✅ Environment-specific guides
 
 ### User Experience
-- ✅ OpenAI-compatible API design
+- Professional API design
 - ✅ Intuitive method names
 - ✅ Clear error messages
 - ✅ Comprehensive TypeScript types
@@ -162,7 +162,7 @@ This SVECTOR SDK is production-ready and follows npm best practices:
 - **Compatible**: Works across all major JavaScript environments
 - **Maintainable**: Clear code structure and contribution guidelines
 - **Reliable**: Comprehensive error handling and retry logic
-- **User-friendly**: OpenAI-compatible API with intuitive usage
+- **User-friendly**: Professional API with intuitive usage
 
 The package is ready to be published to npm as "svector" and will provide developers with a robust, type-safe way to integrate SVECTOR's AI capabilities into their applications.
 
