@@ -1,7 +1,7 @@
 {
   "name": "svector-sdk",
-  "version": "1.0.1",
-  "description": "Official TypeScript and JavaScript SDK for SVECTOR's Spec-Chat API - Advanced AI with RAG capabilities",
+  "version": "1.0.3",
+  "description": "Official TypeScript and JavaScript SDK for SVECTOR AI Models - Advanced conversational AI and language models",
   "main": "dist/src/index.js",
   "types": "dist/src/index.d.ts",
   "scripts": {
@@ -22,15 +22,14 @@
     "svector", 
     "ai", 
     "machine-learning", 
-    "spec-chat", 
     "api", 
     "typescript", 
     "javascript",
     "llm",
     "chatbot",
-    "rag",
-    "retrieval-augmented-generation",
-    "openai-compatible"
+    "artificial-intelligence",
+    "conversational-ai",
+    "language-models"
   ],
   "author": "SVECTOR Team <support@svector.co.in>",
   "license": "MIT",

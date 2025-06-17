@@ -5,7 +5,7 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Node.js Version](https://img.shields.io/badge/node-%3E%3D18.0.0-brightgreen.svg)](https://nodejs.org/)
 
-The official TypeScript and JavaScript SDK for **SVECTOR's Spec-Chat API**. Build powerful AI applications with advanced language models, file processing, and Retrieval Augmented Generation (RAG) capabilities.
+The official TypeScript and JavaScript SDK for **SVECTOR AI Models**. Build powerful AI applications with advanced conversational AI and language models.
 
 ```bash
 npm install svector-sdk
