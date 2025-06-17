@@ -362,12 +362,12 @@ export default {
 
 ## Examples
 
-### Chatbot with Conversation History
+### Chat with Conversation History
 
 ```typescript
 import { SVECTOR } from 'svector';
 
-class ChatBot {
+class Chat {
   private client: SVECTOR;
   private conversationHistory: Array<{role: string, content: string}> = [];
 
@@ -392,7 +392,7 @@ class ChatBot {
 }
 
 // Usage
-const bot = new ChatBot(process.env.SVECTOR_API_KEY);
+const bot = new Chat(process.env.SVECTOR_API_KEY);
 console.log(await bot.chat('Hello!'));
 console.log(await bot.chat('Tell me about yourself'));
 ```

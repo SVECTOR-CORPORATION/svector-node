@@ -77,7 +77,7 @@ async function comprehensiveExample() {
     console.log('\n');
 
     // 4. Model Listing
-    console.log('🤖 4. Available Models');
+    console.log('4. Available Models');
     console.log('─'.repeat(50));
     
     const models = await client.models.list();
