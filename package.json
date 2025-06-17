@@ -1,0 +1,70 @@
+{
+  "name": "svector-sdk",
+  "version": "1.0.1",
+  "description": "Official TypeScript and JavaScript SDK for SVECTOR's Spec-Chat API - Advanced AI with RAG capabilities",
+  "main": "dist/src/index.js",
+  "types": "dist/src/index.d.ts",
+  "scripts": {
+    "build": "npm run clean && tsc",
+    "dev": "tsc --watch",
+    "prepublishOnly": "npm run build && npm run validate",
+    "validate": "node dist/examples/validate-sdk.js",
+    "test": "npm run type-check && npm run validate",
+    "clean": "rm -rf dist",
+    "type-check": "tsc --noEmit",
+    "examples:basic": "npm run build && node dist/examples/basic-chat.js",
+    "examples:streaming": "npm run build && node dist/examples/streaming-chat.js",
+    "examples:rag": "npm run build && node dist/examples/file-upload-rag.js",
+    "examples:advanced": "npm run build && node dist/examples/advanced-rag.js",
+    "examples:comprehensive": "npm run build && node dist/examples/comprehensive-demo.js"
+  },
+  "keywords": [
+    "svector", 
+    "ai", 
+    "machine-learning", 
+    "spec-chat", 
+    "api", 
+    "typescript", 
+    "javascript",
+    "llm",
+    "chatbot",
+    "rag",
+    "retrieval-augmented-generation",
+    "openai-compatible"
+  ],
+  "author": "SVECTOR Team <support@svector.co.in>",
+  "license": "MIT",
+  "dependencies": {},
+  "devDependencies": {
+    "typescript": "^5.0.0",
+    "@types/node": "^20.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/svector-corporation/svector-sdk.git"
+  },
+  "homepage": "https://www.svector.co.in",
+  "bugs": {
+    "url": "https://github.com/svector-corporation/svector-sdk/issues"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "files": [
+    "dist/**/*",
+    "README.md",
+    "LICENSE"
+  ],
+  "exports": {
+    ".": {
+      "types": "./dist/src/index.d.ts",
+      "require": "./dist/src/index.js",
+      "import": "./dist/src/index.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "funding": {
+    "type": "individual",
+    "url": "https://www.svector.co.in/support"
+  }
+}
