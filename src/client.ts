@@ -1,4 +1,5 @@
 import { ChatCompletions } from './api/chat';
+import { Conversations } from './api/conversations';
 import { Files } from './api/files';
 import { Knowledge } from './api/knowledge';
 import { Models } from './api/models';
@@ -24,6 +25,7 @@ export class SVECTOR {
   private dangerouslyAllowBrowser: boolean;
 
   public chat: ChatCompletions;
+  public conversations: Conversations;
   public models: Models;
   public files: Files;
   public knowledge: Knowledge;
@@ -47,6 +49,7 @@ export class SVECTOR {
 
     // Initialize API endpoints
     this.chat = new ChatCompletions(this);
+    this.conversations = new Conversations(this);
     this.models = new Models(this);
     this.files = new Files(this);
     this.knowledge = new Knowledge(this);

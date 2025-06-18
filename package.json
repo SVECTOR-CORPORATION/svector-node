@@ -1,7 +1,7 @@
 {
   "name": "svector-sdk",
-  "version": "1.0.4",
-  "description": "Official TypeScript and JavaScript SDK for SVECTOR's AI models - Spec-3, Theta-35, and advanced reasoning systems",
+  "version": "1.1.0",
+  "description": "Official JavaScript and TypeScript SDK for accessing SVECTOR APIs.",
   "main": "dist/src/index.js",
   "types": "dist/src/index.d.ts",
   "scripts": {
@@ -19,11 +19,11 @@
     "examples:comprehensive": "npm run build && node dist/examples/comprehensive-demo.js"
   },
   "keywords": [
-    "svector", 
-    "ai", 
-    "machine-learning", 
-    "api", 
-    "typescript", 
+    "svector",
+    "ai",
+    "machine-learning",
+    "api",
+    "typescript",
     "javascript",
     "llm",
     "spec-chat",
@@ -33,10 +33,12 @@
   ],
   "author": "SVECTOR Team <support@svector.co.in>",
   "license": "MIT",
-  "dependencies": {},
+  "dependencies": {
+    "svector-sdk": "^1.0.6"
+  },
   "devDependencies": {
-    "typescript": "^5.0.0",
-    "@types/node": "^20.0.0"
+    "@types/node": "^20.0.0",
+    "typescript": "^5.0.0"
   },
   "repository": {
     "type": "git",

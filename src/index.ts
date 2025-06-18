@@ -12,6 +12,7 @@ export { toFile } from './utils';
 
 // Re-export API classes for advanced usage
 export { ChatCompletions } from './api/chat';
+export { Conversations } from './api/conversations';
 export { Files } from './api/files';
 export { Knowledge } from './api/knowledge';
 export { Models } from './api/models';

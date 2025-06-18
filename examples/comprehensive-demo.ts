@@ -28,6 +28,7 @@ async function comprehensiveExample() {
     const basicResponse = await client.chat.create({
       model: 'spec-3-turbo:latest',
       messages: [
+        { role: 'system', content: 'You are a knowledgeable science educator who explains complex topics in simple terms.' },
         { role: 'user', content: 'Explain quantum computing in simple terms' }
       ],
       temperature: 0.7,
@@ -45,7 +46,7 @@ async function comprehensiveExample() {
     const conversationResponse = await client.chat.create({
       model: 'spec-3-turbo:latest',
       messages: [
-        { role: 'developer', content: 'You are a helpful programming assistant.' },
+        { role: 'system', content: 'You are a helpful programming assistant that provides clear code examples.' },
         { role: 'user', content: 'How do I reverse a string in Python?' },
       ],
       temperature: 0.5,
@@ -63,6 +64,7 @@ async function comprehensiveExample() {
     const stream = await client.chat.createStream({
       model: 'spec-3-turbo:latest',
       messages: [
+        { role: 'system', content: 'You are a creative poet who writes beautiful verses about technology.' },
         { role: 'user', content: 'Write a short poem about artificial intelligence' }
       ],
       temperature: 0.8,

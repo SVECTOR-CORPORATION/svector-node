@@ -10,7 +10,7 @@ export interface SVECTOROptions {
 }
 
 export interface ChatMessage {
-  role: 'user' | 'developer';
+  role: 'system' | 'user' | 'assistant' | 'developer';
   content: string;
 }
 
@@ -104,4 +104,26 @@ export interface FetchOptions {
 
 export interface SVECTORRequestInit extends Omit<RequestInit, 'signal' | 'timeout'> {
   timeout?: number;
+}
+
+// Sophisticated conversation interface
+export interface ConversationRequest {
+  model: string;
+  instructions?: string; // System instructions
+  input: string; // User input
+  max_tokens?: number;
+  temperature?: number;
+  stream?: boolean;
+  files?: FileReference[];
+  context?: string[]; // Previous conversation context
+}
+
+export interface ConversationResponse {
+  output: string;
+  usage?: {
+    prompt_tokens: number;
+    completion_tokens: number;
+    total_tokens: number;
+  };
+  _request_id?: string;
 }

@@ -136,7 +136,7 @@ function showQuickStart() {
   console.log('');
   
   console.log('2️⃣  Get your API key:');
-  console.log('   Visit: https://www.svector.co.in/dashboard');
+  console.log('   Visit: https://platform.svector.co.in');
   console.log('   Generate an API key from your dashboard');
   console.log('');
   

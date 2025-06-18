@@ -59,7 +59,7 @@ interface ChatCompletionRequest {
 }
 
 interface ChatMessage {
-  role: 'user' | 'developer';
+  role: 'system' | 'user' | 'assistant' | 'developer';
   content: string;
 }
 
@@ -98,7 +98,14 @@ interface ChatCompletionChoice {
 const response = await client.chat.create({
   model: 'spec-3-turbo:latest',
   messages: [
-    { role: 'user', content: 'Hello, how are you?' }
+    {
+      role: 'system',
+      content: 'You are a helpful assistant that provides accurate and concise answers.'
+    },
+    {
+      role: 'user',
+      content: 'Hello, how are you?'
+    }
   ],
   max_tokens: 150,
   temperature: 0.7,
