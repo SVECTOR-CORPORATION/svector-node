@@ -3,7 +3,7 @@
 [![JSR](https://jsr.io/badges/@svector/svector)](https://jsr.io/@svector/svector)
 [![npm version](https://img.shields.io/npm/v/svector-sdk.svg)](https://www.npmjs.com/package/svector-sdk)
 
-**Official TypeScript/JavaScript SDK for SVECTOR AI Models**
+**Official TypeScript/JavaScript SDK for accessing SVECTOR APIs**
 
 SVECTOR develops high-performance AI models and automation solutions, specializing in artificial intelligence, mathematical computing, and computational research. This SDK provides programmatic access to SVECTOR's API services through type-safe JavaScript/TypeScript interfaces, completion endpoints, document processing capabilities, and additional AI model integrations.
 
@@ -57,26 +57,47 @@ const client = new SVECTOR({
 });
 ```
 
-##  Installation
+## Installation
 
 ### Deno
-```bash
-# No installation needed, import directly:
+
+```ts
+// No installation needed, import directly:
 import { SVECTOR } from "jsr:@svector/svector";
 ```
 
-### Node.js/npm
+### npm
+
 ```bash
 npx jsr add @svector/svector
 # or
-npm install @svector/svector
+npm i svector-sdk
+```
+
+### pnpm
+
+```bash
+pnpm i jsr:@svector/svector
+```
+
+### Yarn
+
+```bash
+yarn add jsr:@svector/svector
+```
+
+### vlt (Velte)
+
+```bash
+vlt install jsr:@svector/svector
 ```
 
 ### Bun
+
 ```bash
 bunx jsr add @svector/svector
 # or
-bun add @svector/svector
+bun add jsr:@svector/svector
 ```
 
 ##  Core Features
@@ -169,25 +190,62 @@ for await (const event of stream) {
 }
 ```
 
-##  File Processing 
+## Document-based Conversation
 
 Upload documents for enhanced AI responses:
 
+### Basic Document Analysis
 ```typescript
-// Upload a file
-const fileResponse = await client.files.create(
-  await Deno.readFile("document.pdf"),
-    "default",
-    "document.pdf"
+async function analyzeDocument(filePath: string, question = "Analyze this document and provide key findings.") {
+  const fileContent = await Deno.readFile(filePath);
+  
+  const fileResponse = await client.files.create(
+    fileContent,
+    'default',
+    filePath.split('/').pop()
   );
+  
+  const result = await client.conversations.create({
+    model: 'spec-3-turbo:latest',
+    instructions: 'You are a document analyst. Provide clear, concise analysis.',
+    input: `${question}\n\nDocument content:\n${fileResponse.data.content}`,
+    temperature: 0.3,
+  });
 
-// Ask questions about the document
-const response = await client.conversations.create({
-  model: "spec-3-turbo:latest",
-  instructions: "You are a document analyst.",
-  input: "What are the key findings in this document?",
-  files: [{ type: "file", id: fileResponse.file_id }],
-});
+  console.log(result.output);
+  return result.output;
+}
+
+await analyzeDocument('document.pdf');
+```
+
+### Multi-Document Analysis
+```typescript
+async function analyzeMultipleDocuments(filePaths: string[], question: string) {
+  const documents = [];
+  
+  for (const filePath of filePaths) {
+    const fileContent = await Deno.readFile(filePath);
+    const fileResponse = await client.files.create(
+      fileContent,
+      'default',
+      filePath.split('/').pop()
+    );
+    documents.push(`${filePath}: ${fileResponse.data.content}`);
+  }
+  
+  const result = await client.conversations.create({
+    model: 'spec-3-turbo:latest',
+    instructions: 'You are a document analyst. Compare and analyze multiple documents.',
+    input: `${question}\n\nDocuments:\n${documents.join('\n\n')}`,
+    temperature: 0.3,
+  });
+
+  console.log(result.output);
+  return result.output;
+}
+
+await analyzeMultipleDocuments(['report1.pdf', 'report2.pdf'], 'Compare these reports');
 ```
 
 ## Available Models
@@ -230,17 +288,17 @@ try {
 ```typescript
 const client = new SVECTOR({
   apiKey: "your-api-key",
-  baseURL: "https://spec-chat.tech",  // Custom endpoint
-  timeout: 30000,                     // 30 second timeout
-  maxRetries: 3,                      // Retry failed requests
-  dangerouslyAllowBrowser: true,      // Allow browser usage
+  baseURL: "https://spec-chat.tech",
+  timeout: 30000,
+  maxRetries: 3,
+  dangerouslyAllowBrowser: true,
 });
 ```
 
-##  Deno Example
+## Complete Deno Example
 
 ```typescript
-#!/usr/bin/env -S deno run --allow-env --allow-net
+#!/usr/bin/env -S deno run --allow-env --allow-net --allow-read
 
 import { SVECTOR } from "jsr:@svector/svector";
 
@@ -248,6 +306,7 @@ const client = new SVECTOR({
   apiKey: Deno.env.get("SVECTOR_API_KEY")!,
 });
 
+// Basic conversation
 const response = await client.conversations.create({
   model: "spec-3-turbo:latest",
   instructions: "You are a helpful assistant.",
@@ -255,6 +314,22 @@ const response = await client.conversations.create({
 });
 
 console.log("AI Response:", response.output);
+
+// Document analysis (if document.pdf exists)
+try {
+  const fileContent = await Deno.readFile("document.pdf");
+  const fileResponse = await client.files.create(fileContent, 'default', 'document.pdf');
+  
+  const analysis = await client.conversations.create({
+    model: "spec-3-turbo:latest",
+    instructions: "You are a document analyst.",
+    input: `Analyze this document: ${fileResponse.data.content}`,
+  });
+  
+  console.log("Document Analysis:", analysis.output);
+} catch (error) {
+  console.log("No document found, skipping analysis");
+}
 ```
 
 ##  API Reference
