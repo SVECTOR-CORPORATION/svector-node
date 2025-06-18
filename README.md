@@ -19,7 +19,7 @@ SVECTOR develops high-performance AI models and automation solutions, specializi
 This repository contains both package distributions:
 
 ```
-svector-sdk/
+svector-node/
 ├── src/                    # npm package source (Node.js/TypeScript)
 │   ├── api/               # API implementations  
 │   ├── client.ts          # Main client
