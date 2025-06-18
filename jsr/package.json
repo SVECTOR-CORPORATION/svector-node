@@ -9,7 +9,7 @@
   },
   "files": [
     "mod.ts",
-    "client.ts", 
+    "client.ts",
     "types.ts",
     "errors.ts",
     "utils.ts",
@@ -40,5 +40,8 @@
   },
   "publishConfig": {
     "access": "public"
+  },
+  "dependencies": {
+    "@svector/svector": "npm:@jsr/svector__svector@^1.1.6"
   }
 }

@@ -33,7 +33,7 @@ jobs:
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
-  publish-gpr:
+  publish-github-packages:
     runs-on: ubuntu-latest
     permissions:
       contents: read
@@ -45,6 +45,7 @@ jobs:
         with:
           node-version: '18'
           registry-url: https://npm.pkg.github.com/
+          scope: '@svector-corporation'
       
       - name: Install dependencies
         run: npm ci
@@ -54,7 +55,10 @@ jobs:
       
       - name: Configure package for GitHub Packages
         run: |
-          sed -i 's/"name": "svector-sdk"/"name": "@svector-corporation\/svector-sdk"/' package.json
+          # Create .npmrc for GitHub Packages
+          echo "@svector-corporation:registry=https://npm.pkg.github.com" >> .npmrc
+          # Update package name for GitHub Packages
+          cp package-github.json package.json
       
       - name: Publish to GitHub Packages
         run: npm publish

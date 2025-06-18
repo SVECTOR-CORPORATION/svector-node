@@ -1,0 +1,77 @@
+{
+  "name": "@svector-corporation/svector-sdk",
+  "version": "1.1.3",
+  "description": "Official JavaScript and TypeScript SDK for accessing SVECTOR APIs.",
+  "main": "dist/src/index.js",
+  "types": "dist/src/index.d.ts",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/SVECTOR-CORPORATION/svector-node.git"
+  },
+  "scripts": {
+    "build": "npm run clean && tsc",
+    "dev": "tsc --watch",
+    "prepublishOnly": "npm run build && npm run validate",
+    "validate": "node dist/examples/validate-sdk.js",
+    "test": "npm run type-check && npm run validate",
+    "clean": "rm -rf dist",
+    "type-check": "tsc --noEmit",
+    "examples:basic": "npm run build && node dist/examples/basic-chat.js",
+    "examples:streaming": "npm run build && node dist/examples/streaming-chat.js",
+    "examples:rag": "npm run build && node dist/examples/file-upload-rag.js",
+    "examples:advanced": "npm run build && node dist/examples/advanced-rag.js",
+    "examples:comprehensive": "npm run build && node dist/examples/comprehensive-demo.js",
+    "publish:github": "npm publish --registry=https://npm.pkg.github.com",
+    "publish:npm": "npm publish --registry=https://registry.npmjs.org"
+  },
+  "keywords": [
+    "svector",
+    "ai",
+    "artificial-intelligence",
+    "chatbot",
+    "nlp",
+    "machine-learning",
+    "sdk",
+    "api",
+    "typescript",
+    "javascript",
+    "conversational-ai",
+    "language-models"
+  ],
+  "author": "SVECTOR Team <support@svector.co.in>",
+  "license": "MIT",
+  "dependencies": {
+    "svector-sdk": "^1.0.6"
+  },
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "typescript": "^5.0.0"
+  },
+  "homepage": "https://www.svector.co.in",
+  "bugs": {
+    "url": "https://github.com/SVECTOR-CORPORATION/svector-node/issues"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "files": [
+    "dist/**/*",
+    "README.md",
+    "LICENSE"
+  ],
+  "exports": {
+    ".": {
+      "types": "./dist/src/index.d.ts",
+      "require": "./dist/src/index.js",
+      "import": "./dist/src/index.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "funding": {
+    "type": "individual",
+    "url": "https://www.svector.co.in/support"
+  },
+  "publishConfig": {
+    "@svector-corporation:registry": "https://npm.pkg.github.com"
+  }
+}
