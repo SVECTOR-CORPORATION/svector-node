@@ -35,7 +35,7 @@ svector-node/
 ```
 
 **Package Locations:**
-- **npm**: `svecto## Links & Support
+- **npm**: `svector ## Links & Support
 
 - **Website**: [https://www.svector.co.in](https://www.svector.co.in)
 - **Documentation**: [API Reference](API.md)

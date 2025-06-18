@@ -275,7 +275,7 @@ console.log("AI Response:", response.output);
 - `NotFoundError` - Resource not found
 - `UnprocessableEntityError` - Invalid request data
 
-## 🔗 Links & Support
+## Links & Support
 
 - **Website**: [https://www.svector.co.in](https://www.svector.co.in)
 - **Documentation**: [https://platform.svector.co.in](https://platform.svector.co.in)

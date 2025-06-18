@@ -44,6 +44,9 @@
     "type": "git",
     "url": "https://github.com/SVECTOR-CORPORATION/svector-node.git"
   },
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com"
+  },
   "homepage": "https://www.svector.co.in",
   "bugs": {
     "url": "https://github.com/SVECTOR-CORPORATION/svector-node/issues"
