@@ -123,7 +123,7 @@ npm install svector-sdk
 npm install @svector-corporation/svector-sdk
 ```
 
-## 🔒 Private Package Access
+## Private Package Access
 
 For private repositories or packages:
 

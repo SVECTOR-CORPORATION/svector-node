@@ -5,6 +5,40 @@ All notable changes to the SVECTOR SDK will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.1.6] - 2025-06-18
+
+### 🚀 Added
+- **Complete GitHub Packages Integration** following official documentation
+- **Dual-registry publishing** support (npm + GitHub Packages)
+- **Interactive authentication setup** with `npm run setup:github-auth`
+- **Automated CI/CD workflows** with GITHUB_TOKEN
+- **Comprehensive authentication guide** (`GITHUB_AUTH.md`)
+- **Multiple publishing scripts**:
+  - `npm run publish:dual` - Both registries
+  - `npm run publish:npm` - npm only  
+  - `npm run publish:github` - GitHub Packages only
+  - `npm run publish:dry-run` - Test without publishing
+
+### 🔧 Enhanced
+- **Scoped package naming** for GitHub Packages (`@svector-corporation/svector-sdk`)
+- **Enhanced `.npmrc`** configuration for dual registries
+- **Security best practices** with token management
+- **Project-level vs global** authentication options
+- **GitHub Actions workflow** improvements
+
+### 🐛 Fixed
+- **SHA256 hash** in Homebrew formula
+- **Workflow authentication** issues with proper token usage
+- **Package naming** for scoped packages
+- **Registry configuration** conflicts
+
+### 📦 Distribution
+- **npm**: `npm install svector-sdk`
+- **Pip**: `pip intall svector-sdk`
+- **GitHub Packages**: `npm install @svector-corporation/svector-sdk`
+- **JSR (Deno)**: `import { SVECTOR } from "jsr:@svector/svector@1.1.6"`
+- **Homebrew**: `brew install svector`
+
 ## [1.0.0] - 2024-12-17
 
 ### Added
@@ -13,8 +47,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Streaming support for real-time responses
 - File upload functionality for document processing
 - Knowledge collection management
-- 🔒 Comprehensive TypeScript support with full type definitions
-- ⚡ Automatic retry logic with exponential backoff
+- Comprehensive TypeScript support with full type definitions
+- Automatic retry logic with exponential backoff
 -  Robust error handling with specific error types
 -  Multi-platform support (Node.js, browsers, Deno, Bun)
 -  Utility functions for file handling

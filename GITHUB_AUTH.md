@@ -146,7 +146,7 @@ Set environment variable:
 export NPM_CONFIG_//npm.pkg.github.com/:_authToken=YOUR_TOKEN
 ```
 
-## 🔒 Security Best Practices
+## Security Best Practices
 
 ### Token Security
 
