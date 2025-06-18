@@ -280,7 +280,7 @@ console.log("AI Response:", response.output);
 - **Website**: [https://www.svector.co.in](https://www.svector.co.in)
 - **Documentation**: [https://platform.svector.co.in](https://platform.svector.co.in)
 - **Support**: [support@svector.co.in](mailto:support@svector.co.in)
-- **Issues**: [GitHub Issues](https://github.com/SVECTOR-CORPORATION/svector-sdk/issues)
+- **Issues**: [GitHub Issues](https://github.com/SVECTOR-CORPORATION/svector-node/issues)
 - **JSR Package**: [@svector/svector](https://jsr.io/@svector/svector)
 - **npm Package**: [svector-sdk](https://www.npmjs.com/package/svector-sdk)
 

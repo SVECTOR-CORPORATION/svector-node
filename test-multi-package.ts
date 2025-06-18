@@ -39,5 +39,5 @@ console.log("\n" + "=".repeat(70));
 console.log("🎉 Multi-Package Repository Structure Verified!");
 console.log("npm: svector-sdk (from /src)");
 console.log("JSR: @svector/svector (from /jsr)");
-console.log("Repository: https://github.com/svector-corporation/svector-sdk");
+console.log("Repository: https://github.com/SVECTOR-CORPORATION/svector-node");
 console.log("JSR Page: https://jsr.io/@svector/svector");

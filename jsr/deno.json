@@ -1,23 +1,45 @@
 {
   "name": "@svector/svector",
-  "version": "1.1.5",
+  "version": "1.1.6",
+  "description": "Official TypeScript/JavaScript SDK for SVECTOR AI Models - Works with Deno, Node.js, Bun, and browsers",
   "license": "MIT",
   "exports": "./mod.ts",
   "imports": {
     "@std/assert": "jsr:@std/assert@^1.0.0"
   },
+  "keywords": [
+    "svector",
+    "ai",
+    "chat",
+    "llm",
+    "api",
+    "typescript",
+    "deno",
+    "node",
+    "bun",
+    "browser",
+    "conversation",
+    "streaming",
+    "rag",
+    "sdk"
+  ],
+  "repository": "https://github.com/SVECTOR-CORPORATION/svector-node",
+  "homepage": "https://www.svector.co.in",
+  "author": "SVECTOR Team <support@svector.co.in>",
   "tasks": {
     "test": "deno test --allow-env --allow-net",
     "fmt": "deno fmt",
-    "lint": "deno lint",
-    "check": "deno check mod.ts"
+    "lint": "deno lint", 
+    "check": "deno check mod.ts",
+    "example": "deno run --allow-env --allow-net examples/basic.ts"
   },
   "compilerOptions": {
     "strict": true,
     "noImplicitAny": true,
     "noImplicitReturns": true,
     "noFallthroughCasesInSwitch": true,
-    "noUncheckedIndexedAccess": true
+    "noUncheckedIndexedAccess": true,
+    "exactOptionalPropertyTypes": true
   },
   "fmt": {
     "useTabs": false,

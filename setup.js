@@ -179,7 +179,7 @@ function showAvailableExamples() {
   });
   
   console.log('');
-  console.log('💡 Find all examples at: https://github.com/svector-corporation/svector-sdk/tree/main/examples');
+  console.log('💡 Find all examples at: https://github.com/SVECTOR-CORPORATION/svector-node/tree/main/examples');
 }
 
 function showDocumentation() {
@@ -190,7 +190,7 @@ function showDocumentation() {
   console.log('📋 API Reference: https://platform.svector.co.in');
   console.log(' Website: https://www.svector.co.in');
   console.log('Support: support@svector.co.in');
-  console.log(' Issues: https://github.com/svector-corporation/svector-sdk/issues');
+  console.log(' Issues: https://github.com/SVECTOR-CORPORATION/svector-node/issues');
   console.log('');
 }
 

@@ -6,7 +6,7 @@ We welcome contributions to the SVECTOR SDK! This document provides guidelines f
 
 1. **Clone the repository**:
    ```bash
-   git clone https://github.com/svector-corporation/svector-sdk.git
+   git clone https://github.com/SVECTOR-CORPORATION/svector-node.git
    cd svector-sdk
    ```
 

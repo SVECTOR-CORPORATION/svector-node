@@ -39,7 +39,7 @@ svector-sdk/
 
 - **Website**: [https://www.svector.co.in](https://www.svector.co.in)
 - **Documentation**: [API Reference](API.md)
-- **Issues**: [GitHub Issues](https://github.com/SVECTOR-CORPORATION/svector-sdk/issues)
+- **Issues**: [GitHub Issues](https://github.com/SVECTOR-CORPORATION/svector-node/issues)
 - **Support**: [support@svector.co.in](mailto:support@svector.co.in)
 - **npm Package**: [svector-sdk](https://www.npmjs.com/package/svector-sdk)
 - **JSR Package**: [@svector/svector](https://jsr.io/@svector/svector)
@@ -908,7 +908,7 @@ MIT License - see [LICENSE](LICENSE) file for details.
 
 - **Website**: [https://www.svector.co.in](https://www.svector.co.in)
 - **Documentation**: [API Reference](API.md)
-- **Issues**: [GitHub Issues](https://github.com/SVECTOR-CORPORATION/svector-sdk/issues)
+- **Issues**: [GitHub Issues](https://github.com/SVECTOR-CORPORATION/svector-node/issues)
 - **Support**: [support@svector.co.in](mailto:support@svector.co.in)
 - **npm Package**: [svector-sdk](https://www.npmjs.com/package/svector-sdk)
 
