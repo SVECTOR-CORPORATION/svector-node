@@ -12,14 +12,22 @@ export async function toFile(
     return value;
   }
 
-  // Handle Buffer (Node.js)
+  // Handle Buffer (Node.js) - with proper browser compatibility
   if (typeof Buffer !== 'undefined' && value instanceof Buffer) {
-    const blob = new Blob([value], { type: options?.type || 'application/octet-stream' });
+    // Convert Buffer to Uint8Array for better browser compatibility
+    const uint8Array = new Uint8Array(value.buffer, value.byteOffset, value.byteLength);
+    const blob = new Blob([uint8Array], { type: options?.type || 'application/octet-stream' });
     return new File([blob], filename || 'file', { type: blob.type });
   }
 
   // Handle Uint8Array
   if (value instanceof Uint8Array) {
+    const blob = new Blob([value], { type: options?.type || 'application/octet-stream' });
+    return new File([blob], filename || 'file', { type: blob.type });
+  }
+
+  // Handle ArrayBuffer
+  if (value instanceof ArrayBuffer) {
     const blob = new Blob([value], { type: options?.type || 'application/octet-stream' });
     return new File([blob], filename || 'file', { type: blob.type });
   }
@@ -30,23 +38,27 @@ export async function toFile(
     return new File([blob], filename || 'file.txt', { type: blob.type });
   }
 
-  // Handle ReadableStream
+  // Handle ReadableStream (with better error handling)
   if (value && typeof value.getReader === 'function') {
-    const chunks: BlobPart[] = [];
-    const reader = value.getReader();
-    
     try {
-      while (true) {
-        const { done, value: chunk } = await reader.read();
-        if (done) break;
-        chunks.push(chunk);
+      const chunks: BlobPart[] = [];
+      const reader = value.getReader();
+      
+      try {
+        while (true) {
+          const { done, value: chunk } = await reader.read();
+          if (done) break;
+          chunks.push(chunk);
+        }
+      } finally {
+        reader.releaseLock();
       }
-    } finally {
-      reader.releaseLock();
-    }
 
-    const blob = new Blob(chunks, { type: options?.type || 'application/octet-stream' });
-    return new File([blob], filename || 'file', { type: blob.type });
+      const blob = new Blob(chunks, { type: options?.type || 'application/octet-stream' });
+      return new File([blob], filename || 'file', { type: blob.type });
+    } catch (error) {
+      throw new Error(`Failed to read stream: ${error}`);
+    }
   }
 
   // If it's a Response object

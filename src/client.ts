@@ -16,6 +16,38 @@ import {
 } from './errors';
 import { RequestOptions, SVECTOROptions } from './types';
 
+// Environment detection utilities
+function isNode(): boolean {
+  return typeof process !== 'undefined' && 
+         process.versions != null && 
+         process.versions.node != null;
+}
+
+function isBrowser(): boolean {
+  return typeof window !== 'undefined' && 
+         typeof window.document !== 'undefined';
+}
+
+function isWebWorker(): boolean {
+  return typeof (globalThis as any).importScripts === 'function' && 
+         typeof self !== 'undefined' && 
+         typeof window === 'undefined';
+}
+
+function isDeno(): boolean {
+  return typeof (globalThis as any).Deno !== 'undefined';
+}
+
+function isEdgeRuntime(): boolean {
+  return typeof (globalThis as any).EdgeRuntime !== 'undefined';
+}
+
+function isSSR(): boolean {
+  return typeof window === 'undefined' && 
+         typeof process !== 'undefined' && 
+         process.env !== undefined;
+}
+
 export class SVECTOR {
   private apiKey: string;
   private baseURL: string;
@@ -63,20 +95,73 @@ export class SVECTOR {
   }
 
   private getDefaultFetch(): typeof fetch {
+    // Try different fetch implementations based on environment
+    
+    // 1. User-provided fetch (highest priority)
     if (typeof globalThis !== 'undefined' && globalThis.fetch) {
-      return globalThis.fetch;
+      return globalThis.fetch.bind(globalThis);
     }
+    
+    // 2. Browser fetch
     if (typeof window !== 'undefined' && window.fetch) {
-      return window.fetch;
+      return window.fetch.bind(window);
     }
+    
+    // 3. Node.js global fetch (Node 18+)
     if (typeof global !== 'undefined' && (global as any).fetch) {
       return (global as any).fetch;
     }
-    throw new Error('No fetch implementation found. Please provide a fetch function via the fetch option.');
+    
+    // 4. Deno fetch
+    if (isDeno() && (globalThis as any).fetch) {
+      return (globalThis as any).fetch;
+    }
+    
+    // 5. Web Worker fetch
+    if (isWebWorker() && typeof self !== 'undefined' && (self as any).fetch) {
+      return (self as any).fetch;
+    }
+    
+    // 6. Try dynamic import for Node.js environments without global fetch
+    if (isNode()) {
+      try {
+        // This will be handled at runtime
+        const nodeFetch = require('node-fetch');
+        return nodeFetch.default || nodeFetch;
+      } catch (error) {
+        console.warn('SVECTOR SDK: node-fetch not available, falling back to native fetch');
+      }
+    }
+    
+    throw new Error(
+      'No fetch implementation found. Please provide a fetch function via the fetch option, ' +
+      'or install node-fetch in Node.js environments.'
+    );
   }
 
   private checkBrowserEnvironment(): void {
-    if (typeof window !== 'undefined' && !this.dangerouslyAllowBrowser) {
+    // Allow usage in SSR environments (Next.js, SvelteKit, etc.)
+    if (isSSR()) {
+      return;
+    }
+
+    // Allow usage in Edge Runtime environments (Vercel Edge Functions, etc.)
+    if (isEdgeRuntime()) {
+      return;
+    }
+
+    // Allow usage in Web Workers
+    if (isWebWorker()) {
+      return;
+    }
+
+    // Allow usage in Deno
+    if (isDeno()) {
+      return;
+    }
+
+    // Only restrict in actual browser environments
+    if (isBrowser() && !this.dangerouslyAllowBrowser) {
       throw new Error(
         'SVECTOR SDK is being used in a browser environment without dangerouslyAllowBrowser set to true. ' +
         'This is strongly discouraged as it exposes your API key to client-side code. ' +
