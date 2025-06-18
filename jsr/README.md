@@ -7,7 +7,7 @@
 
 SVECTOR develops high-performance AI models and automation solutions, specializing in artificial intelligence, mathematical computing, and computational research. This SDK provides programmatic access to SVECTOR's API services through type-safe JavaScript/TypeScript interfaces, completion endpoints, document processing capabilities, and additional AI model integrations.
 
-## 🚀 Quick Start
+## Quick Start
 
 ### For Deno
 
@@ -79,16 +79,16 @@ bunx jsr add @svector/svector
 bun add @svector/svector
 ```
 
-## ⭐ Core Features
+##  Core Features
 
 - **Conversations API** - Simple instructions + input interface
-- **  Advanced Chat Completions** - Full control with role-based messages  
-- ** Real-time Streaming** - Server-sent events for live responses
-- ** File Processing** - Upload and process documents (PDF, DOCX, TXT, etc.)
-- ** Knowledge Collections** - Organize files for enhanced RAG
-- ** Type Safety** - Full TypeScript support with IntelliSense
-- ** Universal** - Works in Deno, Node.js, Bun, and browsers
-- ** Robust Error Handling** - Comprehensive error types and retry logic
+- **Advanced Chat Completions** - Full control with role-based messages  
+- **Real-time Streaming** - Server-sent events for live responses
+- **File Processing** - Upload and process documents (PDF, DOCX, TXT, etc.)
+- **Knowledge Collections** - Organize files for enhanced RAG
+- **Type Safety** - Full TypeScript support with IntelliSense
+- **Universal** - Works in Deno, Node.js, Bun, and browsers
+- **Robust Error Handling** - Comprehensive error types and retry logic
 
 ##  Conversations API
 
@@ -277,12 +277,12 @@ console.log("AI Response:", response.output);
 
 ## 🔗 Links & Support
 
-- ** Website**: [https://www.svector.co.in](https://www.svector.co.in)
-- ** Documentation**: [https://docs.svector.co.in](https://docs.svector.co.in)
-- **  Support**: [support@svector.co.in](mailto:support@svector.co.in)
-- ** Issues**: [GitHub Issues](https://github.com/SVECTOR-CORPORATION/svector-sdk/issues)
-- ** JSR Package**: [@svector/svector](https://jsr.io/@svector/svector)
-- ** npm Package**: [svector-sdk](https://www.npmjs.com/package/svector-sdk)
+- **Website**: [https://www.svector.co.in](https://www.svector.co.in)
+- **Documentation**: [https://platform.svector.co.in](https://platform.svector.co.in)
+- **Support**: [support@svector.co.in](mailto:support@svector.co.in)
+- **Issues**: [GitHub Issues](https://github.com/SVECTOR-CORPORATION/svector-sdk/issues)
+- **JSR Package**: [@svector/svector](https://jsr.io/@svector/svector)
+- **npm Package**: [svector-sdk](https://www.npmjs.com/package/svector-sdk)
 
 ##  License
 

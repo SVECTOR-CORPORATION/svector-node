@@ -7,7 +7,7 @@
 import { SVECTOR } from "../mod.ts";
 
 async function basicExample() {
-  console.log("🚀 SVECTOR Deno Example\n");
+  console.log("SVECTOR Deno Example\n");
   
   const client = new SVECTOR({
     apiKey: Deno.env.get("SVECTOR_API_KEY"),

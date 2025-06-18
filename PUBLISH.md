@@ -60,7 +60,7 @@ This checklist ensures the SVECTOR SDK is ready for npm publication.
 - [x] **Scripts**: Build and validation scripts work
 - [x] **Keywords**: SEO-friendly keywords for npm search
 
-## 🚀 Publication Steps
+## Publication Steps
 
 ### 1. Final Pre-checks
 ```bash

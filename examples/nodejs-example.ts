@@ -4,7 +4,7 @@
 import { SVECTOR } from '../src';
 
 async function nodeJSExample() {
-  console.log('🚀 Node.js SVECTOR SDK Example\n');
+  console.log('Node.js SVECTOR SDK Example\n');
 
   // Initialize client (API key from environment variable)
   const client = new SVECTOR({

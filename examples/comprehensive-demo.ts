@@ -11,7 +11,7 @@ import {
 } from '../src';
 
 async function comprehensiveExample() {
-  console.log('🚀 SVECTOR SDK - Complete Feature Demonstration\n');
+  console.log('SVECTOR SDK - Complete Feature Demonstration\n');
 
   // Initialize client
   const client = new SVECTOR({

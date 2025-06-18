@@ -11,7 +11,7 @@ async function advancedRAGExample() {
   });
 
   try {
-    console.log('🚀 Advanced SVECTOR RAG Example\n');
+    console.log('Advanced SVECTOR RAG Example\n');
 
     // Create multiple sample documents
     const documents = [

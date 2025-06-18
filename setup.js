@@ -9,7 +9,7 @@ const { execSync } = require('child_process');
 const fs = require('fs');
 const path = require('path');
 
-console.log('🚀 SVECTOR SDK Quick Start Guide\n');
+console.log('SVECTOR SDK Quick Start Guide\n');
 
 function runCommand(command, description) {
   console.log(`📋 ${description}`);
@@ -127,7 +127,7 @@ main();
 }
 
 function showQuickStart() {
-  console.log('🚀 Quick Start Guide');
+  console.log('Quick Start Guide');
   console.log('─'.repeat(50));
   console.log('');
   

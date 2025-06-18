@@ -10,7 +10,7 @@
 
 SVECTOR develops high-performance AI models and automation solutions, specializing in artificial intelligence, mathematical computing, and computational research. This SDK provides programmatic access to SVECTOR's API services through type-safe JavaScript/TypeScript interfaces, completion endpoints, document processing capabilities, and additional AI model integrations.
 
-## 🚀 Quick Start
+## Quick Start
 
 ### For Node.js/npm
 ```bash
@@ -117,16 +117,16 @@ const client = new SVECTOR({
 });
 ```
 
-## ⭐ Core Features
+##  Core Features
 
 - **Conversations API** - Simple instructions + input interface
-- **  Advanced Chat Completions** - Full control with role-based messages
-- ** Real-time Streaming** - Server-sent events for live responses
-- ** File Processing** - Upload and process documents (PDF, DOCX, TXT, etc.)
-- ** Knowledge Collections** - Organize files for enhanced RAG
-- ** TypeScript Native** - Full type safety and IntelliSense
-- ** Multi-environment** - Node.js, Browser, Deno, Bun, Cloudflare Workers
-- ** Robust Error Handling** - Comprehensive error types and retry logic
+- **Advanced Chat Completions** - Full control with role-based messages
+- **Real-time Streaming** - Server-sent events for live responses
+- **File Processing** - Upload and process documents (PDF, DOCX, TXT, etc.)
+- **Knowledge Collections** - Organize files for enhanced RAG
+- **TypeScript Native** - Full type safety and IntelliSense
+- **Multi-environment** - Node.js, Browser, Deno, Bun, Cloudflare Workers
+- **Robust Error Handling** - Comprehensive error types and retry logic
 
 ##  Conversations API (Recommended)
 
@@ -869,11 +869,11 @@ MIT License - see [LICENSE](LICENSE) file for details.
 
 ## 🔗 Links & Support
 
-- ** Website**: [https://www.svector.co.in](https://www.svector.co.in)
-- ** Documentation**: [API Reference](API.md)
-- ** Issues**: [GitHub Issues](https://github.com/SVECTOR-CORPORATION/svector-sdk/issues)
-- **  Support**: [support@svector.co.in](mailto:support@svector.co.in)
-- ** npm Package**: [svector-sdk](https://www.npmjs.com/package/svector-sdk)
+- **Website**: [https://www.svector.co.in](https://www.svector.co.in)
+- **Documentation**: [API Reference](API.md)
+- **Issues**: [GitHub Issues](https://github.com/SVECTOR-CORPORATION/svector-sdk/issues)
+- **Support**: [support@svector.co.in](mailto:support@svector.co.in)
+- **npm Package**: [svector-sdk](https://www.npmjs.com/package/svector-sdk)
 
 ---
 
