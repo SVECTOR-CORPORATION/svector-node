@@ -55,10 +55,10 @@ jobs:
       
       - name: Configure package for GitHub Packages
         run: |
-          # Create .npmrc for GitHub Packages
-          echo "@svector-corporation:registry=https://npm.pkg.github.com" >> .npmrc
           # Update package name for GitHub Packages
-          cp package-github.json package.json
+          jq '.name = "@svector-corporation/svector-sdk"' package.json > package.json.tmp
+          jq '.publishConfig = {"registry": "https://npm.pkg.github.com"}' package.json.tmp > package.json
+          rm package.json.tmp
       
       - name: Publish to GitHub Packages
         run: npm publish
