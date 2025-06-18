@@ -11,6 +11,7 @@ export class ChatCompletions {
 
   /**
    * Creates a chat completion using SVECTOR's Spec-Chat models
+   * Enhanced with better system prompt handling
    */
   async create(
     params: ChatCompletionRequest,
@@ -20,25 +21,91 @@ export class ChatCompletions {
       throw new Error('Use createStream() for streaming responses');
     }
 
+    // Process messages to handle flexible system prompts
+    const processedParams = this.processSystemPrompts(params);
+
     return this.client.request<ChatCompletionResponse>(
       'POST',
       '/api/chat/completions',
-      params,
+      processedParams,
       options
     );
   }
 
   /**
+   * Process system prompts to handle various input formats
+   */
+  private processSystemPrompts(params: ChatCompletionRequest): ChatCompletionRequest {
+    const messages = [...params.messages];
+    
+    // Find and process system messages
+    const processedMessages = messages.map(message => {
+      if (message.role === 'system') {
+        return {
+          ...message,
+          content: this.normalizeSystemContent(message.content)
+        };
+      }
+      return message;
+    });
+
+    return {
+      ...params,
+      messages: processedMessages
+    };
+  }
+
+  /**
+   * Normalize system content to handle various formats
+   */
+  private normalizeSystemContent(content: any): string {
+    if (typeof content === 'string') {
+      return content;
+    }
+    
+    if (typeof content === 'function') {
+      try {
+        const result = content();
+        return typeof result === 'string' ? result : String(result);
+      } catch (error) {
+        console.warn('SVECTOR: Failed to execute system content function:', error);
+        return 'You are a helpful assistant.';
+      }
+    }
+    
+    if (content && typeof content === 'object') {
+      // Handle objects with a content or text property
+      if (content.content) return String(content.content);
+      if (content.text) return String(content.text);
+      if (content.value) return String(content.value);
+      
+      // Try to JSON stringify if it's a structured object
+      try {
+        return JSON.stringify(content);
+      } catch (error) {
+        return String(content);
+      }
+    }
+    
+    // Fallback for any other type
+    return content ? String(content) : 'You are a helpful assistant.';
+  }
+
+  /**
    * Creates a streaming chat completion
+   * Enhanced with system prompt processing
    */
   async createStream(
     params: ChatCompletionRequest & { stream: true },
     options?: RequestOptions
   ): Promise<AsyncIterable<StreamEvent>> {
+    // Process messages to handle flexible system prompts
+    const processedParams = this.processSystemPrompts(params);
+
     const response = await this.client.requestStream(
       'POST',
       '/api/chat/completions',
-      { ...params, stream: true },
+      { ...processedParams, stream: true },
       options
     );
 

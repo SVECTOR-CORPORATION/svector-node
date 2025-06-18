@@ -14,13 +14,17 @@ export class Conversations {
   /**
    * Create a conversation with instructions and input
    * This automatically handles the system/user role conversion internally
+   * Enhanced with better system prompt handling and error recovery
    */
   async create(
     params: ConversationRequest,
     options?: RequestOptions
   ): Promise<ConversationResponse> {
+    // Enhanced system prompt handling - can accept various formats
+    const systemInstructions = this.normalizeSystemInstructions(params.instructions);
+    
     // Convert the interface to the internal chat completion format
-    const messages = this.buildMessagesFromConversation(params);
+    const messages = this.buildMessagesFromConversation(params, systemInstructions);
     
     const chatRequest: ChatCompletionRequest = {
       model: params.model,
@@ -48,7 +52,8 @@ export class Conversations {
     params: ConversationRequest & { stream: true },
     options?: RequestOptions
   ): Promise<AsyncIterable<{ content: string; done: boolean }>> {
-    const messages = this.buildMessagesFromConversation(params);
+    const systemInstructions = this.normalizeSystemInstructions(params.instructions);
+    const messages = this.buildMessagesFromConversation(params, systemInstructions);
     
     const chatRequest: ChatCompletionRequest & { stream: true } = {
       model: params.model,
@@ -72,7 +77,8 @@ export class Conversations {
     params: ConversationRequest,
     options?: RequestOptions
   ): Promise<{ data: ConversationResponse; response: Response }> {
-    const messages = this.buildMessagesFromConversation(params);
+    const systemInstructions = this.normalizeSystemInstructions(params.instructions);
+    const messages = this.buildMessagesFromConversation(params, systemInstructions);
     
     const chatRequest: ChatCompletionRequest = {
       model: params.model,
@@ -96,16 +102,57 @@ export class Conversations {
   }
 
   /**
-   * Internal method to build messages from conversation parameters
+   * Normalize system instructions - can handle strings, functions, or complex objects
    */
-  private buildMessagesFromConversation(params: ConversationRequest): ChatMessage[] {
+  private normalizeSystemInstructions(instructions: any): string {
+    if (typeof instructions === 'string') {
+      return instructions;
+    }
+    
+    if (typeof instructions === 'function') {
+      try {
+        const result = instructions();
+        return typeof result === 'string' ? result : String(result);
+      } catch (error) {
+        console.warn('SVECTOR: Failed to execute system instructions function:', error);
+        return 'You are a helpful assistant.';
+      }
+    }
+    
+    if (instructions && typeof instructions === 'object') {
+      // Handle objects with a content or text property
+      if (instructions.content) return String(instructions.content);
+      if (instructions.text) return String(instructions.text);
+      if (instructions.value) return String(instructions.value);
+      
+      // Try to JSON stringify if it's a structured object
+      try {
+        return JSON.stringify(instructions);
+      } catch (error) {
+        return String(instructions);
+      }
+    }
+    
+    // Fallback for any other type
+    return instructions ? String(instructions) : 'You are a helpful assistant.';
+  }
+
+  /**
+   * Internal method to build messages from conversation parameters
+   * Enhanced to handle flexible system instructions
+   */
+  private buildMessagesFromConversation(
+    params: ConversationRequest, 
+    systemInstructions?: string
+  ): ChatMessage[] {
     const messages: ChatMessage[] = [];
 
-    // Add system instructions if provided
-    if (params.instructions) {
+    // Add system instructions - use provided or fallback to params
+    const finalInstructions = systemInstructions || this.normalizeSystemInstructions(params.instructions);
+    if (finalInstructions && finalInstructions.trim()) {
       messages.push({
         role: 'system',
-        content: params.instructions,
+        content: finalInstructions,
       });
     }
 

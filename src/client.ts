@@ -401,7 +401,7 @@ export class SVECTOR {
   }
 
   private createErrorFromResponse(response: Response, data: any): APIError {
-    const message = data.message || data.error || `HTTP ${response.status}`;
+    const message = data.message || data.error || data.detail || `HTTP ${response.status}`;
     const requestId = response.headers.get('x-request-id') || undefined;
     const headers = Object.fromEntries(response.headers.entries());
 
@@ -412,10 +412,20 @@ export class SVECTOR {
         return new PermissionDeniedError(message, requestId, headers);
       case 404:
         return new NotFoundError(message, requestId, headers);
+      case 405:
+        return new APIError('Method Not Allowed. Please check the API endpoint and HTTP method.', response.status, requestId, headers);
       case 422:
         return new UnprocessableEntityError(message, requestId, headers);
       case 429:
         return new RateLimitError(message, requestId, headers);
+      case 502:
+        return new InternalServerError('Bad Gateway - API server temporarily unavailable', response.status, requestId, headers);
+      case 503:
+        return new InternalServerError('Service Unavailable - API server temporarily overloaded', response.status, requestId, headers);
+      case 504:
+        return new InternalServerError('Gateway Timeout - API request timed out', response.status, requestId, headers);
+      case 524:
+        return new InternalServerError('Cloudflare Timeout - Request took too long to process', response.status, requestId, headers);
       default:
         if (response.status >= 500) {
           return new InternalServerError(message, response.status, requestId, headers);
@@ -428,8 +438,8 @@ export class SVECTOR {
     if (retries >= maxRetries) return false;
     if (!status) return false;
     
-    // Retry on 408, 409, 429, and 5xx errors
-    return [408, 409, 429].includes(status) || status >= 500;
+    // Retry on 408, 409, 429, 502, 503, 504, 524 and other 5xx errors
+    return [408, 409, 429, 502, 503, 504, 524].includes(status) || status >= 500;
   }
 
   private calculateBackoffDelay(retryCount: number): number {
