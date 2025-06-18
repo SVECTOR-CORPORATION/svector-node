@@ -1,0 +1,21 @@
+{
+  "version": "5",
+  "specifiers": {
+    "jsr:@svector/svector@1.1.1": "1.1.1"
+  },
+  "jsr": {
+    "@svector/svector@1.1.1": {
+      "integrity": "cadfa835a30bb17b7c41ab2b47fcacf91cb35b1a855d258a82d77bfcebe3d4f4"
+    }
+  },
+  "workspace": {
+    "dependencies": [
+      "jsr:@std/assert@1"
+    ],
+    "packageJson": {
+      "dependencies": [
+        "npm:@jsr/svector__svector@^1.1.6"
+      ]
+    }
+  }
+}

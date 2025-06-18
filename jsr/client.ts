@@ -4,17 +4,49 @@ import { Files } from './api/files.ts';
 import { Knowledge } from './api/knowledge.ts';
 import { Models } from './api/models.ts';
 import {
-    APIConnectionError,
-    APIConnectionTimeoutError,
-    APIError,
-    AuthenticationError,
-    InternalServerError,
-    NotFoundError,
-    PermissionDeniedError,
-    RateLimitError,
-    UnprocessableEntityError
+  APIConnectionError,
+  APIConnectionTimeoutError,
+  APIError,
+  AuthenticationError,
+  InternalServerError,
+  NotFoundError,
+  PermissionDeniedError,
+  RateLimitError,
+  UnprocessableEntityError
 } from './errors.ts';
 import { RequestOptions, SVECTOROptions } from './types.ts';
+
+// Environment detection utilities
+function isNode(): boolean {
+  return typeof (globalThis as any).process !== 'undefined' && 
+         (globalThis as any).process.versions != null && 
+         (globalThis as any).process.versions.node != null;
+}
+
+function isBrowser(): boolean {
+  return typeof window !== 'undefined' && 
+         typeof (window as any).document !== 'undefined';
+}
+
+function isWebWorker(): boolean {
+  return typeof (globalThis as any).importScripts === 'function' && 
+         typeof self !== 'undefined' && 
+         typeof window === 'undefined';
+}
+
+function isDeno(): boolean {
+  return typeof (globalThis as any).Deno !== 'undefined';
+}
+
+function isEdgeRuntime(): boolean {
+  return typeof (globalThis as any).EdgeRuntime !== 'undefined';
+}
+
+function isSSR(): boolean {
+  return typeof window === 'undefined' && 
+         typeof (globalThis as any).process !== 'undefined' && 
+         (globalThis as any).process.env !== undefined;
+}
 
 export class SVECTOR {
   private apiKey: string;
@@ -56,28 +88,72 @@ export class SVECTOR {
   }
 
   private getApiKeyFromEnv(): string {
-    // Try different environment access methods
-    try {
-      // Deno environment
-      if (typeof globalThis !== 'undefined' && (globalThis as any).Deno?.env) {
-        return (globalThis as any).Deno.env.get('SVECTOR_API_KEY') || '';
-      }
-      // Node.js environment
-      if (typeof globalThis !== 'undefined' && (globalThis as any).process?.env) {
-        return (globalThis as any).process.env['SVECTOR_API_KEY'] || '';
-      }
-    } catch {
-      // Ignore errors
+    if (isDeno() && (globalThis as any).Deno?.env) {
+      return (globalThis as any).Deno.env.get('SVECTOR_API_KEY') || '';
+    }
+    if (typeof (globalThis as any).process !== 'undefined' && (globalThis as any).process.env) {
+      return (globalThis as any).process.env['SVECTOR_API_KEY'] || '';
     }
     return '';
   }
 
   private getDefaultFetch(): typeof fetch {
-    return fetch;
+    // Try different fetch implementations based on environment
+    
+    // 1. Global fetch (most common)
+    if (typeof globalThis !== 'undefined' && globalThis.fetch) {
+      return globalThis.fetch.bind(globalThis);
+    }
+    
+    // 2. Browser fetch
+    if (typeof window !== 'undefined' && window.fetch) {
+      return window.fetch.bind(window);
+    }
+    
+    // 3. Deno fetch
+    if (isDeno() && typeof fetch !== 'undefined') {
+      return fetch;
+    }
+    
+    // 4. Web Worker fetch
+    if (isWebWorker() && typeof self !== 'undefined' && (self as any).fetch) {
+      return (self as any).fetch;
+    }
+    
+    // 5. Node.js global fetch (Node 18+)
+    if (typeof (globalThis as any).global !== 'undefined' && ((globalThis as any).global as any).fetch) {
+      return ((globalThis as any).global as any).fetch;
+    }
+    
+    throw new Error(
+      'No fetch implementation found. Please provide a fetch function via the fetch option, ' +
+      'or ensure you are running in an environment with fetch support.'
+    );
   }
 
   private checkBrowserEnvironment(): void {
-    if (typeof window !== 'undefined' && !this.dangerouslyAllowBrowser) {
+    // Allow usage in SSR environments (Next.js, SvelteKit, etc.)
+    if (isSSR()) {
+      return;
+    }
+
+    // Allow usage in Edge Runtime environments (Vercel Edge Functions, etc.)
+    if (isEdgeRuntime()) {
+      return;
+    }
+
+    // Allow usage in Web Workers
+    if (isWebWorker()) {
+      return;
+    }
+
+    // Allow usage in Deno
+    if (isDeno()) {
+      return;
+    }
+
+    // Only restrict in actual browser environments
+    if (isBrowser() && !this.dangerouslyAllowBrowser) {
       throw new Error(
         'SVECTOR SDK is being used in a browser environment without dangerouslyAllowBrowser set to true. ' +
         'This is strongly discouraged as it exposes your API key to client-side code. ' +

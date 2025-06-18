@@ -4,7 +4,7 @@
  * Test the published JSR package
  */
 
-import { SVECTOR } from "jsr:@svector/svector@1.1.1";
+import { SVECTOR } from "./mod.ts";
 
 async function testJSRPackage() {
   console.log(" Testing SVECTOR JSR Package");
