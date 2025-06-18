@@ -169,7 +169,7 @@ for await (const event of stream) {
 }
 ```
 
-##  File Processing & RAG
+##  File Processing 
 
 Upload documents for enhanced AI responses:
 
@@ -177,9 +177,9 @@ Upload documents for enhanced AI responses:
 // Upload a file
 const fileResponse = await client.files.create(
   await Deno.readFile("document.pdf"),
-  "rag",
-  "document.pdf"
-);
+    "default",
+    "document.pdf"
+  );
 
 // Ask questions about the document
 const response = await client.conversations.create({

@@ -10,12 +10,12 @@ async function validateSDK() {
   console.log('Test 1: Constructor validation');
   try {
     new SVECTOR({ apiKey: '' });
-    console.log('❌ Should have thrown AuthenticationError');
+    console.log('Should have thrown AuthenticationError');
   } catch (error) {
     if (error instanceof AuthenticationError) {
-      console.log('✅ Properly validates missing API key');
+      console.log('Properly validates missing API key');
     } else {
-      console.log('❌ Unexpected error type:', error instanceof Error ? error.constructor.name : 'Unknown');
+      console.log('Unexpected error type:', error instanceof Error ? error.constructor.name : 'Unknown');
     }
   }
 
@@ -26,13 +26,13 @@ async function validateSDK() {
       apiKey: 'test-key',
       dangerouslyAllowBrowser: true 
     });
-    console.log('✅ Client created successfully');
+    console.log('Client created successfully');
     console.log(`   • Has chat API: ${!!client.chat}`);
     console.log(`   • Has models API: ${!!client.models}`);
     console.log(`   • Has files API: ${!!client.files}`);
     console.log(`   • Has knowledge API: ${!!client.knowledge}`);
   } catch (error) {
-    console.log('❌ Failed to create client:', error);
+    console.log('Failed to create client:', error);
   }
 
   // Test 3: Type definitions
@@ -47,21 +47,21 @@ async function validateSDK() {
       temperature: 0.7,
       max_tokens: 100,
     };
-    console.log('✅ TypeScript types are working correctly');
+    console.log('TypeScript types are working correctly');
   } catch (error) {
-    console.log('❌ TypeScript type error:', error);
+    console.log('TypeScript type error:', error);
   }
 
   // Test 4: Utility functions
   console.log('\nTest 4: Utility functions');
   try {
     const file = await toFile('test content', 'test.txt', { type: 'text/plain' });
-    console.log('✅ toFile utility works correctly');
+    console.log('toFile utility works correctly');
     console.log(`   • File name: ${file.name}`);
     console.log(`   • File type: ${file.type}`);
     console.log(`   • File size: ${file.size} bytes`);
   } catch (error) {
-    console.log('❌ toFile utility error:', error);
+    console.log('toFile utility error:', error);
   }
 
   // Test 5: Error hierarchy
@@ -72,7 +72,7 @@ async function validateSDK() {
   ];
   
   for (const error of errors) {
-    console.log(`✅ ${error.constructor.name} extends Error: ${error instanceof Error}`);
+    console.log(`${error.constructor.name} extends Error: ${error instanceof Error}`);
     console.log(`   • Has status: ${error.status !== undefined}`);
     console.log(`   • Message: ${error.message}`);
   }
@@ -105,9 +105,9 @@ async function validateSDK() {
     }
     
     if (typeof obj === 'function') {
-      console.log(`✅ Method ${method} exists and is callable`);
+      console.log(`Method ${method} exists and is callable`);
     } else {
-      console.log(`❌ Method ${method} is missing or not a function`);
+      console.log(`Method ${method} is missing or not a function`);
     }
   }
 

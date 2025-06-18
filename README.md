@@ -6,9 +6,45 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)  
 [![Node.js Version](https://img.shields.io/badge/node-%3E%3D18.0.0-brightgreen.svg)](https://nodejs.org/)
 
+
 **Official JavaScript and TypeScript SDK for accessing SVECTOR APIs.**
 
 SVECTOR develops high-performance AI models and automation solutions, specializing in artificial intelligence, mathematical computing, and computational research. This SDK provides programmatic access to SVECTOR's API services through type-safe JavaScript/TypeScript interfaces, completion endpoints, document processing capabilities, and additional AI model integrations.
+
+**Multi-Platform Support**: This repository contains both the npm package (`svector-sdk`) and the JSR package (`@svector/svector`) for seamless integration across Node.js, Deno, Bun, and browser environments.
+
+
+## Repository Structure
+
+This repository contains both package distributions:
+
+```
+svector-sdk/
+├── src/                    # npm package source (Node.js/TypeScript)
+│   ├── api/               # API implementations  
+│   ├── client.ts          # Main client
+│   ├── types.ts           # TypeScript definitions
+│   └── index.ts           # npm package entry
+├── jsr/                   # JSR package source (Deno/JSR)
+│   ├── api/               # Deno-compatible API implementations
+│   ├── client.ts          # Deno-compatible client
+│   ├── mod.ts             # JSR package entry  
+│   └── deno.json          # Deno configuration
+├── examples/              # Usage examples
+└── package.json           # npm package config
+```
+
+**Package Locations:**
+- **npm**: `svecto## Links & Support
+
+- **Website**: [https://www.svector.co.in](https://www.svector.co.in)
+- **Documentation**: [API Reference](API.md)
+- **Issues**: [GitHub Issues](https://github.com/SVECTOR-CORPORATION/svector-sdk/issues)
+- **Support**: [support@svector.co.in](mailto:support@svector.co.in)
+- **npm Package**: [svector-sdk](https://www.npmjs.com/package/svector-sdk)
+- **JSR Package**: [@svector/svector](https://jsr.io/@svector/svector)
+- **Deno Land**: [deno.land/x/svector](https://deno.land/x/svector)- Full-featured package for Node.js/Bun
+- **JSR**: `@svector/svector` - Deno-optimized package from `/jsr` folder)
 
 ## Quick Start
 
@@ -60,6 +96,7 @@ console.log(result.output);
 
 - [Installation](#installation)
 - [Authentication](#authentication)
+- [Repository Structure](#repository-structure)
 - [Core Features](#core-features)
 - [Conversations API (Recommended)](#conversations-api-recommended)
 - [Chat Completions API (Advanced)](#chat-completions-api-advanced)
@@ -101,7 +138,7 @@ import { SVECTOR } from 'jsr:@svector/svector';
 import { SVECTOR } from 'https://esm.sh/svector-sdk';
 ```
 
-## 🔐 Authentication
+## Authentication
 
 Get your API key from the [SVECTOR Dashboard](https://www.svector.co.in) and set it as an environment variable:
 
@@ -192,7 +229,7 @@ for await (const event of stream) {
 // First upload a document
 const fileResponse = await client.files.create(
   fs.createReadStream('research-paper.pdf'),
-  'rag'
+  'default'
 );
 
 // Then ask questions about it
@@ -307,14 +344,14 @@ import fs from 'fs';
 // PDF document
 const pdfFile = await client.files.create(
   fs.createReadStream('document.pdf'),
-  'rag',
+  'default',
   'document.pdf'
 );
 
 // Text file
 const textFile = await client.files.create(
   fs.createReadStream('notes.txt'),
-  'rag',
+  'default',
   'notes.txt'
 );
 
@@ -325,7 +362,7 @@ console.log(`Files uploaded: ${pdfFile.file_id}, ${textFile.file_id}`);
 
 ```typescript
 const buffer = fs.readFileSync('document.pdf');
-const fileResponse = await client.files.create(buffer, 'rag', 'document.pdf');
+const fileResponse = await client.files.create(buffer, 'default', 'document.pdf');
 ```
 
 ### Upload from String Content
@@ -336,7 +373,7 @@ const content = `
 This document contains important findings...
 `;
 
-const fileResponse = await client.files.create(content, 'rag', 'notes.md');
+const fileResponse = await client.files.create(content, 'default', 'notes.md');
 ```
 
 ### Upload in Browser
@@ -351,7 +388,7 @@ const client = new SVECTOR({
   dangerouslyAllowBrowser: true,
 });
 
-const fileResponse = await client.files.create(file, 'rag');
+const fileResponse = await client.files.create(file, 'default');
 ```
 
 ### Using toFile Utility
@@ -362,7 +399,7 @@ import { toFile } from 'svector-sdk';
 // Convert buffer to file
 const buffer = Buffer.from('Hello world');
 const file = await toFile(buffer, 'hello.txt');
-const response = await client.files.create(file, 'rag');
+const response = await client.files.create(file, 'default');
 
 // Convert string to file
 const stringFile = await toFile('Content here', 'content.txt', { type: 'text/plain' });
@@ -372,8 +409,8 @@ const stringFile = await toFile('Content here', 'content.txt', { type: 'text/pla
 
 ```typescript
 // Upload documents
-const doc1 = await client.files.create(fs.createReadStream('manual.pdf'), 'rag');
-const doc2 = await client.files.create(fs.createReadStream('faq.docx'), 'rag');
+const doc1 = await client.files.create(fs.createReadStream('manual.pdf'), 'default');
+const doc2 = await client.files.create(fs.createReadStream('faq.docx'), 'default');
 
 // Ask questions about the documents
 const answer = await client.conversations.create({
@@ -475,11 +512,11 @@ try {
   console.log(response.output);
 } catch (error) {
   if (error instanceof AuthenticationError) {
-    console.error('❌ Invalid API key:', error.message);
+    console.error('Invalid API key:', error.message);
     console.error('💡 Get your API key from https://www.svector.co.in');
   } else if (error instanceof RateLimitError) {
     console.error('⏰ Rate limit exceeded:', error.message);
-    console.error('🔄 Please wait before making another request');
+    console.error('Please wait before making another request');
   } else if (error instanceof NotFoundError) {
     console.error('🔍 Resource not found:', error.message);
   } else if (error instanceof APIError) {
@@ -708,15 +745,15 @@ class DocumentAnalyzer {
     try {
       const fileResponse = await this.client.files.create(
         fs.createReadStream(filePath),
-        'rag',
+        'default',
         filePath.split('/').pop()
       );
       
       this.uploadedFiles.push(fileResponse.file_id);
-      console.log(`✅ Uploaded: ${filePath} (ID: ${fileResponse.file_id})`);
+      console.log(`Uploaded: ${filePath} (ID: ${fileResponse.file_id})`);
       return fileResponse.file_id;
     } catch (error) {
-      console.error(`❌ Failed to upload ${filePath}:`, error);
+      console.error(`Failed to upload ${filePath}:`, error);
       throw error;
     }
   }
@@ -780,14 +817,14 @@ console.log('💡 Insights:', insights);
 
 ### 1. Use Conversations API for Simplicity
 ```typescript
-// ✅ Recommended: Clean and simple
+// Recommended: Clean and simple
 const result = await client.conversations.create({
   model: 'spec-3-turbo:latest',
   instructions: 'You are a helpful assistant.',
   input: userMessage,
 });
 
-// ❌ More complex: Manual role management
+// More complex: Manual role management
 const result = await client.chat.create({
   model: 'spec-3-turbo:latest',
   messages: [
@@ -824,8 +861,8 @@ model: 'theta-35-mini:latest'
 
 ### 4. Optimize File Usage
 ```typescript
-// ✅ Upload once, use multiple times
-const fileId = await client.files.create(document, 'rag');
+// Upload once, use multiple times
+const fileId = await client.files.create(document, 'default');
 
 // Use in multiple conversations
 const result1 = await client.conversations.create({
@@ -836,12 +873,12 @@ const result1 = await client.conversations.create({
 
 ### 5. Environment Variables
 ```typescript
-// ✅ Use environment variables
+// Use environment variables
 const client = new SVECTOR({
   apiKey: process.env.SVECTOR_API_KEY,
 });
 
-// ❌ Don't hardcode API keys
+// Don't hardcode API keys
 const client = new SVECTOR({
   apiKey: 'sk-hardcoded-key-here', // Never do this!
 });

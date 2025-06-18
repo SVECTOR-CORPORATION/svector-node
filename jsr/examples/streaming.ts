@@ -31,13 +31,13 @@ async function streamingExample() {
         // Write content without newlines to show streaming effect
         await Deno.stdout.write(new TextEncoder().encode(event.content));
       } else if (event.done) {
-        console.log("\n\n✅ Streaming completed!");
+        console.log("\n\nStreaming completed!");
         break;
       }
     }
 
   } catch (error) {
-    console.error("❌ Error:", error.message);
+    console.error("Error:", error.message);
   }
 }
 

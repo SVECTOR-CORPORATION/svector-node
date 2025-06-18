@@ -40,7 +40,7 @@ async function comprehensiveExample() {
     console.log(`Request ID: ${basicResponse._request_id}\n`);
 
     // 2. Multi-turn Conversation
-    console.log('🔄 2. Multi-turn Conversation');
+    console.log('2. Multi-turn Conversation');
     console.log('─'.repeat(50));
     
     const conversationResponse = await client.chat.create({
@@ -107,13 +107,13 @@ This is a sample document to demonstrate RAG capabilities.
     `;
     
     const fileFromString = await toFile(textContent, 'example-doc.md', { type: 'text/markdown' });
-    const uploadResponse1 = await client.files.create(fileFromString, 'rag');
-    console.log(`✅ File uploaded from string: ${uploadResponse1.file_id}`);
+    const uploadResponse1 = await client.files.create(fileFromString, 'default');
+    console.log(`File uploaded from string: ${uploadResponse1.file_id}`);
 
     // Method 2: Upload from buffer
     const buffer = Buffer.from('This is a sample text file for testing.', 'utf-8');
-    const uploadResponse2 = await client.files.create(buffer, 'rag', 'sample.txt');
-    console.log(`✅ File uploaded from buffer: ${uploadResponse2.file_id}`);
+    const uploadResponse2 = await client.files.create(buffer, 'default', 'sample.txt');
+    console.log(`File uploaded from buffer: ${uploadResponse2.file_id}`);
     
     const fileIds = [uploadResponse1.file_id, uploadResponse2.file_id];
 
@@ -162,7 +162,7 @@ This is a sample document to demonstrate RAG capabilities.
       });
     } catch (error) {
       if (error instanceof APIError) {
-        console.log(`✅ Caught API error: ${error.constructor.name} - ${error.message}`);
+        console.log(`Caught API error: ${error.constructor.name} - ${error.message}`);
         console.log(`   Status: ${error.status}`);
         console.log(`   Request ID: ${error.request_id}`);
       }
@@ -190,7 +190,7 @@ This is a sample document to demonstrate RAG capabilities.
     console.log('─'.repeat(50));
     
     const modelsViaGet = await client.get<{ models: string[] }>('/api/models');
-    console.log(`✅ GET request successful - found ${modelsViaGet.models?.length || 0} models`);
+    console.log(`GET request successful - found ${modelsViaGet.models?.length || 0} models`);
 
     // 11. Custom Configuration Demo
     console.log('\n  11. Custom Configuration');
@@ -214,7 +214,7 @@ This is a sample document to demonstrate RAG capabilities.
       maxRetries: 0,   // No retries for this request
     });
 
-    console.log('✅ Custom configuration test successful');
+    console.log('Custom configuration test successful');
     console.log(`   Response length: ${customResponse.choices[0].message.content.length} chars\n`);
 
     // 12. Streaming with Response Access
@@ -241,21 +241,21 @@ This is a sample document to demonstrate RAG capabilities.
 
     console.log('✨ All examples completed successfully!');
     console.log('\nSummary of demonstrated features:');
-    console.log('   ✅ Basic chat completions');
-    console.log('   ✅ Multi-turn conversations');
-    console.log('   ✅ Streaming responses');
-    console.log('   ✅ Model listing');
-    console.log('   ✅ File uploads (multiple methods)');
-    console.log('   ✅ RAG with individual files');
-    console.log('   ✅ Multi-file RAG');
-    console.log('   ✅ Error handling');
-    console.log('   ✅ Raw response access');
-    console.log('   ✅ Generic HTTP methods');
-    console.log('   ✅ Custom configuration');
-    console.log('   ✅ Advanced streaming');
+    console.log('   Basic chat completions');
+    console.log('   Multi-turn conversations');
+    console.log('   Streaming responses');
+    console.log('   Model listing');
+    console.log('   File uploads (multiple methods)');
+    console.log('   RAG with individual files');
+    console.log('   Multi-file RAG');
+    console.log('   Error handling');
+    console.log('   Raw response access');
+    console.log('   Generic HTTP methods');
+    console.log('   Custom configuration');
+    console.log('   Advanced streaming');
 
   } catch (error) {
-    console.error('\n❌ Example failed with error:');
+    console.error('\nExample failed with error:');
     
     if (error instanceof AuthenticationError) {
       console.error('Authentication Error: Invalid API key');
@@ -278,7 +278,7 @@ This is a sample document to demonstrate RAG capabilities.
 // Run the example
 if (require.main === module) {
   if (!process.env.SVECTOR_API_KEY) {
-    console.error('❌ Please set the SVECTOR_API_KEY environment variable');
+    console.error('Please set the SVECTOR_API_KEY environment variable');
     console.error('   export SVECTOR_API_KEY="your-api-key-here"');
     process.exit(1);
   }

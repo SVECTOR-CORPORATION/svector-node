@@ -15,9 +15,9 @@ function runCommand(command, description) {
   console.log(`📋 ${description}`);
   try {
     execSync(command, { stdio: 'pipe' });
-    console.log('✅ Success\n');
+    console.log('Success\n');
   } catch (error) {
-    console.log(`❌ Failed: ${error.message}\n`);
+    console.log(`Failed: ${error.message}\n`);
   }
 }
 
@@ -31,13 +31,13 @@ function checkEnvironment() {
   if (parseInt(nodeVersion.slice(1)) < 18) {
     console.log('⚠️  Warning: Node.js 18+ is recommended');
   } else {
-    console.log('✅ Node.js version is compatible');
+    console.log('Node.js version is compatible');
   }
   
   // Check if TypeScript is available
   try {
     execSync('npx tsc --version', { stdio: 'pipe' });
-    console.log('✅ TypeScript is available');
+    console.log('TypeScript is available');
   } catch {
     console.log('ℹ️  TypeScript not found globally (this is OK)');
   }
@@ -119,10 +119,10 @@ main();
       'SVECTOR_API_KEY=your-api-key-here\n'
     );
     
-    console.log(`✅ Example project created in ${projectDir}/`);
+    console.log(`Example project created in ${projectDir}/`);
     console.log('');
   } catch (error) {
-    console.log(`❌ Failed to create example project: ${error.message}\n`);
+    console.log(`Failed to create example project: ${error.message}\n`);
   }
 }
 
@@ -189,7 +189,7 @@ function showDocumentation() {
   
   console.log('📋 API Reference: https://platform.svector.co.in');
   console.log(' Website: https://www.svector.co.in');
-  console.log('📧 Support: support@svector.co.in');
+  console.log('Support: support@svector.co.in');
   console.log(' Issues: https://github.com/svector-corporation/svector-sdk/issues');
   console.log('');
 }
@@ -219,7 +219,7 @@ function showTroubleshooting() {
   console.log('   • Consider using a backend proxy for production');
   console.log('');
   
-  console.log('🔄 Rate Limiting:');
+  console.log('Rate Limiting:');
   console.log('   • Built-in retry logic handles most cases');
   console.log('   • Implement exponential backoff for high-volume usage');
   console.log('   • Monitor your usage limits in the dashboard');

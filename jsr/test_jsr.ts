@@ -12,7 +12,7 @@ async function testJSRPackage() {
   
   try {
     // Test package import
-    console.log("✅ Package imported successfully from JSR!");
+    console.log("Package imported successfully from JSR!");
     console.log(` SVECTOR class available: ${typeof SVECTOR === 'function'}`);
     
     // Test client creation (will fail without API key, but should not throw on creation)
@@ -21,7 +21,7 @@ async function testJSRPackage() {
         apiKey: (globalThis as any).Deno.env.get("SVECTOR_API_KEY"),
       });
       
-      console.log("✅ Client created successfully!");
+      console.log("Client created successfully!");
       console.log(` Chat API: ${!!client.chat}`);
       console.log(` Conversations API: ${!!client.conversations}`);
       console.log(` Files API: ${!!client.files}`);
@@ -36,7 +36,7 @@ async function testJSRPackage() {
         max_tokens: 10,
       });
       
-      console.log(`✅ API call successful: ${response.output}`);
+      console.log(`API call successful: ${response.output}`);
       
     } else {
       console.log("⚠️  No SVECTOR_API_KEY provided, skipping API tests");
@@ -44,7 +44,7 @@ async function testJSRPackage() {
     }
     
   } catch (error) {
-    console.error("❌ Test failed:", error.message);
+    console.error("Test failed:", error.message);
   }
   
   console.log("\n🎉 JSR Package Test Complete!");

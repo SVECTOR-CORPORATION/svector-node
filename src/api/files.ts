@@ -10,7 +10,7 @@ export class Files {
    */
   async create(
     file: File | NodeJS.ReadableStream | Buffer | Uint8Array | string,
-    purpose: string = 'rag',
+    purpose: string = 'default',
     filename?: string,
     options?: RequestOptions
   ): Promise<FileUploadResponse> {
@@ -47,7 +47,7 @@ export class Files {
    */
   async createFromPath(
     filePath: string,
-    purpose: string = 'rag',
+    purpose: string = 'default',
     options?: RequestOptions
   ): Promise<FileUploadResponse> {
     if (typeof window !== 'undefined') {

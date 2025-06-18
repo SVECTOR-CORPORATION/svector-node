@@ -76,14 +76,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Planned Features
 -  Comprehensive test suite with Jest
 - Usage analytics and monitoring hooks
-- 🔄 Auto-pagination for list endpoints
+- Auto-pagination for list endpoints
 -  Advanced RAG features (collection management)
 - 📝 Enhanced logging capabilities
 -  Proxy configuration support
 -  Internationalization support
 - 📱 React Native compatibility
 - 🎨 OpenAPI specification generation
-- 🔐 Enhanced security features
+- Enhanced security features
 
 ### Future Enhancements
 - Support for additional SVECTOR models

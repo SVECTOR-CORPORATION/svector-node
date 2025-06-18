@@ -107,9 +107,9 @@ async function nodeJSExample() {
     batchResults.forEach(result => {
       console.log(`${result.id}. ${result.question}`);
       if (result.success) {
-        console.log(`   ✅ ${result.answer}`);
+        console.log(`   ${result.answer}`);
       } else {
-        console.log(`   ❌ Error: ${result.error}`);
+        console.log(`   Error: ${result.error}`);
       }
     });
 
@@ -131,8 +131,8 @@ async function nodeJSExample() {
       maxRetries: 3,   // More retries for reliability
     });
 
-    console.log('✅ Development client configured');
-    console.log('✅ Production client configured');
+    console.log('Development client configured');
+    console.log('Production client configured');
 
     // Example 5: Error handling patterns
     console.log('\n Example 5: Error Handling Patterns');
@@ -174,7 +174,7 @@ async function nodeJSExample() {
     console.log('\n✨ Node.js examples completed successfully!');
 
   } catch (error) {
-    console.error('❌ Example failed:', error);
+    console.error('Example failed:', error);
     process.exit(1);
   }
 }
@@ -223,7 +223,7 @@ app.listen(3000, () => {
 // Run the example
 if (require.main === module) {
   if (!process.env.SVECTOR_API_KEY) {
-    console.error('❌ Please set the SVECTOR_API_KEY environment variable');
+    console.error('Please set the SVECTOR_API_KEY environment variable');
     process.exit(1);
   }
   

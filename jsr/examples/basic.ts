@@ -29,7 +29,7 @@ async function basicExample() {
     console.log(`Usage: ${JSON.stringify(response.usage, null, 2)}`);
 
   } catch (error) {
-    console.error("❌ Error:", error.message);
+    console.error("Error:", error.message);
   }
 }
 

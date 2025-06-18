@@ -111,27 +111,27 @@ All plans include:
           // Method 1: Upload from file stream
           fileResponse = await client.files.create(
             fs.createReadStream(tempFile),
-            'rag',
+            'default',
             doc.name
           );
         } else if (index === 1) {
           // Method 2: Upload from buffer
           const buffer = fs.readFileSync(tempFile);
-          fileResponse = await client.files.create(buffer, 'rag', doc.name);
+          fileResponse = await client.files.create(buffer, 'default', doc.name);
         } else {
           // Method 3: Upload using toFile utility
           const fileContent = fs.readFileSync(tempFile, 'utf8');
           const file = await toFile(fileContent, doc.name, { type: 'text/plain' });
-          fileResponse = await client.files.create(file, 'rag');
+          fileResponse = await client.files.create(file, 'default');
         }
 
         fileIds.push(fileResponse.file_id);
-        console.log(`   ✅ Uploaded ${doc.name} -> ${fileResponse.file_id}`);
+        console.log(`   Uploaded ${doc.name} -> ${fileResponse.file_id}`);
         
         // Clean up temp file
         fs.unlinkSync(tempFile);
       } catch (error) {
-        console.error(`   ❌ Failed to upload ${doc.name}:`, error);
+        console.error(`   Failed to upload ${doc.name}:`, error);
         if (fs.existsSync(tempFile)) {
           fs.unlinkSync(tempFile);
         }
@@ -180,7 +180,7 @@ All plans include:
 
           console.log(`  Answer: ${response.choices[0].message.content}\n`);
         } catch (error) {
-          console.error(`❌ Error processing question: ${error}\n`);
+          console.error(`Error processing question: ${error}\n`);
         }
       }
     }
@@ -214,7 +214,7 @@ All plans include:
 
         console.log(`  Answer: ${response.choices[0].message.content}\n`);
       } catch (error) {
-        console.error(`❌ Error processing cross-doc question: ${error}\n`);
+        console.error(`Error processing cross-doc question: ${error}\n`);
       }
     }
 
@@ -245,7 +245,7 @@ All plans include:
       }
       console.log('\n');
     } catch (error) {
-      console.error(`❌ Error in streaming example: ${error}`);
+      console.error(`Error in streaming example: ${error}`);
     }
 
     // Example 4: Error handling and edge cases
@@ -263,7 +263,7 @@ All plans include:
         ],
       });
     } catch (error) {
-      console.log(`✅ Properly caught error for invalid file ID: ${error instanceof Error ? error.constructor.name : 'Unknown'}`);
+      console.log(`Properly caught error for invalid file ID: ${error instanceof Error ? error.constructor.name : 'Unknown'}`);
     }
 
     console.log('\n✨ Advanced RAG example completed successfully!');
@@ -275,7 +275,7 @@ All plans include:
     console.log(`   • Validated error handling`);
 
   } catch (error) {
-    console.error('\n❌ Example failed:', error);
+    console.error('\nExample failed:', error);
     process.exit(1);
   }
 }
@@ -283,7 +283,7 @@ All plans include:
 // Run the example
 if (require.main === module) {
   if (!process.env.SVECTOR_API_KEY) {
-    console.error('❌ Please set the SVECTOR_API_KEY environment variable');
+    console.error('Please set the SVECTOR_API_KEY environment variable');
     process.exit(1);
   }
   

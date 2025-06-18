@@ -36,7 +36,7 @@ looking to integrate AI into their workflows and applications.
     // Upload the file
     const fileResponse = await client.files.create(
       fs.createReadStream(tempFile),
-      'rag'
+      'default'
     );
 
     console.log(`File uploaded successfully! File ID: ${fileResponse.file_id}`);

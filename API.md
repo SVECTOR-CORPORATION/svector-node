@@ -200,7 +200,7 @@ Uploads a file for RAG functionality.
 #### Parameters
 
 - `file`: File, Buffer, Uint8Array, string, or ReadableStream
-- `purpose`: File purpose (default: 'rag')
+- `purpose`: File purpose (default: 'default')
 - `filename`: Optional filename
 - `options`: Request options
 
@@ -224,15 +224,15 @@ const response = await client.files.create(file);
 // From Buffer (Node.js)
 import fs from 'fs';
 const buffer = fs.readFileSync('document.pdf');
-const response = await client.files.create(buffer, 'rag', 'document.pdf');
+const response = await client.files.create(buffer, 'default', 'document.pdf');
 
 // From stream (Node.js)
 const stream = fs.createReadStream('document.pdf');
-const response = await client.files.create(stream, 'rag');
+const response = await client.files.create(stream, 'default');
 
 // From string
 const text = 'This is sample text content';
-const response = await client.files.create(text, 'rag', 'sample.txt');
+const response = await client.files.create(text, 'default', 'sample.txt');
 ```
 
 ### createFromPath(filePath, purpose?, options?)
@@ -244,7 +244,7 @@ Uploads a file from a file path (Node.js only).
 ```typescript
 const response = await client.files.createFromPath(
   '/path/to/document.pdf',
-  'rag'
+  'default'
 );
 ```
 
@@ -455,7 +455,7 @@ const client = new SVECTOR({
 
 ```typescript
 // Upload file
-const fileResponse = await client.files.create(fileData, 'rag');
+const fileResponse = await client.files.create(fileData, 'default');
 
 // Use in chat
 const chatResponse = await client.chat.create({
@@ -508,5 +508,5 @@ The SVECTOR API has rate limits that vary by plan:
 For additional help:
 - 📖 [Full Documentation](https://platform.svector.co.in)
 -  [SVECTOR Website](https://www.svector.co.in)
-- 📧 Support: support@svector.co.in
+- Support: support@svector.co.in
 -  [Report Issues](https://github.com/svector-corporation/svector-sdk/issues)
