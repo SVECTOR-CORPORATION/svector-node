@@ -240,7 +240,7 @@ This is a sample document to demonstrate RAG capabilities.
     console.log('\n');
 
     console.log('✨ All examples completed successfully!');
-    console.log('\n📊 Summary of demonstrated features:');
+    console.log('\nSummary of demonstrated features:');
     console.log('   ✅ Basic chat completions');
     console.log('   ✅ Multi-turn conversations');
     console.log('   ✅ Streaming responses');

@@ -1,0 +1,44 @@
+{
+  "name": "@svector/svector",
+  "version": "1.1.2",
+  "description": "Official TypeScript/JavaScript SDK for SVECTOR AI Models - Works with Deno, Node.js, Bun, and browsers",
+  "main": "./mod.ts",
+  "types": "./mod.ts",
+  "exports": {
+    ".": "./mod.ts"
+  },
+  "files": [
+    "mod.ts",
+    "client.ts", 
+    "types.ts",
+    "errors.ts",
+    "utils.ts",
+    "api/"
+  ],
+  "keywords": [
+    "svector",
+    "ai",
+    "chat",
+    "llm",
+    "api",
+    "typescript",
+    "deno",
+    "jsr"
+  ],
+  "author": "SVECTOR Team <support@svector.co.in>",
+  "license": "MIT",
+  "homepage": "https://www.svector.co.in",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/svector-corporation/svector-jsr.git"
+  },
+  "bugs": {
+    "url": "https://github.com/svector-corporation/svector-jsr/issues"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}

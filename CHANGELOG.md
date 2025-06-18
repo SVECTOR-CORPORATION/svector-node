@@ -75,7 +75,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Planned Features
 - 🧪 Comprehensive test suite with Jest
-- 📊 Usage analytics and monitoring hooks
+- Usage analytics and monitoring hooks
 - 🔄 Auto-pagination for list endpoints
 - 🎯 Advanced RAG features (collection management)
 - 📝 Enhanced logging capabilities

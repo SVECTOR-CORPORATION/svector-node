@@ -1,16 +1,18 @@
 # SVECTOR SDK
 
 [![npm version](https://badge.fury.io/js/svector-sdk.svg)](https://badge.fury.io/js/svector-sdk)  
+[![JSR](https://jsr.io/badges/@svector/svector)](https://jsr.io/@svector/svector)  
 [![TypeScript](https://img.shields.io/badge/TypeScript-Ready-blue.svg)](https://www.typescriptlang.org)  
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)  
 [![Node.js Version](https://img.shields.io/badge/node-%3E%3D18.0.0-brightgreen.svg)](https://nodejs.org/)
 
 **Official JavaScript and TypeScript SDK for accessing SVECTOR APIs.**
 
-SVECTOR is a technology-driven organization focused on AI, Mathematics, and Computational research, developing high-performance AI models, mathematical reasoning systems, and next-gen automation. This SDK provides convenient access to SVECTOR's powerful foundational AI models including **Spec-3**, **Spec-3-Turbo**, **Theta-35**, and **Theta-35-Mini**.
+SVECTOR develops high-performance AI models and automation solutions, specializing in artificial intelligence, mathematical computing, and computational research. This SDK provides programmatic access to SVECTOR's API services through type-safe JavaScript/TypeScript interfaces, completion endpoints, document processing capabilities, and additional AI model integrations.
 
 ## 🚀 Quick Start
 
+### For Node.js/npm
 ```bash
 npm install svector-sdk
 ```
@@ -19,10 +21,32 @@ npm install svector-sdk
 import { SVECTOR } from 'svector-sdk';
 
 const client = new SVECTOR({
-  apiKey: process.env.SVECTOR_API_KEY, // Get your API key from https://www.svector.co.in
+  apiKey: process.env.SVECTOR_API_KEY, // Get your API key from https://platform.svector.co.in
 });
 
-// Sophisticated conversation API - just provide instructions and input!
+// Conversational API - just provide instructions and input!
+const result = await client.conversations.create({
+  model: 'spec-3-turbo:latest',
+  instructions: 'You are a helpful AI assistant that explains complex topics clearly.',
+  input: 'What is artificial intelligence?',
+});
+
+console.log(result.output);
+```
+
+### For Deno/JSR
+```bash
+deno add jsr:@svector/svector
+```
+
+```typescript
+import { SVECTOR } from "jsr:@svector/svector";
+
+const client = new SVECTOR({
+  apiKey: Deno.env.get("SVECTOR_API_KEY"), // Get your API key from https://platform.svector.co.in
+});
+
+// Conversational API
 const result = await client.conversations.create({
   model: 'spec-3-turbo:latest',
   instructions: 'You are a helpful AI assistant that explains complex topics clearly.',
@@ -51,7 +75,7 @@ console.log(result.output);
 
 ## 📦 Installation
 
-### npm / yarn
+### npm / yarn (Node.js)
 ```bash
 npm install svector-sdk
 # or
@@ -60,13 +84,21 @@ yarn add svector-sdk
 
 ### Deno / JSR
 ```bash
-deno add jsr:svector-sdk
-npx jsr add svector-sdk
+# Using JSR (recommended for Deno)
+deno add jsr:@svector/svector
+
+# Or using npm package in Deno
+deno add npm:svector-sdk
 ```
 
 ### Direct Import (Deno)
 ```typescript
-import { SVECTOR } from 'jsr:svector-sdk';
+import { SVECTOR } from 'jsr:@svector/svector';
+```
+
+### Browser (via CDN)
+```typescript
+import { SVECTOR } from 'https://esm.sh/svector-sdk';
 ```
 
 ## 🔐 Authentication
@@ -87,7 +119,7 @@ const client = new SVECTOR({
 
 ## ⭐ Core Features
 
-- **🤖 Sophisticated Conversations API** - Simple instructions + input interface
+- **Conversations API** - Simple instructions + input interface
 - **💬 Advanced Chat Completions** - Full control with role-based messages
 - **🌊 Real-time Streaming** - Server-sent events for live responses
 - **📁 File Processing** - Upload and process documents (PDF, DOCX, TXT, etc.)
@@ -373,7 +405,7 @@ const response = await client.conversations.create({
 });
 ```
 
-## 🤖 Models
+## Models
 
 SVECTOR provides several cutting-edge foundational AI models:
 
@@ -545,7 +577,10 @@ const client = new SVECTOR({
 
 ### Deno
 ```typescript
+import { SVECTOR } from 'jsr:@svector/svector';
+// or
 import { SVECTOR } from 'npm:svector-sdk';
+
 const client = new SVECTOR({
   apiKey: Deno.env.get('SVECTOR_API_KEY'),
 });
@@ -612,7 +647,7 @@ class IntelligentChat {
   }
 
   async streamChat(userMessage: string): Promise<void> {
-    console.log('🤖 Assistant: ');
+    console.log('Assistant: ');
     
     const stream = await this.client.conversations.createStream({
       model: 'spec-3-turbo:latest',

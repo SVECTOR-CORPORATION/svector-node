@@ -267,7 +267,7 @@ All plans include:
     }
 
     console.log('\n✨ Advanced RAG example completed successfully!');
-    console.log('\n📊 Summary:');
+    console.log('\nSummary:');
     console.log(`   • Uploaded ${fileIds.length} documents using different methods`);
     console.log(`   • Demonstrated single-file RAG queries`);
     console.log(`   • Showed cross-document analysis capabilities`);

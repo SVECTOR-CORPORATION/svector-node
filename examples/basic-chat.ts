@@ -1,5 +1,5 @@
 /**
- * Basic conversation example using the sophisticated API
+ * Basic conversation example using the API
  */
 import { SVECTOR } from '../src';
 

@@ -106,7 +106,7 @@ export interface SVECTORRequestInit extends Omit<RequestInit, 'signal' | 'timeou
   timeout?: number;
 }
 
-// conversation interface
+// Conversation interface
 export interface ConversationRequest {
   model: string;
   instructions?: string; // System instructions

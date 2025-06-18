@@ -1,4 +1,4 @@
-import { SVECTOR } from '../client';
+import { SVECTOR } from '../client.ts';
 import {
     ChatCompletionRequest,
     ChatMessage,
@@ -6,7 +6,7 @@ import {
     ConversationResponse,
     RequestOptions,
     StreamEvent
-} from '../types';
+} from '../types.ts';
 
 export class Conversations {
   constructor(private client: SVECTOR) {}
@@ -112,12 +112,15 @@ export class Conversations {
     // Add context messages if provided
     if (params.context && params.context.length > 0) {
       for (let i = 0; i < params.context.length; i++) {
-        // Alternate between user and assistant for context
-        const role = i % 2 === 0 ? 'user' : 'assistant';
-        messages.push({
-          role: role as 'user' | 'assistant',
-          content: params.context[i],
-        });
+        const contextMsg = params.context[i];
+        if (contextMsg) {
+          // Alternate between user and assistant for context
+          const role = i % 2 === 0 ? 'user' : 'assistant';
+          messages.push({
+            role: role as 'user' | 'assistant',
+            content: contextMsg,
+          });
+        }
       }
     }
 
