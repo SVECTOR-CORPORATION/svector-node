@@ -5,7 +5,7 @@
 
 set -e
 
-echo "🚀 SVECTOR SDK - GitHub Packages Publisher"
+echo "SVECTOR SDK - GitHub Packages Publisher"
 echo "=========================================="
 
 # Check if we're in the right directory
@@ -15,7 +15,7 @@ if [ ! -f "package.json" ]; then
 fi
 
 # Build the project
-echo "📦 Building project..."
+echo "Building project..."
 npm run build
 
 # Run tests
@@ -44,6 +44,6 @@ rm -f package.json.bak
 # Reset npm registry
 npm config set registry https://registry.npmjs.org/
 
-echo "✅ Successfully published to GitHub Packages!"
-echo "📦 Package: @svector-corporation/svector-sdk"
-echo "🔗 URL: https://github.com/SVECTOR-CORPORATION/svector-node/packages"
+echo "Successfully published to GitHub Packages!"
+echo "Package: @svector-corporation/svector-sdk"
+echo "URL: https://github.com/SVECTOR-CORPORATION/svector-node/packages"

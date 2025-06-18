@@ -1,8 +1,8 @@
-# 📦 SVECTOR SDK - GitHub Packages Setup
+# SVECTOR SDK - GitHub Packages Setup
 
 This guide explains how to set up and use GitHub Packages for the SVECTOR SDK.
 
-## 🚀 Quick Setup
+## Quick Setup
 
 ### 1. Authentication
 
@@ -144,7 +144,7 @@ Both registries maintain synchronized versions:
 - npm: https://www.npmjs.com/package/svector-sdk
 - GitHub: https://github.com/SVECTOR-CORPORATION/svector-node/packages
 
-## 🚀 CI/CD Integration
+## CI/CD Integration
 
 ### GitHub Actions Secrets
 

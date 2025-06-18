@@ -35,7 +35,6 @@ svector-node/
 ```
 
 **Package Locations:**
-- **npm**: `svector ## Links & Support
 
 - **Website**: [https://www.svector.co.in](https://www.svector.co.in)
 - **Documentation**: [API Reference](API.md)
@@ -904,7 +903,7 @@ We welcome contributions! Please see our [Contributing Guide](CONTRIBUTING.md) f
 
 MIT License - see [LICENSE](LICENSE) file for details.
 
-## 🔗 Links & Support
+## Links & Support
 
 - **Website**: [https://www.svector.co.in](https://www.svector.co.in)
 - **Documentation**: [API Reference](API.md)
