@@ -56,10 +56,9 @@ npm install svector-sdk
 import { SVECTOR } from 'svector-sdk';
 
 const client = new SVECTOR({
-  apiKey: process.env.SVECTOR_API_KEY, // Get your API key from https://platform.svector.co.in
+  apiKey: process.env.SVECTOR_API_KEY,
 });
 
-// Conversational API - just provide instructions and input!
 const result = await client.conversations.create({
   model: 'spec-3-turbo:latest',
   instructions: 'You are a helpful AI assistant that explains complex topics clearly.',
@@ -78,10 +77,9 @@ deno add jsr:@svector/svector
 import { SVECTOR } from "jsr:@svector/svector";
 
 const client = new SVECTOR({
-  apiKey: Deno.env.get("SVECTOR_API_KEY"), // Get your API key from https://platform.svector.co.in
+  apiKey: Deno.env.get("SVECTOR_API_KEY"),
 });
 
-// Conversational API
 const result = await client.conversations.create({
   model: 'spec-3-turbo:latest',
   instructions: 'You are a helpful AI assistant that explains complex topics clearly.',
@@ -139,7 +137,7 @@ import { SVECTOR } from 'https://esm.sh/svector-sdk';
 
 ## Authentication
 
-Get your API key from the [SVECTOR Dashboard](https://www.svector.co.in) and set it as an environment variable:
+Get your API key from the [SVECTOR Platform](https://platform.svector.co.in) and set it as an environment variable:
 
 ```bash
 export SVECTOR_API_KEY="your-api-key-here"
@@ -225,19 +223,32 @@ for await (const event of stream) {
 ### Document-based Conversation
 
 ```typescript
-// First upload a document
-const fileResponse = await client.files.create(
-  fs.createReadStream('research-paper.pdf'),
-  'default'
-);
+import fs from 'node:fs';
+import { SVECTOR } from 'svector-sdk';
 
-// Then ask questions about it
-const result = await client.conversations.create({
-  model: 'spec-3-turbo:latest',
-  instructions: 'You are a research assistant that analyzes documents.',
-  input: 'What are the key findings in this paper?',
-  files: [{ type: 'file', id: fileResponse.file_id }],
+const client = new SVECTOR({
+  apiKey: process.env.SVECTOR_API_KEY,
 });
+
+async function analyzeDocument(filePath, question = "Analyze this document and provide key findings.") {
+  const fileResponse = await client.files.create(
+    fs.readFileSync(filePath),
+    'default',
+    filePath.split('/').pop()
+  );
+  
+  const result = await client.conversations.create({
+    model: 'spec-3-turbo:latest',
+    instructions: 'You are a document analyst. Provide clear, concise analysis.',
+    input: `${question}\n\nDocument content:\n${fileResponse.data.content}`,
+    temperature: 0.3,
+  });
+
+  console.log(result.output);
+  return result.output;
+}
+
+await analyzeDocument('document.pdf');
 ```
 
 ##  Chat Completions API (Advanced)
@@ -338,23 +349,15 @@ Upload and process various file formats for enhanced AI capabilities:
 ### Upload from File System (Node.js)
 
 ```typescript
-import fs from 'fs';
+import fs from 'node:fs';
 
-// PDF document
-const pdfFile = await client.files.create(
-  fs.createReadStream('document.pdf'),
+const fileResponse = await client.files.create(
+  fs.readFileSync('document.pdf'),
   'default',
   'document.pdf'
 );
 
-// Text file
-const textFile = await client.files.create(
-  fs.createReadStream('notes.txt'),
-  'default',
-  'notes.txt'
-);
-
-console.log(`Files uploaded: ${pdfFile.file_id}, ${textFile.file_id}`);
+console.log(`File uploaded: ${fileResponse.id}`);
 ```
 
 ### Upload from Buffer
@@ -378,12 +381,11 @@ const fileResponse = await client.files.create(content, 'default', 'notes.md');
 ### Upload in Browser
 
 ```typescript
-// From file input
 const fileInput = document.getElementById('fileInput') as HTMLInputElement;
 const file = fileInput.files[0];
 
 const client = new SVECTOR({
-  apiKey: 'your-key',
+  apiKey: process.env.SVECTOR_API_KEY,
   dangerouslyAllowBrowser: true,
 });
 
@@ -407,19 +409,13 @@ const stringFile = await toFile('Content here', 'content.txt', { type: 'text/pla
 ### Document Q&A
 
 ```typescript
-// Upload documents
-const doc1 = await client.files.create(fs.createReadStream('manual.pdf'), 'default');
-const doc2 = await client.files.create(fs.createReadStream('faq.docx'), 'default');
+const doc1 = await client.files.create(fs.readFileSync('manual.pdf'), 'default', 'manual.pdf');
+const doc2 = await client.files.create(fs.readFileSync('faq.docx'), 'default', 'faq.docx');
 
-// Ask questions about the documents
 const answer = await client.conversations.create({
   model: 'spec-3-turbo:latest',
-  instructions: 'You are a helpful assistant that answers questions based on the provided documents.',
-  input: 'What are the key features mentioned in the manual?',
-  files: [
-    { type: 'file', id: doc1.file_id },
-    { type: 'file', id: doc2.file_id }
-  ],
+  instructions: 'You are a helpful assistant that answers questions based on provided documents.',
+  input: `What are the key features mentioned in the manual?\n\nDocument 1: ${doc1.data.content}\nDocument 2: ${doc2.data.content}`,
 });
 ```
 
@@ -512,17 +508,15 @@ try {
 } catch (error) {
   if (error instanceof AuthenticationError) {
     console.error('Invalid API key:', error.message);
-    console.error('💡 Get your API key from https://www.svector.co.in');
   } else if (error instanceof RateLimitError) {
-    console.error('⏰ Rate limit exceeded:', error.message);
-    console.error('Please wait before making another request');
+    console.error('Rate limit exceeded:', error.message);
   } else if (error instanceof NotFoundError) {
-    console.error('🔍 Resource not found:', error.message);
+    console.error('Resource not found:', error.message);
   } else if (error instanceof APIError) {
-    console.error(`🚨 API error: ${error.message} (Status: ${error.status})`);
-    console.error(`📋 Request ID: ${error.request_id}`);
+    console.error(`API error: ${error.message} (Status: ${error.status})`);
+    console.error(`Request ID: ${error.request_id}`);
   } else {
-    console.error('💥 Unexpected error:', error);
+    console.error('Unexpected error:', error);
   }
 }
 ```
@@ -544,12 +538,12 @@ try {
 
 ```typescript
 const client = new SVECTOR({
-  apiKey: 'your-api-key',
-  baseURL: 'https://spec-chat.tech',           // Custom API endpoint
-  maxRetries: 3,                               // Retry failed requests
-  timeout: 30000,                              // Request timeout in milliseconds
-  dangerouslyAllowBrowser: false,              // Allow browser usage (security risk)
-  fetch: customFetch,                          // Custom fetch implementation
+  apiKey: process.env.SVECTOR_API_KEY,
+  baseURL: 'https://spec-chat.tech',
+  maxRetries: 3,
+  timeout: 30000,
+  dangerouslyAllowBrowser: false,
+  fetch: customFetch,
 });
 ```
 
@@ -563,9 +557,9 @@ const response = await client.conversations.create(
     input: 'Hello',
   },
   {
-    timeout: 60000,           // Override timeout for this request
-    maxRetries: 1,            // Override retry count
-    headers: {                // Additional headers
+    timeout: 60000,
+    maxRetries: 1,
+    headers: {
       'X-Custom-Header': 'value',
       'X-Request-Source': 'my-app'
     }
@@ -596,19 +590,18 @@ The SVECTOR SDK works across multiple JavaScript environments:
 ### Node.js (18+)
 ```typescript
 import { SVECTOR } from 'svector-sdk';
-const client = new SVECTOR(); // Uses SVECTOR_API_KEY env var
+const client = new SVECTOR({
+  apiKey: process.env.SVECTOR_API_KEY,
+});
 ```
 
 ### Browser (with bundlers)
 ```typescript
 import { SVECTOR } from 'svector-sdk';
 const client = new SVECTOR({
-  apiKey: 'your-key',
-  dangerouslyAllowBrowser: true, // Required for browser usage
+  apiKey: process.env.SVECTOR_API_KEY,
+  dangerouslyAllowBrowser: true,
 });
-
-// ⚠️ Warning: This exposes your API key in the browser!
-// Only use in secure contexts or with restricted keys
 ```
 
 ### Deno
@@ -625,7 +618,9 @@ const client = new SVECTOR({
 ### Bun
 ```typescript
 import { SVECTOR } from 'svector-sdk';
-const client = new SVECTOR(); // Works like Node.js
+const client = new SVECTOR({
+  apiKey: process.env.SVECTOR_API_KEY,
+});
 ```
 
 ### Cloudflare Workers
@@ -772,6 +767,7 @@ class DocumentAnalyzer {
       temperature: 0.3, // Lower temperature for more factual responses
     });
 
+    console.log(result.output);
     return result.output;
   }
 
@@ -839,9 +835,7 @@ try {
   const result = await client.conversations.create({...});
 } catch (error) {
   if (error instanceof RateLimitError) {
-    // Implement exponential backoff
-    await sleep(Math.pow(2, retryCount) * 1000);
-    // Retry the request
+    await new Promise(resolve => setTimeout(resolve, Math.pow(2, retryCount) * 1000));
   }
 }
 ```
@@ -860,26 +854,17 @@ model: 'theta-35-mini:latest'
 
 ### 4. Optimize File Usage
 ```typescript
-// Upload once, use multiple times
 const fileId = await client.files.create(document, 'default');
 
-// Use in multiple conversations
 const result1 = await client.conversations.create({
-  // ... other params
   files: [{ type: 'file', id: fileId }],
 });
 ```
 
 ### 5. Environment Variables
 ```typescript
-// Use environment variables
 const client = new SVECTOR({
   apiKey: process.env.SVECTOR_API_KEY,
-});
-
-// Don't hardcode API keys
-const client = new SVECTOR({
-  apiKey: 'sk-hardcoded-key-here', // Never do this!
 });
 ```
 
