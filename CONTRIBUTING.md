@@ -128,6 +128,6 @@ If you have questions about contributing:
 
 - Open an issue for general questions
 - Email us at: support@svector.co.in
-- Check our documentation: https://spec-chat.tech/docs
+- Check our documentation: https://platform.svector.co.in
 
 Thank you for contributing to SVECTOR SDK! 🚀

@@ -187,7 +187,7 @@ function showDocumentation() {
   console.log('─'.repeat(50));
   console.log('');
   
-  console.log('📋 API Reference: https://spec-chat.tech/docs');
+  console.log('📋 API Reference: https://platform.svector.co.in');
   console.log('🌐 Website: https://www.svector.co.in');
   console.log('📧 Support: support@svector.co.in');
   console.log('🐛 Issues: https://github.com/svector-corporation/svector-sdk/issues');

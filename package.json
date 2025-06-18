@@ -1,7 +1,7 @@
 {
   "name": "svector-sdk",
   "version": "1.0.4",
-  "description": "Official TypeScript and JavaScript SDK for SVECTOR AI Models - Advanced conversational AI and language models",
+  "description": "Official TypeScript and JavaScript SDK for SVECTOR's AI models - Spec-3, Theta-35, and advanced reasoning systems",
   "main": "dist/src/index.js",
   "types": "dist/src/index.d.ts",
   "scripts": {

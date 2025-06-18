@@ -1,5 +1,14 @@
 # SVECTOR SDK
 
+[![npm version](https://badge.fury.io/js/svector-sdk.svg)](https://badge.fury.io/js/svector-sdk)
+[![TypeScript](https://img.shields.io/badge/TypeScript-Ready-blue.svg)](https://www.typescriptlang.org)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![Node.js Version](https://img.shields.io/badge/node-%3E%3D18.0.0-brightgreen.svg)](https://nodejs.org/)
+
+The official TypeScript and JavaScript SDK for **SVECTOR's AI models**. SVECTOR is a technology-driven organization developing cutting-edge foundational language models including Spec-3, Spec-3-Turbo, Theta-35, and Theta-35-Mini.
+
+Build intelligent applications with SVECTOR's next-generation AI models through our comprehensive TypeScript/JavaScript SDK.R SDK
+
 [![npm version](https://badge.fury.io/js/svector.svg)](https://badge.fury.io/js/svector)
 [![TypeScript](https://img.shields.io/badge/TypeScript-Ready-blue.svg)](https://www.typescriptlang.org)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)

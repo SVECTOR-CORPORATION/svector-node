@@ -499,7 +499,7 @@ The SVECTOR API has rate limits that vary by plan:
 ## Support
 
 For additional help:
-- 📖 [Full Documentation](https://spec-chat.tech/docs)
+- 📖 [Full Documentation](https://platform.svector.co.in)
 - 🌐 [SVECTOR Website](https://www.svector.co.in)
 - 📧 Support: support@svector.co.in
 - 🐛 [Report Issues](https://github.com/svector-corporation/svector-sdk/issues)
