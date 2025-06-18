@@ -4,7 +4,7 @@
 import { APIError, AuthenticationError, SVECTOR, toFile } from '../src';
 
 async function validateSDK() {
-  console.log('🧪 SVECTOR SDK Validation Tests\n');
+  console.log(' SVECTOR SDK Validation Tests\n');
 
   // Test 1: Constructor validation
   console.log('Test 1: Constructor validation');
@@ -114,7 +114,7 @@ async function validateSDK() {
   console.log('\n🎉 Validation complete!');
   
   if (process.env.SVECTOR_API_KEY) {
-    console.log('\n🌐 API key detected - you can run live tests:');
+    console.log('\n API key detected - you can run live tests:');
     console.log('   npm run build && node dist/examples/basic-chat.js');
     console.log('   npm run build && node dist/examples/advanced-rag.js');
   } else {

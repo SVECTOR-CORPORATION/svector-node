@@ -15,11 +15,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Knowledge collection management
 - 🔒 Comprehensive TypeScript support with full type definitions
 - ⚡ Automatic retry logic with exponential backoff
-- 🛡️ Robust error handling with specific error types
-- 🌐 Multi-platform support (Node.js, browsers, Deno, Bun)
-- 🔧 Utility functions for file handling
-- 📚 Comprehensive documentation and examples
-- 🧪 Validation tools and example scripts
+-  Robust error handling with specific error types
+-  Multi-platform support (Node.js, browsers, Deno, Bun)
+-  Utility functions for file handling
+-  Comprehensive documentation and examples
+-  Validation tools and example scripts
 
 ### Features
 - **Chat Completions**: Full support for SVECTOR's Spec-Chat models
@@ -74,13 +74,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Planned Features
-- 🧪 Comprehensive test suite with Jest
+-  Comprehensive test suite with Jest
 - Usage analytics and monitoring hooks
 - 🔄 Auto-pagination for list endpoints
-- 🎯 Advanced RAG features (collection management)
+-  Advanced RAG features (collection management)
 - 📝 Enhanced logging capabilities
-- 🔧 Proxy configuration support
-- 🌍 Internationalization support
+-  Proxy configuration support
+-  Internationalization support
 - 📱 React Native compatibility
 - 🎨 OpenAPI specification generation
 - 🔐 Enhanced security features

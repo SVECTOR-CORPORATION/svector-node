@@ -28,7 +28,7 @@ async function nodeJSExample() {
     console.log(`Answer: ${response.choices[0].message.content}\n`);
 
     // Example 2: Using with Express.js server simulation
-    console.log('🌐 Example 2: Express.js Integration Pattern');
+    console.log(' Example 2: Express.js Integration Pattern');
     console.log('─'.repeat(50));
     
     async function handleChatRequest(userMessage: string, conversationHistory: any[] = []) {
@@ -68,7 +68,7 @@ async function nodeJSExample() {
     console.log('API Response 2:', result2);
 
     // Example 3: Batch processing
-    console.log('\n📦 Example 3: Batch Processing');
+    console.log('\n Example 3: Batch Processing');
     console.log('─'.repeat(50));
     
     const questions = [
@@ -114,7 +114,7 @@ async function nodeJSExample() {
     });
 
     // Example 4: Environment configuration patterns
-    console.log('\n⚙️ Example 4: Configuration Patterns');
+    console.log('\n Example 4: Configuration Patterns');
     console.log('─'.repeat(50));
     
     // Development configuration
@@ -135,7 +135,7 @@ async function nodeJSExample() {
     console.log('✅ Production client configured');
 
     // Example 5: Error handling patterns
-    console.log('\n🛡️ Example 5: Error Handling Patterns');
+    console.log('\n Example 5: Error Handling Patterns');
     console.log('─'.repeat(50));
     
     async function robustChatCall(message: string, retries = 3) {

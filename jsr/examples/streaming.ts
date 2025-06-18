@@ -7,7 +7,7 @@
 import { SVECTOR } from "../mod.ts";
 
 async function streamingExample() {
-  console.log("🌊 SVECTOR Streaming Example\n");
+  console.log(" SVECTOR Streaming Example\n");
   
   const client = new SVECTOR({
     apiKey: Deno.env.get("SVECTOR_API_KEY"),

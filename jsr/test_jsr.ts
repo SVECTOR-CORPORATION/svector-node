@@ -7,13 +7,13 @@
 import { SVECTOR } from "jsr:@svector/svector@1.1.1";
 
 async function testJSRPackage() {
-  console.log("🧪 Testing SVECTOR JSR Package");
+  console.log(" Testing SVECTOR JSR Package");
   console.log("=".repeat(50));
   
   try {
     // Test package import
     console.log("✅ Package imported successfully from JSR!");
-    console.log(`📦 SVECTOR class available: ${typeof SVECTOR === 'function'}`);
+    console.log(` SVECTOR class available: ${typeof SVECTOR === 'function'}`);
     
     // Test client creation (will fail without API key, but should not throw on creation)
     if ((globalThis as any).Deno?.env?.get("SVECTOR_API_KEY")) {
@@ -22,11 +22,11 @@ async function testJSRPackage() {
       });
       
       console.log("✅ Client created successfully!");
-      console.log(`🔧 Chat API: ${!!client.chat}`);
-      console.log(`🎯 Conversations API: ${!!client.conversations}`);
-      console.log(`📁 Files API: ${!!client.files}`);
-      console.log(`📚 Models API: ${!!client.models}`);
-      console.log(`🧠 Knowledge API: ${!!client.knowledge}`);
+      console.log(` Chat API: ${!!client.chat}`);
+      console.log(` Conversations API: ${!!client.conversations}`);
+      console.log(` Files API: ${!!client.files}`);
+      console.log(` Models API: ${!!client.models}`);
+      console.log(` Knowledge API: ${!!client.knowledge}`);
       
       // Test a simple conversation
       const response = await client.conversations.create({
@@ -48,8 +48,8 @@ async function testJSRPackage() {
   }
   
   console.log("\n🎉 JSR Package Test Complete!");
-  console.log("📦 Package: jsr:@svector/svector@1.1.1");
-  console.log("🌐 JSR URL: https://jsr.io/@svector/svector@1.1.1");
+  console.log(" Package: jsr:@svector/svector@1.1.1");
+  console.log(" JSR URL: https://jsr.io/@svector/svector@1.1.1");
 }
 
 // Use a different method to check if this is the main module

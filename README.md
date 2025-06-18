@@ -56,7 +56,7 @@ const result = await client.conversations.create({
 console.log(result.output);
 ```
 
-## 📚 Table of Contents
+##  Table of Contents
 
 - [Installation](#installation)
 - [Authentication](#authentication)
@@ -73,7 +73,7 @@ console.log(result.output);
 - [Best Practices](#best-practices)
 - [Contributing](#contributing)
 
-## 📦 Installation
+##  Installation
 
 ### npm / yarn (Node.js)
 ```bash
@@ -120,15 +120,15 @@ const client = new SVECTOR({
 ## ⭐ Core Features
 
 - **Conversations API** - Simple instructions + input interface
-- **💬 Advanced Chat Completions** - Full control with role-based messages
-- **🌊 Real-time Streaming** - Server-sent events for live responses
-- **📁 File Processing** - Upload and process documents (PDF, DOCX, TXT, etc.)
-- **🧠 Knowledge Collections** - Organize files for enhanced RAG
-- **🔧 TypeScript Native** - Full type safety and IntelliSense
-- **🌍 Multi-environment** - Node.js, Browser, Deno, Bun, Cloudflare Workers
-- **🛡️ Robust Error Handling** - Comprehensive error types and retry logic
+- **  Advanced Chat Completions** - Full control with role-based messages
+- ** Real-time Streaming** - Server-sent events for live responses
+- ** File Processing** - Upload and process documents (PDF, DOCX, TXT, etc.)
+- ** Knowledge Collections** - Organize files for enhanced RAG
+- ** TypeScript Native** - Full type safety and IntelliSense
+- ** Multi-environment** - Node.js, Browser, Deno, Bun, Cloudflare Workers
+- ** Robust Error Handling** - Comprehensive error types and retry logic
 
-## 🎯 Conversations API (Recommended)
+##  Conversations API (Recommended)
 
 The **Conversations API** provides a sophisticated, user-friendly interface. Just provide instructions and input - the SDK handles all the complex role management internally!
 
@@ -204,7 +204,7 @@ const result = await client.conversations.create({
 });
 ```
 
-## 🔧 Chat Completions API (Advanced)
+##  Chat Completions API (Advanced)
 
 For full control over the conversation structure, use the Chat Completions API with role-based messages:
 
@@ -253,7 +253,7 @@ const response = await client.chat.create({
 });
 ```
 
-## 🌊 Streaming Responses
+##  Streaming Responses
 
 Both Conversations and Chat APIs support real-time streaming:
 
@@ -295,7 +295,7 @@ for await (const event of stream) {
 }
 ```
 
-## 📁 File Management & Document Processing
+##  File Management & Document Processing
 
 Upload and process various file formats for enhanced AI capabilities:
 
@@ -387,7 +387,7 @@ const answer = await client.conversations.create({
 });
 ```
 
-## 🧠 Knowledge Collections
+##  Knowledge Collections
 
 Organize multiple files into collections for better performance and context management:
 
@@ -450,7 +450,7 @@ const simpleTask = await client.conversations.create({
 });
 ```
 
-## 🛡️ Error Handling
+##  Error Handling
 
 The SDK provides comprehensive error handling with specific error types:
 
@@ -502,7 +502,7 @@ try {
 - **`APIConnectionError`** - Network connection issues
 - **`APIConnectionTimeoutError`** - Request timeout
 
-## ⚙️ Advanced Configuration
+##  Advanced Configuration
 
 ### Client Configuration
 
@@ -553,7 +553,7 @@ console.log('Response:', data.output);
 console.log('Request ID:', data._request_id);
 ```
 
-## 🌍 Environment Support
+##  Environment Support
 
 The SVECTOR SDK works across multiple JavaScript environments:
 
@@ -767,7 +767,7 @@ const summary = await analyzer.analyze(
   'Provide a comprehensive summary of all documents',
   'summary'
 );
-console.log('📄 Summary:', summary);
+console.log(' Summary:', summary);
 
 const insights = await analyzer.analyze(
   'What are the key business decisions and their potential impact?',
@@ -776,7 +776,7 @@ const insights = await analyzer.analyze(
 console.log('💡 Insights:', insights);
 ```
 
-## 🎯 Best Practices
+##  Best Practices
 
 ### 1. Use Conversations API for Simplicity
 ```typescript
@@ -847,7 +847,7 @@ const client = new SVECTOR({
 });
 ```
 
-## 🧪 Testing
+##  Testing
 
 ```bash
 npm test
@@ -863,17 +863,17 @@ We welcome contributions! Please see our [Contributing Guide](CONTRIBUTING.md) f
 4. Add tests
 5. Submit a pull request
 
-## 📄 License
+##  License
 
 MIT License - see [LICENSE](LICENSE) file for details.
 
 ## 🔗 Links & Support
 
-- **🌐 Website**: [https://www.svector.co.in](https://www.svector.co.in)
-- **📚 Documentation**: [API Reference](API.md)
-- **🐛 Issues**: [GitHub Issues](https://github.com/SVECTOR-CORPORATION/svector-sdk/issues)
-- **💬 Support**: [support@svector.co.in](mailto:support@svector.co.in)
-- **📦 npm Package**: [svector-sdk](https://www.npmjs.com/package/svector-sdk)
+- ** Website**: [https://www.svector.co.in](https://www.svector.co.in)
+- ** Documentation**: [API Reference](API.md)
+- ** Issues**: [GitHub Issues](https://github.com/SVECTOR-CORPORATION/svector-sdk/issues)
+- **  Support**: [support@svector.co.in](mailto:support@svector.co.in)
+- ** npm Package**: [svector-sdk](https://www.npmjs.com/package/svector-sdk)
 
 ---
 

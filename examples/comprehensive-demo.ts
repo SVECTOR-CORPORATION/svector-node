@@ -22,7 +22,7 @@ async function comprehensiveExample() {
 
   try {
     // 1. Basic Chat Completion
-    console.log('💬 1. Basic Chat Completion');
+    console.log('  1. Basic Chat Completion');
     console.log('─'.repeat(50));
     
     const basicResponse = await client.chat.create({
@@ -56,7 +56,7 @@ async function comprehensiveExample() {
     console.log(`Answer: ${conversationResponse.choices[0].message.content}\n`);
 
     // 3. Streaming Response
-    console.log('🌊 3. Streaming Response');
+    console.log(' 3. Streaming Response');
     console.log('─'.repeat(50));
     console.log('Question: Write a short poem about artificial intelligence');
     console.log('Streaming Answer: ');
@@ -90,7 +90,7 @@ async function comprehensiveExample() {
     console.log('');
 
     // 5. File Upload (different methods)
-    console.log('📁 5. File Upload Methods');
+    console.log(' 5. File Upload Methods');
     console.log('─'.repeat(50));
     
     // Method 1: Upload from string
@@ -118,7 +118,7 @@ This is a sample document to demonstrate RAG capabilities.
     const fileIds = [uploadResponse1.file_id, uploadResponse2.file_id];
 
     // 6. RAG with Individual File
-    console.log('\n🧠 6. RAG with Individual File');
+    console.log('\n 6. RAG with Individual File');
     console.log('─'.repeat(50));
     
     const ragResponse = await client.chat.create({
@@ -136,7 +136,7 @@ This is a sample document to demonstrate RAG capabilities.
     console.log(`Answer: ${ragResponse.choices[0].message.content}\n`);
 
     // 7. Knowledge Collection (simulated with multiple files)
-    console.log('📚 7. Multi-file RAG (Knowledge Collection Simulation)');
+    console.log(' 7. Multi-file RAG (Knowledge Collection Simulation)');
     console.log('─'.repeat(50));
     
     const multiFileResponse = await client.chat.create({
@@ -186,14 +186,14 @@ This is a sample document to demonstrate RAG capabilities.
     console.log(`Content type: ${response.headers.get('content-type')}\n`);
 
     // 10. Generic HTTP Methods
-    console.log('🔧 10. Generic HTTP Methods');
+    console.log(' 10. Generic HTTP Methods');
     console.log('─'.repeat(50));
     
     const modelsViaGet = await client.get<{ models: string[] }>('/api/models');
     console.log(`✅ GET request successful - found ${modelsViaGet.models?.length || 0} models`);
 
     // 11. Custom Configuration Demo
-    console.log('\n⚙️  11. Custom Configuration');
+    console.log('\n  11. Custom Configuration');
     console.log('─'.repeat(50));
     
     const customClient = new SVECTOR({
@@ -218,7 +218,7 @@ This is a sample document to demonstrate RAG capabilities.
     console.log(`   Response length: ${customResponse.choices[0].message.content.length} chars\n`);
 
     // 12. Streaming with Response Access
-    console.log('🌊 12. Advanced Streaming');
+    console.log(' 12. Advanced Streaming');
     console.log('─'.repeat(50));
     console.log('Question: Explain the benefits of TypeScript');
     console.log('Streaming with response access: ');

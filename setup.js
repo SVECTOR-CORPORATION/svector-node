@@ -46,7 +46,7 @@ function checkEnvironment() {
 }
 
 function createExampleProject() {
-  console.log('📁 Creating example project...');
+  console.log(' Creating example project...');
   
   const projectDir = 'svector-example';
   const exampleCode = `
@@ -160,7 +160,7 @@ function showQuickStart() {
 }
 
 function showAvailableExamples() {
-  console.log('📚 Available Examples');
+  console.log(' Available Examples');
   console.log('─'.repeat(50));
   console.log('');
   
@@ -188,9 +188,9 @@ function showDocumentation() {
   console.log('');
   
   console.log('📋 API Reference: https://platform.svector.co.in');
-  console.log('🌐 Website: https://www.svector.co.in');
+  console.log(' Website: https://www.svector.co.in');
   console.log('📧 Support: support@svector.co.in');
-  console.log('🐛 Issues: https://github.com/svector-corporation/svector-sdk/issues');
+  console.log(' Issues: https://github.com/svector-corporation/svector-sdk/issues');
   console.log('');
 }
 
@@ -207,7 +207,7 @@ function showTroubleshooting() {
   console.log('   • Verify your API key has necessary permissions');
   console.log('');
   
-  console.log('🌐 Network Errors:');
+  console.log(' Network Errors:');
   console.log('   • Check internet connectivity');
   console.log('   • Verify firewall/proxy settings');
   console.log('   • Try increasing timeout: { timeout: 60000 }');
@@ -235,7 +235,7 @@ async function main() {
   showTroubleshooting();
   
   // Optionally create example project
-  console.log('🎯 Want to create an example project? (y/n)');
+  console.log(' Want to create an example project? (y/n)');
   
   // In a real CLI tool, you'd use readline here
   // For this example, we'll just show the option

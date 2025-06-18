@@ -57,7 +57,7 @@ const client = new SVECTOR({
 });
 ```
 
-## 📦 Installation
+##  Installation
 
 ### Deno
 ```bash
@@ -82,15 +82,15 @@ bun add @svector/svector
 ## ⭐ Core Features
 
 - **Conversations API** - Simple instructions + input interface
-- **💬 Advanced Chat Completions** - Full control with role-based messages  
-- **🌊 Real-time Streaming** - Server-sent events for live responses
-- **📁 File Processing** - Upload and process documents (PDF, DOCX, TXT, etc.)
-- **🧠 Knowledge Collections** - Organize files for enhanced RAG
-- **🔧 Type Safety** - Full TypeScript support with IntelliSense
-- **🌍 Universal** - Works in Deno, Node.js, Bun, and browsers
-- **🛡️ Robust Error Handling** - Comprehensive error types and retry logic
+- **  Advanced Chat Completions** - Full control with role-based messages  
+- ** Real-time Streaming** - Server-sent events for live responses
+- ** File Processing** - Upload and process documents (PDF, DOCX, TXT, etc.)
+- ** Knowledge Collections** - Organize files for enhanced RAG
+- ** Type Safety** - Full TypeScript support with IntelliSense
+- ** Universal** - Works in Deno, Node.js, Bun, and browsers
+- ** Robust Error Handling** - Comprehensive error types and retry logic
 
-## 🎯 Conversations API
+##  Conversations API
 
 The **Conversations API** provides a user-friendly interface. Just provide instructions and input!
 
@@ -134,7 +134,7 @@ for await (const event of stream) {
 }
 ```
 
-## 💬 Chat Completions API
+##   Chat Completions API
 
 For advanced use cases with full control:
 
@@ -169,7 +169,7 @@ for await (const event of stream) {
 }
 ```
 
-## 📁 File Processing & RAG
+##  File Processing & RAG
 
 Upload documents for enhanced AI responses:
 
@@ -203,7 +203,7 @@ const models = await client.models.list();
 console.log(models.models);
 ```
 
-## 🛡️ Error Handling
+##  Error Handling
 
 ```typescript
 import { SVECTOR, AuthenticationError, RateLimitError } from "jsr:@svector/svector";
@@ -225,7 +225,7 @@ try {
 }
 ```
 
-## ⚙️ Configuration
+##  Configuration
 
 ```typescript
 const client = new SVECTOR({
@@ -237,7 +237,7 @@ const client = new SVECTOR({
 });
 ```
 
-## 🧪 Deno Example
+##  Deno Example
 
 ```typescript
 #!/usr/bin/env -S deno run --allow-env --allow-net
@@ -257,7 +257,7 @@ const response = await client.conversations.create({
 console.log("AI Response:", response.output);
 ```
 
-## 📚 API Reference
+##  API Reference
 
 ### SVECTOR Client
 - `new SVECTOR(options)` - Create a client instance
@@ -277,14 +277,14 @@ console.log("AI Response:", response.output);
 
 ## 🔗 Links & Support
 
-- **🌐 Website**: [https://www.svector.co.in](https://www.svector.co.in)
-- **📚 Documentation**: [https://docs.svector.co.in](https://docs.svector.co.in)
-- **💬 Support**: [support@svector.co.in](mailto:support@svector.co.in)
-- **🐛 Issues**: [GitHub Issues](https://github.com/SVECTOR-CORPORATION/svector-sdk/issues)
-- **📦 JSR Package**: [@svector/svector](https://jsr.io/@svector/svector)
-- **📦 npm Package**: [svector-sdk](https://www.npmjs.com/package/svector-sdk)
+- ** Website**: [https://www.svector.co.in](https://www.svector.co.in)
+- ** Documentation**: [https://docs.svector.co.in](https://docs.svector.co.in)
+- **  Support**: [support@svector.co.in](mailto:support@svector.co.in)
+- ** Issues**: [GitHub Issues](https://github.com/SVECTOR-CORPORATION/svector-sdk/issues)
+- ** JSR Package**: [@svector/svector](https://jsr.io/@svector/svector)
+- ** npm Package**: [svector-sdk](https://www.npmjs.com/package/svector-sdk)
 
-## 📄 License
+##  License
 
 MIT License - see [LICENSE](LICENSE) file for details.
 

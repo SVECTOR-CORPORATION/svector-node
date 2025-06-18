@@ -507,6 +507,6 @@ The SVECTOR API has rate limits that vary by plan:
 
 For additional help:
 - 📖 [Full Documentation](https://platform.svector.co.in)
-- 🌐 [SVECTOR Website](https://www.svector.co.in)
+-  [SVECTOR Website](https://www.svector.co.in)
 - 📧 Support: support@svector.co.in
-- 🐛 [Report Issues](https://github.com/svector-corporation/svector-sdk/issues)
+-  [Report Issues](https://github.com/svector-corporation/svector-sdk/issues)

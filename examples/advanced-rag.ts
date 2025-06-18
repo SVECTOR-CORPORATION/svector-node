@@ -96,7 +96,7 @@ All plans include:
       }
     ];
 
-    console.log('📁 Creating and uploading documents...');
+    console.log(' Creating and uploading documents...');
     const fileIds: string[] = [];
 
     // Upload documents using different methods
@@ -142,7 +142,7 @@ All plans include:
       throw new Error('No files were uploaded successfully');
     }
 
-    console.log(`\n📚 Successfully uploaded ${fileIds.length} documents\n`);
+    console.log(`\n Successfully uploaded ${fileIds.length} documents\n`);
 
     // Example 1: Query using individual files
     console.log('🔍 Example 1: Querying individual files');
@@ -178,7 +178,7 @@ All plans include:
             temperature: 0.3,
           });
 
-          console.log(`💬 Answer: ${response.choices[0].message.content}\n`);
+          console.log(`  Answer: ${response.choices[0].message.content}\n`);
         } catch (error) {
           console.error(`❌ Error processing question: ${error}\n`);
         }
@@ -212,7 +212,7 @@ All plans include:
           max_tokens: 500,
         });
 
-        console.log(`💬 Answer: ${response.choices[0].message.content}\n`);
+        console.log(`  Answer: ${response.choices[0].message.content}\n`);
       } catch (error) {
         console.error(`❌ Error processing cross-doc question: ${error}\n`);
       }
@@ -223,7 +223,7 @@ All plans include:
     
     try {
       console.log('\n❓ Streaming Question: Create a comprehensive summary of SVECTOR based on all available information\n');
-      console.log('💬 Streaming Answer: ');
+      console.log('  Streaming Answer: ');
       
       const stream = await client.chat.createStream({
         model: 'spec-3-turbo:latest',

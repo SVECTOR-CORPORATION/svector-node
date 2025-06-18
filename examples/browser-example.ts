@@ -84,7 +84,7 @@ console.log(browserExample);
 export async function browserChatExample() {
     // This would be imported like: import { browserChatExample } from 'svector/examples/browser';
     
-    console.log('🌐 Browser Chat Example');
+    console.log(' Browser Chat Example');
     console.log('WARNING: This exposes your API key to client-side code!');
     
     // In a real browser environment, you'd get the API key from user input
