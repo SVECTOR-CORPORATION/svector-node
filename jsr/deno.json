@@ -29,7 +29,7 @@
   "tasks": {
     "test": "deno test --allow-env --allow-net",
     "fmt": "deno fmt",
-    "lint": "deno lint", 
+    "lint": "deno lint",
     "check": "deno check mod.ts",
     "example": "deno run --allow-env --allow-net examples/basic.ts"
   },
