@@ -42,7 +42,7 @@ svector-node/
 - **Support**: [support@svector.co.in](mailto:support@svector.co.in)
 - **npm Package**: [svector-sdk](https://www.npmjs.com/package/svector-sdk)
 - **JSR Package**: [@svector/svector](https://jsr.io/@svector/svector)
-- **Deno Land**: [deno.land/x/svector](https://deno.land/x/svector)- Full-featured package for Node.js/Bun
+- **Deno Land**: [deno.land/@svector/svector](https://jsr.io/@svector/svector)- Full-featured package for Node.js/Bun
 - **JSR**: `@svector/svector` - Deno-optimized package from `/jsr` folder)
 
 ## Quick Start
