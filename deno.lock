@@ -1,0 +1,20 @@
+{
+  "version": "5",
+  "specifiers": {
+    "jsr:@svector/svector@1.1.2": "1.1.2"
+  },
+  "jsr": {
+    "@svector/svector@1.1.2": {
+      "integrity": "1dc2081eaf013f4d12bf15a6c4c803a2c8598a387a1d91fbebfb8db1179206c9"
+    }
+  },
+  "workspace": {
+    "packageJson": {
+      "dependencies": [
+        "npm:@types/node@20",
+        "npm:svector-sdk@^1.0.6",
+        "npm:typescript@5"
+      ]
+    }
+  }
+}
