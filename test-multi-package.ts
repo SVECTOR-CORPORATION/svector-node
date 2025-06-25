@@ -21,7 +21,7 @@ try {
     });
     
     const jsrResponse = await jsrClient.conversations.create({
-      model: "spec-3-turbo:latest",
+      model: "spec-3-turbo",
       instructions: "Be very concise. Reply with exactly 2 words.",
       input: "Say hello",
       max_tokens: 5,

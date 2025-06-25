@@ -30,7 +30,7 @@ async function testJSRPackage() {
       
       // Test a simple conversation
       const response = await client.conversations.create({
-        model: "spec-3-turbo:latest",
+        model: "spec-3-turbo",
         instructions: "You are helpful. Keep responses very short.",
         input: "Say hello in exactly 2 words.",
         max_tokens: 10,

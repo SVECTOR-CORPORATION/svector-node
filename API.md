@@ -50,7 +50,7 @@ Creates a chat completion using SVECTOR's Spec-Chat models.
 
 ```typescript
 interface ChatCompletionRequest {
-  model: string;                      // Model name (e.g., 'spec-3-turbo:latest')
+  model: string;                      // Model name (e.g., 'spec-3-turbo')
   messages: ChatMessage[];            // Array of conversation messages
   max_tokens?: number;                // Maximum tokens to generate
   temperature?: number;               // Randomness (0.0 to 2.0)
@@ -96,7 +96,7 @@ interface ChatCompletionChoice {
 
 ```typescript
 const response = await client.chat.create({
-  model: 'spec-3-turbo:latest',
+  model: 'spec-3-turbo',
   messages: [
     {
       role: 'system',
@@ -132,7 +132,7 @@ AsyncIterable<StreamEvent>
 
 ```typescript
 const stream = await client.chat.createStream({
-  model: 'spec-3-turbo:latest',
+  model: 'spec-3-turbo',
   messages: [{ role: 'user', content: 'Tell me a story' }],
   stream: true,
 });
@@ -161,7 +161,7 @@ Creates a chat completion and returns both data and raw response.
 
 ```typescript
 const { data, response } = await client.chat.createWithResponse({
-  model: 'spec-3-turbo:latest',
+  model: 'spec-3-turbo',
   messages: [{ role: 'user', content: 'Hello' }],
 });
 
@@ -313,7 +313,7 @@ import {
 
 try {
   const response = await client.chat.create({
-    model: 'spec-3-turbo:latest',
+    model: 'spec-3-turbo',
     messages: [{ role: 'user', content: 'Hello' }],
   });
 } catch (error) {
@@ -368,7 +368,7 @@ interface RequestOptions {
 ```typescript
 const response = await client.chat.create(
   {
-    model: 'spec-3-turbo:latest',
+    model: 'spec-3-turbo',
     messages: [{ role: 'user', content: 'Hello' }],
   },
   {
@@ -459,7 +459,7 @@ const fileResponse = await client.files.create(fileData, 'default');
 
 // Use in chat
 const chatResponse = await client.chat.create({
-  model: 'spec-3-turbo:latest',
+  model: 'spec-3-turbo',
   messages: [{ role: 'user', content: 'Summarize this document' }],
   files: [{ type: 'file', id: fileResponse.file_id }],
 });
@@ -474,7 +474,7 @@ await client.knowledge.addFile('collection-id', 'file-id-2');
 
 // Use collection in chat
 const chatResponse = await client.chat.create({
-  model: 'spec-3-turbo:latest',
+  model: 'spec-3-turbo',
   messages: [{ role: 'user', content: 'What insights can you provide?' }],
   files: [{ type: 'collection', id: 'collection-id' }],
 });

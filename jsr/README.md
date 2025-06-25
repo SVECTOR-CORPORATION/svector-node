@@ -20,7 +20,7 @@ const client = new SVECTOR({
 
 // Conversational API
 const response = await client.conversations.create({
-  model: "spec-3-turbo:latest",
+  model: "spec-3-turbo",
   instructions: "You are a helpful AI assistant.",
   input: "What is artificial intelligence?",
 });
@@ -38,7 +38,7 @@ const client = new SVECTOR({
 });
 
 const response = await client.conversations.create({
-  model: "spec-3-turbo:latest",
+  model: "spec-3-turbo",
   instructions: "You are a helpful AI assistant.",
   input: "What is artificial intelligence?",
 });
@@ -117,7 +117,7 @@ The **Conversations API** provides a user-friendly interface. Just provide instr
 
 ```typescript
 const response = await client.conversations.create({
-  model: "spec-3-turbo:latest",
+  model: "spec-3-turbo",
   instructions: "You are a helpful coding assistant.",
   input: "How do I create a function in TypeScript?",
   temperature: 0.7,
@@ -129,7 +129,7 @@ console.log(response.output);
 ### With Context
 ```typescript
 const response = await client.conversations.create({
-  model: "spec-3-turbo:latest", 
+  model: "spec-3-turbo", 
   instructions: "You are a programming tutor.",
   input: "Can you show me an example?",
   context: [
@@ -142,7 +142,7 @@ const response = await client.conversations.create({
 ### Streaming Conversations
 ```typescript
 const stream = await client.conversations.createStream({
-  model: "spec-3-turbo:latest",
+  model: "spec-3-turbo",
   instructions: "You are a creative storyteller.",
   input: "Tell me a short story about AI.",
   stream: true,
@@ -161,7 +161,7 @@ For advanced use cases with full control:
 
 ```typescript
 const response = await client.chat.create({
-  model: "spec-3-turbo:latest",
+  model: "spec-3-turbo",
   messages: [
     { role: "system", content: "You are a helpful assistant." },
     { role: "user", content: "Hello!" }
@@ -175,7 +175,7 @@ console.log(response.choices[0].message.content);
 ### Streaming Chat
 ```typescript
 const stream = await client.chat.createStream({
-  model: "spec-3-turbo:latest",
+  model: "spec-3-turbo",
   messages: [
     { role: "system", content: "You are helpful." },
     { role: "user", content: "Explain quantum computing" }
@@ -206,7 +206,7 @@ async function analyzeDocument(filePath: string, question = "Analyze this docume
   );
   
   const result = await client.conversations.create({
-    model: 'spec-3-turbo:latest',
+    model: 'spec-3-turbo',
     instructions: 'You are a document analyst. Provide clear, concise analysis.',
     input: `${question}\n\nDocument content:\n${fileResponse.data.content}`,
     temperature: 0.3,
@@ -235,7 +235,7 @@ async function analyzeMultipleDocuments(filePaths: string[], question: string) {
   }
   
   const result = await client.conversations.create({
-    model: 'spec-3-turbo:latest',
+    model: 'spec-3-turbo',
     instructions: 'You are a document analyst. Compare and analyze multiple documents.',
     input: `${question}\n\nDocuments:\n${documents.join('\n\n')}`,
     temperature: 0.3,
@@ -250,10 +250,10 @@ await analyzeMultipleDocuments(['report1.pdf', 'report2.pdf'], 'Compare these re
 
 ## Available Models
 
-- **`spec-3-turbo:latest`** - Fast, efficient for most use cases
-- **`spec-3:latest`** - Standard model with balanced performance
-- **`theta-35:latest`** - Advanced model for complex reasoning  
-- **`theta-35-mini:latest`** - Lightweight model for simple tasks
+- **`spec-3-turbo`** - Fast, efficient for most use cases
+- **`spec-3`** - Standard model with balanced performance
+- **`theta-35`** - Advanced model for complex reasoning  
+- **`theta-35-mini`** - Lightweight model for simple tasks
 
 ```typescript
 // List all available models
@@ -268,7 +268,7 @@ import { SVECTOR, AuthenticationError, RateLimitError } from "jsr:@svector/svect
 
 try {
   const response = await client.conversations.create({
-    model: "spec-3-turbo:latest",
+    model: "spec-3-turbo",
     instructions: "You are helpful.",
     input: "Hello!",
   });
@@ -308,7 +308,7 @@ const client = new SVECTOR({
 
 // Basic conversation
 const response = await client.conversations.create({
-  model: "spec-3-turbo:latest",
+  model: "spec-3-turbo",
   instructions: "You are a helpful assistant.",
   input: "What's the weather like on Mars?",
 });
@@ -321,7 +321,7 @@ try {
   const fileResponse = await client.files.create(fileContent, 'default', 'document.pdf');
   
   const analysis = await client.conversations.create({
-    model: "spec-3-turbo:latest",
+    model: "spec-3-turbo",
     instructions: "You are a document analyst.",
     input: `Analyze this document: ${fileResponse.data.content}`,
   });

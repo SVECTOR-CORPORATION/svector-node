@@ -52,7 +52,7 @@ const browserExample = `
                 });
                 
                 const response = await client.chat.create({
-                    model: 'spec-3-turbo:latest',
+                    model: 'spec-3-turbo',
                     messages: [
                         { role: 'user', content: message }
                     ],
@@ -106,7 +106,7 @@ export async function browserChatExample() {
         const message = prompt('What would you like to ask?') || 'Hello!';
         
         const response = await client.chat.create({
-            model: 'spec-3-turbo:latest',
+            model: 'spec-3-turbo',
             messages: [
                 { role: 'user', content: message }
             ],

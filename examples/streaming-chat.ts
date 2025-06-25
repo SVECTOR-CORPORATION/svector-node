@@ -12,7 +12,7 @@ async function streamingChat() {
     console.log('Starting streaming chat...\n');
 
     const stream = await client.chat.createStream({
-      model: 'spec-3-turbo:latest',
+      model: 'spec-3-turbo',
       messages: [
         { role: 'system', content: 'You are a creative storyteller who writes engaging short stories.' },
         { role: 'user', content: 'Tell me a short story about a robot learning to paint' }

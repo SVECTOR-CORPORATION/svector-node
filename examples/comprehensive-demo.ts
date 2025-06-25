@@ -26,7 +26,7 @@ async function comprehensiveExample() {
     console.log('─'.repeat(50));
     
     const basicResponse = await client.chat.create({
-      model: 'spec-3-turbo:latest',
+      model: 'spec-3-turbo',
       messages: [
         { role: 'system', content: 'You are a knowledgeable science educator who explains complex topics in simple terms.' },
         { role: 'user', content: 'Explain quantum computing in simple terms' }
@@ -44,7 +44,7 @@ async function comprehensiveExample() {
     console.log('─'.repeat(50));
     
     const conversationResponse = await client.chat.create({
-      model: 'spec-3-turbo:latest',
+      model: 'spec-3-turbo',
       messages: [
         { role: 'system', content: 'You are a helpful programming assistant that provides clear code examples.' },
         { role: 'user', content: 'How do I reverse a string in Python?' },
@@ -62,7 +62,7 @@ async function comprehensiveExample() {
     console.log('Streaming Answer: ');
     
     const stream = await client.chat.createStream({
-      model: 'spec-3-turbo:latest',
+      model: 'spec-3-turbo',
       messages: [
         { role: 'system', content: 'You are a creative poet who writes beautiful verses about technology.' },
         { role: 'user', content: 'Write a short poem about artificial intelligence' }
@@ -122,7 +122,7 @@ This is a sample document to demonstrate RAG capabilities.
     console.log('─'.repeat(50));
     
     const ragResponse = await client.chat.create({
-      model: 'spec-3-turbo:latest',
+      model: 'spec-3-turbo',
       messages: [
         { role: 'user', content: 'What are the key features mentioned in the document?' }
       ],
@@ -140,7 +140,7 @@ This is a sample document to demonstrate RAG capabilities.
     console.log('─'.repeat(50));
     
     const multiFileResponse = await client.chat.create({
-      model: 'spec-3-turbo:latest',
+      model: 'spec-3-turbo',
       messages: [
         { role: 'user', content: 'Summarize all the information from the uploaded files' }
       ],
@@ -173,7 +173,7 @@ This is a sample document to demonstrate RAG capabilities.
     console.log('─'.repeat(50));
     
     const { data, response } = await client.chat.createWithResponse({
-      model: 'spec-3-turbo:latest',
+      model: 'spec-3-turbo',
       messages: [
         { role: 'user', content: 'What is the meaning of life?' }
       ],
@@ -204,7 +204,7 @@ This is a sample document to demonstrate RAG capabilities.
     });
 
     const customResponse = await customClient.chat.create({
-      model: 'spec-3-turbo:latest',
+      model: 'spec-3-turbo',
       messages: [
         { role: 'user', content: 'Test with custom configuration' }
       ],
@@ -224,7 +224,7 @@ This is a sample document to demonstrate RAG capabilities.
     console.log('Streaming with response access: ');
     
     const { data: streamData, response: streamResponse } = await client.chat.createStreamWithResponse({
-      model: 'spec-3-turbo:latest',
+      model: 'spec-3-turbo',
       messages: [
         { role: 'user', content: 'Explain the benefits of TypeScript in 3 points' }
       ],

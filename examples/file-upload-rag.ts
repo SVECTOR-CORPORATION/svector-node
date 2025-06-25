@@ -45,7 +45,7 @@ looking to integrate AI into their workflows and applications.
     console.log('\nAsking question about the uploaded document...');
     
     const chatResponse = await client.chat.create({
-      model: 'spec-3-turbo:latest',
+      model: 'spec-3-turbo',
       messages: [
         { role: 'user', content: 'What is SVECTOR Corporation and what products do they offer?' }
       ],

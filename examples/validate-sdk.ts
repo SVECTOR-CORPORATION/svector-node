@@ -40,7 +40,7 @@ async function validateSDK() {
   try {
     // This should compile without errors
     const request: import('../src/types').ChatCompletionRequest = {
-      model: 'spec-3-turbo:latest',
+      model: 'spec-3-turbo',
       messages: [
         { role: 'user', content: 'test' }
       ],

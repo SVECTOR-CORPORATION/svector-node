@@ -18,7 +18,7 @@ async function streamingExample() {
     console.log("Streaming Response: ");
     
     const stream = await client.conversations.createStream({
-      model: "spec-3-turbo:latest",
+      model: "spec-3-turbo",
       instructions: "You are a creative storyteller. Keep stories concise and engaging.",
       input: "Tell me a short story about TypeScript",
       temperature: 0.8,

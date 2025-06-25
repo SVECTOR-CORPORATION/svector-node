@@ -16,7 +16,7 @@ async function basicExample() {
   try {
     // Simple conversation
     const response = await client.conversations.create({
-      model: "spec-3-turbo:latest",
+      model: "spec-3-turbo",
       instructions: "You are a helpful AI assistant that explains things clearly.",
       input: "What is the difference between Deno and Node.js?",
       temperature: 0.7,

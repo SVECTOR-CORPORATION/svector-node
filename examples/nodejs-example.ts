@@ -17,7 +17,7 @@ async function nodeJSExample() {
     console.log('─'.repeat(50));
     
     const response = await client.chat.create({
-      model: 'spec-3-turbo:latest',
+      model: 'spec-3-turbo',
       messages: [
         { role: 'user', content: 'Explain Node.js in one paragraph' }
       ],
@@ -39,7 +39,7 @@ async function nodeJSExample() {
         ];
 
         const response = await client.chat.create({
-          model: 'spec-3-turbo:latest',
+          model: 'spec-3-turbo',
           messages,
           max_tokens: 500,
         });
@@ -81,7 +81,7 @@ async function nodeJSExample() {
       questions.map(async (question, index) => {
         try {
           const response = await client.chat.create({
-            model: 'spec-3-turbo:latest',
+            model: 'spec-3-turbo',
             messages: [{ role: 'user', content: question }],
             max_tokens: 100,
           });
@@ -142,7 +142,7 @@ async function nodeJSExample() {
       for (let attempt = 1; attempt <= retries; attempt++) {
         try {
           const response = await client.chat.create({
-            model: 'spec-3-turbo:latest',
+            model: 'spec-3-turbo',
             messages: [{ role: 'user', content: message }],
           });
           
@@ -195,7 +195,7 @@ app.post('/api/chat', async (req, res) => {
     const { message, conversationHistory = [] } = req.body;
     
     const response = await client.chat.create({
-      model: 'spec-3-turbo:latest',
+      model: 'spec-3-turbo',
       messages: [
         ...conversationHistory,
         { role: 'user', content: message }

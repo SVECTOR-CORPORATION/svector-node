@@ -64,7 +64,7 @@ async function main() {
 
     // Basic chat completion
     const response = await client.chat.create({
-      model: 'spec-3-turbo:latest',
+      model: 'spec-3-turbo',
       messages: [
         { role: 'user', content: 'Hello! How can SVECTOR help developers?' }
       ],
@@ -151,7 +151,7 @@ function showQuickStart() {
    const client = new SVECTOR();
    
    const response = await client.chat.create({
-     model: 'spec-3-turbo:latest',
+     model: 'spec-3-turbo',
      messages: [{ role: 'user', content: 'Hello!' }],
    });
    

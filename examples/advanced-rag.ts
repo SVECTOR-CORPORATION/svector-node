@@ -168,7 +168,7 @@ All plans include:
           console.log(`\n❓ Question: ${question}`);
           
           const response = await client.chat.create({
-            model: 'spec-3-turbo:latest',
+            model: 'spec-3-turbo',
             messages: [
               { role: 'user', content: question }
             ],
@@ -199,7 +199,7 @@ All plans include:
         console.log(`\n❓ Cross-doc Question: ${question}`);
         
         const response = await client.chat.create({
-          model: 'spec-3-turbo:latest',
+          model: 'spec-3-turbo',
           messages: [
             { 
               role: 'developer', 
@@ -226,7 +226,7 @@ All plans include:
       console.log('  Streaming Answer: ');
       
       const stream = await client.chat.createStream({
-        model: 'spec-3-turbo:latest',
+        model: 'spec-3-turbo',
         messages: [
           { 
             role: 'user', 
@@ -254,7 +254,7 @@ All plans include:
     try {
       // Try to use a non-existent file ID
       await client.chat.create({
-        model: 'spec-3-turbo:latest',
+        model: 'spec-3-turbo',
         messages: [
           { role: 'user', content: 'This should fail' }
         ],
