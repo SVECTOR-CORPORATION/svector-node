@@ -288,7 +288,7 @@ try {
 ```typescript
 const client = new SVECTOR({
   apiKey: "your-api-key",
-  baseURL: "https://spec-chat.tech",
+  baseURL: "https://api.svector.co.in",
   timeout: 30000,
   maxRetries: 3,
   dangerouslyAllowBrowser: true,

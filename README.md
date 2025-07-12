@@ -539,7 +539,7 @@ try {
 ```typescript
 const client = new SVECTOR({
   apiKey: process.env.SVECTOR_API_KEY,
-  baseURL: 'https://spec-chat.tech',
+  baseURL: 'https://api.svector.co.in',
   maxRetries: 3,
   timeout: 30000,
   dangerouslyAllowBrowser: false,

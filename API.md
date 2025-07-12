@@ -20,7 +20,7 @@ This document provides comprehensive API documentation for the SVECTOR SDK.
 ```typescript
 interface SVECTOROptions {
   apiKey?: string;                    // Your SVECTOR API key
-  baseURL?: string;                   // API base URL (default: https://spec-chat.tech)
+  baseURL?: string;                   // API base URL (default: https://api.svector.co.in)
   maxRetries?: number;                // Maximum retry attempts (default: 2)
   timeout?: number;                   // Request timeout in milliseconds (default: 600000)
   fetch?: typeof fetch;               // Custom fetch implementation
