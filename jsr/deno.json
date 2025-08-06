@@ -21,7 +21,11 @@
     "conversation",
     "streaming",
     "rag",
-    "sdk"
+    "sdk",
+    "vision",
+    "image-analysis",
+    "ocr",
+    "computer-vision"
   ],
   "repository": "https://github.com/SVECTOR-CORPORATION/svector-node",
   "homepage": "https://www.svector.co.in",

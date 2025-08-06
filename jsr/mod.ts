@@ -15,6 +15,8 @@ export { Conversations } from './api/conversations.ts';
 export { Files } from './api/files.ts';
 export { Knowledge } from './api/knowledge.ts';
 export { Models } from './api/models.ts';
+export { Vision } from './api/vision.ts';
+
 
 // Types
 export type * from './types.ts';

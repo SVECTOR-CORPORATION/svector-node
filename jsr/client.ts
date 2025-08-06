@@ -3,6 +3,8 @@ import { Conversations } from './api/conversations.ts';
 import { Files } from './api/files.ts';
 import { Knowledge } from './api/knowledge.ts';
 import { Models } from './api/models.ts';
+import { Vision } from './api/vision.ts';
+
 import {
   APIConnectionError,
   APIConnectionTimeoutError,
@@ -61,6 +63,8 @@ export class SVECTOR {
   public models: Models;
   public files: Files;
   public knowledge: Knowledge;
+  public vision: Vision;
+
 
   constructor(options: SVECTOROptions = {}) {
     this.apiKey = options.apiKey || this.getApiKeyFromEnv();
@@ -85,6 +89,7 @@ export class SVECTOR {
     this.models = new Models(this);
     this.files = new Files(this);
     this.knowledge = new Knowledge(this);
+    this.vision = new Vision(this);
   }
 
   private getApiKeyFromEnv(): string {
