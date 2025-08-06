@@ -1,7 +1,7 @@
 /**
  * @file SVECTOR TypeScript/JavaScript SDK
  * @description Official TypeScript/JavaScript SDK for SVECTOR AI Models
- * @version 1.6.4
+ * @version 1.6.5
  * @author SVECTOR Team <support@svector.co.in>
  * @license MIT
  */

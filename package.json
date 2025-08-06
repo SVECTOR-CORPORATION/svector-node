@@ -1,6 +1,6 @@
 {
   "name": "svector-sdk",
-  "version": "1.6.4",
+  "version": "1.6.5",
   "description": "Official JavaScript and TypeScript SDK for accessing SVECTOR APIs.",
   "main": "dist/src/index.js",
   "module": "dist/src/index.js",

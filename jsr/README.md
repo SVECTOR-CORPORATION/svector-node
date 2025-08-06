@@ -620,7 +620,7 @@ try {
 ```typescript
 const client = new SVECTOR({
   apiKey: "your-api-key",
-  baseURL: "https://api.svector.co.in",
+  baseURL: "https://api.svector.co.in", // This is now the default
   timeout: 30000,
   maxRetries: 3,
   dangerouslyAllowBrowser: true,

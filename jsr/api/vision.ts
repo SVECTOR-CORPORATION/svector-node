@@ -14,15 +14,15 @@ export class Vision {
 
     /**
    * Make a direct API call to SVECTOR vision endpoint
-   * Uses the client's base URL instead of hardcoded URL
+   * This bypasses any routing issues by using multiple endpoints and detecting SVECTOR Server errors
    */
   private async makeVisionRequest(
     chatRequest: ChatCompletionRequest,
     options?: RequestOptions
   ): Promise<any> {
-    // Use the client's base URL - this will be https://spec-chat.tech by default
-    const baseURL = (this.client as any).baseURL;
-    const VISION_API_URL = `${baseURL}/api/chat/completions`;
+    const endpoints = [
+      'https://api.svector.co.in/api/chat/completions',
+    ];
     
     const headers = {
       'Authorization': `Bearer ${(this.client as any).apiKey}`,
@@ -32,28 +32,53 @@ export class Vision {
 
     const requestBody = JSON.stringify(chatRequest);
 
-    try {
-      console.log(`🔍 Making vision request to: ${VISION_API_URL}`);
-      
-      const response = await fetch(VISION_API_URL, {
-        method: 'POST',
-        headers,
-        body: requestBody,
-        signal: AbortSignal.timeout(options?.timeout || 60000)
-      });
+    // Try each endpoint until one works
+    for (const [index, endpoint] of endpoints.entries()) {
+      try {
+        console.log(`� Trying vision endpoint ${index + 1}/${endpoints.length}: ${endpoint}`);
+        
+        const response = await fetch(endpoint, {
+          method: 'POST',
+          headers,
+          body: requestBody,
+          signal: AbortSignal.timeout(options?.timeout || 60000)
+        });
 
-      if (!response.ok) {
-        const errorText = await response.text();
-        throw new Error(`HTTP ${response.status}: ${errorText}`);
-      }
+        if (!response.ok) {
+          const errorText = await response.text();
+          
+          // Check if this is an SVECTOR Server routing error
+          if (errorText.includes('localhost:11434') || errorText.includes('SVECTOR Server')) {
+            console.log(`❌ Endpoint ${index + 1} routes to SVECTOR Server, trying next...`);
+            if (index === endpoints.length - 1) {
+              throw new Error(`All endpoints route to SVECTOR Server. Server configuration issue.`);
+            }
+            continue; // Try next endpoint
+          }
+          
+          throw new Error(`HTTP ${response.status}: ${errorText}`);
+        }
 
-      return await response.json();
-    } catch (error) {
-      if (error instanceof Error) {
-        throw new Error(`Vision API request failed: ${error.message}`);
+        console.log(`✅ Success with vision endpoint ${index + 1}: ${endpoint}`);
+        return await response.json();
+        
+      } catch (error) {
+        console.log(`❌ Vision endpoint ${index + 1} failed: ${error instanceof Error ? error.message : 'Unknown error'}`);
+        
+        // If this is the last endpoint, re-throw the error
+        if (index === endpoints.length - 1) {
+          if (error instanceof Error) {
+            throw new Error(`Vision API request failed after trying all endpoints: ${error.message}`);
+          }
+          throw new Error('Vision API request failed after trying all endpoints: Unknown error');
+        }
+        
+        // Continue to next endpoint
+        continue;
       }
-      throw new Error('Vision API request failed: Unknown error');
     }
+    
+    throw new Error('All vision API endpoints failed');
   }
 
   /**

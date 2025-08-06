@@ -68,7 +68,7 @@ export class SVECTOR {
 
   constructor(options: SVECTOROptions = {}) {
     this.apiKey = options.apiKey || this.getApiKeyFromEnv();
-    this.baseURL = options.baseURL?.replace(/\/+$/, '') || 'https://spec-chat.tech';
+    this.baseURL = options.baseURL?.replace(/\/+$/, '') || 'https://api.svector.co.in';
     this.maxRetries = options.maxRetries ?? 2;
     this.timeout = options.timeout ?? 10 * 60 * 1000; // 10 minutes
     this.fetch = options.fetch || this.getDefaultFetch();
