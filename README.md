@@ -9,438 +9,20 @@
 
 **Official JavaScript and TypeScript SDK for accessing SVECTOR APIs.**
 
-SVECTOR develops high-performance AI models and automation solutions, specializing in artificial intelligence, mathematical computing, and computational research. This SDK provides programmatic access to SVECTOR's API services through type-safe JavaScript/TypeScript interfaces, completion endpoints, document processing capabilities, and additional AI model integrations.
-
-**Multi-Platform Support**: This repository contains both the npm package (`svector-sdk`) and the JSR package (`@svector/svector`) for seamless integration across Node.js, Deno, Bun, and browser environments.
-
-
-## Repository Structure
-
-This repository contains both package distributions:
-
-```
-svector-node/
-├── src/                    # npm package source (Node.js/TypeScript)
-│   ├── api/               # API implementations  
-│   ├── client.ts          # Main client
-│   ├── types.ts           # TypeScript definitions
-│   └── index.ts           # npm package entry
-├── jsr/                   # JSR package source (Deno/JSR)
-│   ├── api/               # Deno-compatible API implementations
-│   ├── client.ts          # Deno-compatible client
-│   ├── mod.ts             # JSR package entry  
-│   └── deno.json          # Deno configuration
-├── examples/              # Usage examples
-└── package.json           # npm package config
-```
-
-**Package Locations:**
-
-- **Website**: [https://www.svector.co.in](https://www.svector.co.in)
-- **Documentation**: [API Reference](API.md)
-- **Issues**: [GitHub Issues](https://github.com/SVECTOR-CORPORATION/svector-node/issues)
-- **Support**: [support@svector.co.in](mailto:support@svector.co.in)
-- **npm Package**: [svector-sdk](https://www.npmjs.com/package/svector-sdk)
-- **JSR Package**: [@svector/svector](https://jsr.io/@svector/svector)
-- **Deno Land**: [deno.land/@svector/svector](https://jsr.io/@svector/svector)- Full-featured package for Node.js/Bun
-- **JSR**: `@svector/svector` - Deno-optimized package from `/jsr` folder)
-
-## Quick Start
-
-### For Node.js/npm
-```bash
-npm install svector-sdk
-```
-
-```typescript
-import { SVECTOR } from 'svector-sdk';
-
-const client = new SVECTOR({
-  apiKey: process.env.SVECTOR_API_KEY,
-});
-
-const result = await client.conversations.create({
-  model: 'spec-3-turbo',
-  instructions: 'You are a helpful AI assistant that explains complex topics clearly.',
-  input: 'What is artificial intelligence?',
-});
-
-console.log(result.output);
-```
-
-### For Deno/JSR
-```bash
-deno add jsr:@svector/svector
-```
-
-```typescript
-import { SVECTOR } from "jsr:@svector/svector";
-
-const client = new SVECTOR({
-  apiKey: Deno.env.get("SVECTOR_API_KEY"),
-});
-
-const result = await client.conversations.create({
-  model: 'spec-3-turbo',
-  instructions: 'You are a helpful AI assistant that explains complex topics clearly.',
-  input: 'What is artificial intelligence?',
-});
-
-console.log(result.output);
-```
-
-##  Table of Contents
-
-- [Installation](#installation)
-- [Authentication](#authentication)
-- [Repository Structure](#repository-structure)
-- [Core Features](#core-features)
-- [Conversations API (Recommended)](#conversations-api-recommended)
-- [Chat Completions API (Advanced)](#chat-completions-api-advanced)
-- [Streaming Responses](#streaming-responses)
-- [File Management & Document Processing](#file-management--document-processing)
-- [Vision & Image Analysis](#vision--image-analysis)
-- [Models](#models)
-- [Error Handling](#error-handling)
-- [Advanced Configuration](#advanced-configuration)
-- [Environment Support](#environment-support)
-- [Complete Examples](#complete-examples)
-- [Best Practices](#best-practices)
-- [Contributing](#contributing)
-
-##  Installation
-
-### npm / yarn (Node.js)
-```bash
-npm install svector-sdk
-# or
-yarn add svector-sdk
-```
-
-### Deno / JSR
-```bash
-# Using JSR (recommended for Deno)
-deno add jsr:@svector/svector
-
-# Or using npm package in Deno
-deno add npm:svector-sdk
-```
-
-### Direct Import (Deno)
-```typescript
-import { SVECTOR } from 'jsr:@svector/svector';
-```
-
-### Browser (via CDN)
-```typescript
-import { SVECTOR } from 'https://esm.sh/svector-sdk';
-```
-
-## Authentication
-
-Get your API key from the [SVECTOR Platform](https://platform.svector.co.in) and set it as an environment variable:
-
-```bash
-export SVECTOR_API_KEY="your-api-key-here"
-```
-
-Or pass it directly to the client:
-
-```typescript
-const client = new SVECTOR({
-  apiKey: 'your-api-key-here',
-});
-```
-
-##  Core Features
-
-- **Conversations API** - Simple instructions + input interface
-- **Advanced Chat Completions** - Full control with role-based messages
-- **Real-time Streaming** - Server-sent events for live responses
-- **File Processing** - Upload and process documents (PDF, DOCX, TXT, etc.)
-- **Knowledge Collections** - Organize files for enhanced RAG
-- **TypeScript Native** - Full type safety and IntelliSense
-- **Multi-environment** - Node.js, Browser, Deno, Bun, Cloudflare Workers
-- **Robust Error Handling** - Comprehensive error types and retry logic
-
-##  Conversations API (Recommended)
-
-The **Conversations API** provides a sophisticated, user-friendly interface. Just provide instructions and input - the SDK handles all the complex role management internally!
-
-### Basic Conversation
-
-```typescript
-import { SVECTOR } from 'svector-sdk';
-
-const client = new SVECTOR({
-  apiKey: process.env.SVECTOR_API_KEY,
-});
-
-const result = await client.conversations.create({
-  model: 'spec-3-turbo',
-  instructions: 'You are a helpful assistant that explains things clearly.',
-  input: 'What is machine learning?',
-  temperature: 0.7,
-  max_tokens: 200,
-});
-
-console.log(result.output);
-// "Machine learning is a subset of artificial intelligence..."
-```
-
-### Conversation with Context
-
-```typescript
-const result = await client.conversations.create({
-  model: 'spec-3-turbo',
-  instructions: 'You are a programming tutor that helps students learn coding.',
-  input: 'Can you show me an example?',
-  context: [
-    'How do I create a function in Python?',
-    'You can create a function using the def keyword followed by the function name and parameters...'
-  ],
-  temperature: 0.5,
-});
-```
-
-### Streaming Conversation
-
-```typescript
-const stream = await client.conversations.createStream({
-  model: 'spec-3-turbo',
-  instructions: 'You are a creative storyteller.',
-  input: 'Tell me a short story about robots and humans.',
-  stream: true,
-});
-
-console.log('Story: ');
-for await (const event of stream) {
-  if (!event.done) {
-    process.stdout.write(event.content);
-  }
-}
-```
-
-### Document-based Conversation
-
-```typescript
-import fs from 'node:fs';
-import { SVECTOR } from 'svector-sdk';
-
-const client = new SVECTOR({
-  apiKey: process.env.SVECTOR_API_KEY,
-});
-
-async function analyzeDocument(filePath, question = "Analyze this document and provide key findings.") {
-  const fileResponse = await client.files.create(
-    fs.readFileSync(filePath),
-    'default',
-    filePath.split('/').pop()
-  );
-  
-  const result = await client.conversations.create({
-    model: 'spec-3-turbo',
-    instructions: 'You are a document analyst. Provide clear, concise analysis.',
-    input: `${question}\n\nDocument content:\n${fileResponse.data.content}`,
-    temperature: 0.3,
-  });
-
-  console.log(result.output);
-  return result.output;
-}
-
-await analyzeDocument('document.pdf');
-```
-
-##  Chat Completions API (Advanced)
-
-For full control over the conversation structure, use the Chat Completions API with role-based messages:
-
-### Basic Chat
-
-```typescript
-const completion = await client.chat.create({
-  model: 'spec-3-turbo',
-  messages: [
-    { role: 'system', content: 'You are a helpful assistant.' },
-    { role: 'user', content: 'Hello, how are you?' }
-  ],
-  max_tokens: 150,
-  temperature: 0.7,
-});
-
-console.log(completion.choices[0].message.content);
-```
-
-### Multi-turn Conversation
-
-```typescript
-const conversation = [
-  { role: 'system', content: 'You are a helpful programming assistant.' },
-  { role: 'user', content: 'How do I reverse a string in Python?' },
-  { role: 'assistant', content: 'You can reverse a string using slicing: string[::-1]' },
-  { role: 'user', content: 'Can you show me other methods?' }
-];
-
-const response = await client.chat.create({
-  model: 'spec-3-turbo',
-  messages: conversation,
-  temperature: 0.5,
-});
-```
-
-### Developer Role (System-level Instructions)
-
-```typescript
-const response = await client.chat.create({
-  model: 'spec-3-turbo',
-  messages: [
-    { role: 'developer', content: 'You are an expert code reviewer. Provide detailed feedback.' },
-    { role: 'user', content: 'Please review this Python code: def add(a, b): return a + b' }
-  ],
-});
-```
-
-##  Streaming Responses
-
-Both Conversations and Chat APIs support real-time streaming:
-
-### Conversations Streaming
-
-```typescript
-const stream = await client.conversations.createStream({
-  model: 'spec-3-turbo',
-  instructions: 'You are a creative writer.',
-  input: 'Write a poem about technology.',
-  stream: true,
-});
-
-for await (const event of stream) {
-  if (!event.done) {
-    process.stdout.write(event.content);
-  } else {
-    console.log('\n✓ Stream completed');
-  }
-}
-```
-
-### Chat Streaming
-
-```typescript
-const stream = await client.chat.createStream({
-  model: 'spec-3-turbo',
-  messages: [
-    { role: 'system', content: 'You are a helpful assistant.' },
-    { role: 'user', content: 'Explain quantum computing' }
-  ],
-  stream: true,
-});
-
-for await (const event of stream) {
-  if (event.choices?.[0]?.delta?.content) {
-    process.stdout.write(event.choices[0].delta.content);
-  }
-}
-```
-
-##  File Management & Document Processing
-
-Upload and process various file formats for enhanced AI capabilities:
-
-### Upload from File System (Node.js)
-
-```typescript
-import fs from 'node:fs';
-
-const fileResponse = await client.files.create(
-  fs.readFileSync('document.pdf'),
-  'default',
-  'document.pdf'
+SVECTOR develops high-performance AI models and automation solutions, specializing in artificial intelligence, mathematical computing, and computational research. This SDK provides programmatic access to SVECTOconst result = await analyzer.analyze(
+  'What are the key business decisions and their potential impact?',
+  'insights'
 );
-
-console.log(`File uploaded: ${fileResponse.id}`);
+console.log('💡 Insights:', insights);
 ```
 
-### Upload from Buffer
-
-```typescript
-const buffer = fs.readFileSync('document.pdf');
-const fileResponse = await client.files.create(buffer, 'default', 'document.pdf');
-```
-
-### Upload from String Content
-
-```typescript
-const content = `
-# Research Notes
-This document contains important findings...
-`;
-
-const fileResponse = await client.files.create(content, 'default', 'notes.md');
-```
-
-### Upload in Browser
-
-```typescript
-const fileInput = document.getElementById('fileInput') as HTMLInputElement;
-const file = fileInput.files[0];
-
-const client = new SVECTOR({
-  apiKey: process.env.SVECTOR_API_KEY,
-  dangerouslyAllowBrowser: true,
-});
-
-const fileResponse = await client.files.create(file, 'default');
-```
-
-### Using toFile Utility
-
-```typescript
-import { toFile } from 'svector-sdk';
-
-// Convert buffer to file
-const buffer = Buffer.from('Hello world');
-const file = await toFile(buffer, 'hello.txt');
-const response = await client.files.create(file, 'default');
-
-// Convert string to file
-const stringFile = await toFile('Content here', 'content.txt', { type: 'text/plain' });
-```
-
-### Document Q&A
-
-```typescript
-const doc1 = await client.files.create(fs.readFileSync('manual.pdf'), 'default', 'manual.pdf');
-const doc2 = await client.files.create(fs.readFileSync('faq.docx'), 'default', 'faq.docx');
-
-const answer = await client.conversations.create({
-  model: 'spec-3-turbo',
-  instructions: 'You are a helpful assistant that answers questions based on provided documents.',
-  input: `What are the key features mentioned in the manual?\n\nDocument 1: ${doc1.data.content}\nDocument 2: ${doc2.data.content}`,
-});
-```
-
-##  Knowledge Collections
-
-Organize multiple files into collections for better performance and context management:
-
-```typescript
-// Add files to a knowledge collection
-const result1 = await client.knowledge.addFile('collection-123', 'file-456');
-const result2 = await client.knowledge.addFile('collection-123', 'file-789');
-
-// Use the entire collection in conversations
-const response = await client.conversations.create({
-  model: 'spec-3-turbo',
-  instructions: 'You are a research assistant with access to our knowledge base.',
-  input: 'Summarize all the information about our products.',
-  files: [{ type: 'collection', id: 'collection-123' }],
-});
-```
 ##  Vision & Image Analysis
 
 SVECTOR provides powerful, proprietary vision capabilities for analyzing, understanding, and processing images. Our Vision API supports multiple input methods and provides specialized functions for different use cases, all optimized for SVECTOR's advanced AI models.
 
+### Why SVECTOR Vision?
+
+- **Advanced AI Models**: Powered by SVECTOR's proprietary vision models (spec-3-turbo, theta-35)
 - **Flexible Input Methods**: URL, base64, and file ID support
 - **Specialized Functions**: OCR, accessibility, object detection, and comparison
 - **Production Ready**: Built-in rate limiting, error handling, and batch processing
@@ -877,6 +459,440 @@ For more advanced vision capabilities, check out the comprehensive examples in `
 
 ```bash
 npm run examples:vision
+```
+
+This example demonstrates:
+- **Flexible Response API**: SVECTOR's advanced response format for complex vision tasks
+- **Batch Processing**: Analyze multiple images efficiently with built-in rate limiting
+- **Confidence Scoring**: Get confidence metrics for analysis quality
+- **Caption Generation**: Generate social media captions in different styles
+- **Technical Analysis**: Detailed technical image analysis for specialized use casesPI services through type-safe JavaScript/TypeScript interfaces, completion endpoints, document processing capabilities, and additional AI model integrations.
+
+**Multi-Platform Support**: This repository contains both the npm package (`svector-sdk`) and the JSR package (`@svector/svector`) for seamless integration across Node.js, Deno, Bun, and browser environments.
+
+
+## Repository Structure
+
+This repository contains both package distributions:
+
+```
+svector-node/
+├── src/                    # npm package source (Node.js/TypeScript)
+│   ├── api/               # API implementations  
+│   ├── client.ts          # Main client
+│   ├── types.ts           # TypeScript definitions
+│   └── index.ts           # npm package entry
+├── jsr/                   # JSR package source (Deno/JSR)
+│   ├── api/               # Deno-compatible API implementations
+│   ├── client.ts          # Deno-compatible client
+│   ├── mod.ts             # JSR package entry  
+│   └── deno.json          # Deno configuration
+├── examples/              # Usage examples
+└── package.json           # npm package config
+```
+
+**Package Locations:**
+
+- **Website**: [https://www.svector.co.in](https://www.svector.co.in)
+- **Documentation**: [API Reference](API.md)
+- **Issues**: [GitHub Issues](https://github.com/SVECTOR-CORPORATION/svector-node/issues)
+- **Support**: [support@svector.co.in](mailto:support@svector.co.in)
+- **npm Package**: [svector-sdk](https://www.npmjs.com/package/svector-sdk)
+- **JSR Package**: [@svector/svector](https://jsr.io/@svector/svector)
+- **Deno Land**: [deno.land/@svector/svector](https://jsr.io/@svector/svector)- Full-featured package for Node.js/Bun
+- **JSR**: `@svector/svector` - Deno-optimized package from `/jsr` folder)
+
+## Quick Start
+
+### For Node.js/npm
+```bash
+npm install svector-sdk
+```
+
+```typescript
+import { SVECTOR } from 'svector-sdk';
+
+const client = new SVECTOR({
+  apiKey: process.env.SVECTOR_API_KEY,
+});
+
+const result = await client.conversations.create({
+  model: 'spec-3-turbo',
+  instructions: 'You are a helpful AI assistant that explains complex topics clearly.',
+  input: 'What is artificial intelligence?',
+});
+
+console.log(result.output);
+```
+
+### For Deno/JSR
+```bash
+deno add jsr:@svector/svector
+```
+
+```typescript
+import { SVECTOR } from "jsr:@svector/svector";
+
+const client = new SVECTOR({
+  apiKey: Deno.env.get("SVECTOR_API_KEY"),
+});
+
+const result = await client.conversations.create({
+  model: 'spec-3-turbo',
+  instructions: 'You are a helpful AI assistant that explains complex topics clearly.',
+  input: 'What is artificial intelligence?',
+});
+
+console.log(result.output);
+```
+
+##  Table of Contents
+
+- [Installation](#installation)
+- [Authentication](#authentication)
+- [Repository Structure](#repository-structure)
+- [Core Features](#core-features)
+- [Conversations API (Recommended)](#conversations-api-recommended)
+- [Chat Completions API (Advanced)](#chat-completions-api-advanced)
+- [Streaming Responses](#streaming-responses)
+- [File Management & Document Processing](#file-management--document-processing)
+- [Vision & Image Analysis](#vision--image-analysis)
+- [Models](#models)
+- [Error Handling](#error-handling)
+- [Advanced Configuration](#advanced-configuration)
+- [Environment Support](#environment-support)
+- [Complete Examples](#complete-examples)
+- [Best Practices](#best-practices)
+- [Contributing](#contributing)
+
+##  Installation
+
+### npm / yarn (Node.js)
+```bash
+npm install svector-sdk
+# or
+yarn add svector-sdk
+```
+
+### Deno / JSR
+```bash
+# Using JSR (recommended for Deno)
+deno add jsr:@svector/svector
+
+# Or using npm package in Deno
+deno add npm:svector-sdk
+```
+
+### Direct Import (Deno)
+```typescript
+import { SVECTOR } from 'jsr:@svector/svector';
+```
+
+### Browser (via CDN)
+```typescript
+import { SVECTOR } from 'https://esm.sh/svector-sdk';
+```
+
+## Authentication
+
+Get your API key from the [SVECTOR Platform](https://platform.svector.co.in) and set it as an environment variable:
+
+```bash
+export SVECTOR_API_KEY="your-api-key-here"
+```
+
+Or pass it directly to the client:
+
+```typescript
+const client = new SVECTOR({
+  apiKey: 'your-api-key-here',
+});
+```
+
+##  Core Features
+
+- **Conversations API** - Simple instructions + input interface
+- **Advanced Chat Completions** - Full control with role-based messages
+- **Real-time Streaming** - Server-sent events for live responses
+- **File Processing** - Upload and process documents (PDF, DOCX, TXT, etc.)
+- **Knowledge Collections** - Organize files for enhanced RAG
+- **TypeScript Native** - Full type safety and IntelliSense
+- **Multi-environment** - Node.js, Browser, Deno, Bun, Cloudflare Workers
+- **Robust Error Handling** - Comprehensive error types and retry logic
+
+##  Conversations API (Recommended)
+
+The **Conversations API** provides a sophisticated, user-friendly interface. Just provide instructions and input - the SDK handles all the complex role management internally!
+
+### Basic Conversation
+
+```typescript
+import { SVECTOR } from 'svector-sdk';
+
+const client = new SVECTOR({
+  apiKey: process.env.SVECTOR_API_KEY,
+});
+
+const result = await client.conversations.create({
+  model: 'spec-3-turbo',
+  instructions: 'You are a helpful assistant that explains things clearly.',
+  input: 'What is machine learning?',
+  temperature: 0.7,
+  max_tokens: 200,
+});
+
+console.log(result.output);
+// "Machine learning is a subset of artificial intelligence..."
+```
+
+### Conversation with Context
+
+```typescript
+const result = await client.conversations.create({
+  model: 'spec-3-turbo',
+  instructions: 'You are a programming tutor that helps students learn coding.',
+  input: 'Can you show me an example?',
+  context: [
+    'How do I create a function in Python?',
+    'You can create a function using the def keyword followed by the function name and parameters...'
+  ],
+  temperature: 0.5,
+});
+```
+
+### Streaming Conversation
+
+```typescript
+const stream = await client.conversations.createStream({
+  model: 'spec-3-turbo',
+  instructions: 'You are a creative storyteller.',
+  input: 'Tell me a short story about robots and humans.',
+  stream: true,
+});
+
+console.log('Story: ');
+for await (const event of stream) {
+  if (!event.done) {
+    process.stdout.write(event.content);
+  }
+}
+```
+
+### Document-based Conversation
+
+```typescript
+import fs from 'node:fs';
+import { SVECTOR } from 'svector-sdk';
+
+const client = new SVECTOR({
+  apiKey: process.env.SVECTOR_API_KEY,
+});
+
+async function analyzeDocument(filePath, question = "Analyze this document and provide key findings.") {
+  const fileResponse = await client.files.create(
+    fs.readFileSync(filePath),
+    'default',
+    filePath.split('/').pop()
+  );
+  
+  const result = await client.conversations.create({
+    model: 'spec-3-turbo',
+    instructions: 'You are a document analyst. Provide clear, concise analysis.',
+    input: `${question}\n\nDocument content:\n${fileResponse.data.content}`,
+    temperature: 0.3,
+  });
+
+  console.log(result.output);
+  return result.output;
+}
+
+await analyzeDocument('document.pdf');
+```
+
+##  Chat Completions API (Advanced)
+
+For full control over the conversation structure, use the Chat Completions API with role-based messages:
+
+### Basic Chat
+
+```typescript
+const completion = await client.chat.create({
+  model: 'spec-3-turbo',
+  messages: [
+    { role: 'system', content: 'You are a helpful assistant.' },
+    { role: 'user', content: 'Hello, how are you?' }
+  ],
+  max_tokens: 150,
+  temperature: 0.7,
+});
+
+console.log(completion.choices[0].message.content);
+```
+
+### Multi-turn Conversation
+
+```typescript
+const conversation = [
+  { role: 'system', content: 'You are a helpful programming assistant.' },
+  { role: 'user', content: 'How do I reverse a string in Python?' },
+  { role: 'assistant', content: 'You can reverse a string using slicing: string[::-1]' },
+  { role: 'user', content: 'Can you show me other methods?' }
+];
+
+const response = await client.chat.create({
+  model: 'spec-3-turbo',
+  messages: conversation,
+  temperature: 0.5,
+});
+```
+
+### Developer Role (System-level Instructions)
+
+```typescript
+const response = await client.chat.create({
+  model: 'spec-3-turbo',
+  messages: [
+    { role: 'developer', content: 'You are an expert code reviewer. Provide detailed feedback.' },
+    { role: 'user', content: 'Please review this Python code: def add(a, b): return a + b' }
+  ],
+});
+```
+
+##  Streaming Responses
+
+Both Conversations and Chat APIs support real-time streaming:
+
+### Conversations Streaming
+
+```typescript
+const stream = await client.conversations.createStream({
+  model: 'spec-3-turbo',
+  instructions: 'You are a creative writer.',
+  input: 'Write a poem about technology.',
+  stream: true,
+});
+
+for await (const event of stream) {
+  if (!event.done) {
+    process.stdout.write(event.content);
+  } else {
+    console.log('\n✓ Stream completed');
+  }
+}
+```
+
+### Chat Streaming
+
+```typescript
+const stream = await client.chat.createStream({
+  model: 'spec-3-turbo',
+  messages: [
+    { role: 'system', content: 'You are a helpful assistant.' },
+    { role: 'user', content: 'Explain quantum computing' }
+  ],
+  stream: true,
+});
+
+for await (const event of stream) {
+  if (event.choices?.[0]?.delta?.content) {
+    process.stdout.write(event.choices[0].delta.content);
+  }
+}
+```
+
+##  File Management & Document Processing
+
+Upload and process various file formats for enhanced AI capabilities:
+
+### Upload from File System (Node.js)
+
+```typescript
+import fs from 'node:fs';
+
+const fileResponse = await client.files.create(
+  fs.readFileSync('document.pdf'),
+  'default',
+  'document.pdf'
+);
+
+console.log(`File uploaded: ${fileResponse.id}`);
+```
+
+### Upload from Buffer
+
+```typescript
+const buffer = fs.readFileSync('document.pdf');
+const fileResponse = await client.files.create(buffer, 'default', 'document.pdf');
+```
+
+### Upload from String Content
+
+```typescript
+const content = `
+# Research Notes
+This document contains important findings...
+`;
+
+const fileResponse = await client.files.create(content, 'default', 'notes.md');
+```
+
+### Upload in Browser
+
+```typescript
+const fileInput = document.getElementById('fileInput') as HTMLInputElement;
+const file = fileInput.files[0];
+
+const client = new SVECTOR({
+  apiKey: process.env.SVECTOR_API_KEY,
+  dangerouslyAllowBrowser: true,
+});
+
+const fileResponse = await client.files.create(file, 'default');
+```
+
+### Using toFile Utility
+
+```typescript
+import { toFile } from 'svector-sdk';
+
+// Convert buffer to file
+const buffer = Buffer.from('Hello world');
+const file = await toFile(buffer, 'hello.txt');
+const response = await client.files.create(file, 'default');
+
+// Convert string to file
+const stringFile = await toFile('Content here', 'content.txt', { type: 'text/plain' });
+```
+
+### Document Q&A
+
+```typescript
+const doc1 = await client.files.create(fs.readFileSync('manual.pdf'), 'default', 'manual.pdf');
+const doc2 = await client.files.create(fs.readFileSync('faq.docx'), 'default', 'faq.docx');
+
+const answer = await client.conversations.create({
+  model: 'spec-3-turbo',
+  instructions: 'You are a helpful assistant that answers questions based on provided documents.',
+  input: `What are the key features mentioned in the manual?\n\nDocument 1: ${doc1.data.content}\nDocument 2: ${doc2.data.content}`,
+});
+```
+
+##  Knowledge Collections
+
+Organize multiple files into collections for better performance and context management:
+
+```typescript
+// Add files to a knowledge collection
+const result1 = await client.knowledge.addFile('collection-123', 'file-456');
+const result2 = await client.knowledge.addFile('collection-123', 'file-789');
+
+// Use the entire collection in conversations
+const response = await client.conversations.create({
+  model: 'spec-3-turbo',
+  instructions: 'You are a research assistant with access to our knowledge base.',
+  input: 'Summarize all the information about our products.',
+  files: [{ type: 'collection', id: 'collection-123' }],
+});
 ```
 
 ## Models
