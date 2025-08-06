@@ -3,16 +3,17 @@ import { Conversations } from './api/conversations';
 import { Files } from './api/files';
 import { Knowledge } from './api/knowledge';
 import { Models } from './api/models';
+import { Vision } from './api/vision';
 import {
-    APIConnectionError,
-    APIConnectionTimeoutError,
-    APIError,
-    AuthenticationError,
-    InternalServerError,
-    NotFoundError,
-    PermissionDeniedError,
-    RateLimitError,
-    UnprocessableEntityError
+  APIConnectionError,
+  APIConnectionTimeoutError,
+  APIError,
+  AuthenticationError,
+  InternalServerError,
+  NotFoundError,
+  PermissionDeniedError,
+  RateLimitError,
+  UnprocessableEntityError
 } from './errors';
 import { RequestOptions, SVECTOROptions } from './types';
 
@@ -61,6 +62,7 @@ export class SVECTOR {
   public models: Models;
   public files: Files;
   public knowledge: Knowledge;
+  public vision: Vision;
 
   constructor(options: SVECTOROptions = {}) {
     this.apiKey = options.apiKey || this.getApiKeyFromEnv();
@@ -85,6 +87,7 @@ export class SVECTOR {
     this.models = new Models(this);
     this.files = new Files(this);
     this.knowledge = new Knowledge(this);
+    this.vision = new Vision(this);
   }
 
   private getApiKeyFromEnv(): string {
