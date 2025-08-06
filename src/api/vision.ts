@@ -14,15 +14,18 @@ export class Vision {
 
   /**
    * Make a direct API call to SVECTOR vision endpoint
-   * Uses the client's base URL instead of hardcoded URL
    */
   private async makeVisionRequest(
     chatRequest: ChatCompletionRequest,
     options?: RequestOptions
   ): Promise<any> {
-    // Use the client's base URL - this will be https://spec-chat.tech by default
     const baseURL = (this.client as any).baseURL;
-    const VISION_API_URL = `${baseURL}/api/chat/completions`;
+    
+    const endpoints = [
+      `${baseURL}/api/chat/completions`,
+      'https://api.svector.co.in/api/chat/completions',
+      'https://spec-chat.tech/api/chat/completions'
+    ];
     
     const headers = {
       'Authorization': `Bearer ${(this.client as any).apiKey}`,
@@ -31,27 +34,61 @@ export class Vision {
     };
 
     const requestBody = JSON.stringify(chatRequest);
+    const timeout = options?.timeout || 120000;
+    const maxRetries = 3;
 
-    try {
-      const response = await fetch(VISION_API_URL, {
-        method: 'POST',
-        headers,
-        body: requestBody,
-        signal: AbortSignal.timeout(options?.timeout || 60000)
-      });
+    for (const [endpointIndex, endpoint] of endpoints.entries()) {
+      for (let retry = 0; retry < maxRetries; retry++) {
+        try {
+          const controller = new AbortController();
+          const timeoutId = setTimeout(() => controller.abort(), timeout);
 
-      if (!response.ok) {
-        const errorText = await response.text();
-        throw new Error(`HTTP ${response.status}: ${errorText}`);
+          const response = await fetch(endpoint, {
+            method: 'POST',
+            headers,
+            body: requestBody,
+            signal: controller.signal
+          });
+
+          clearTimeout(timeoutId);
+
+          if (!response.ok) {
+            const errorText = await response.text();
+            
+            if (response.status >= 400 && response.status < 500) {
+              throw new Error(`HTTP ${response.status}: ${errorText}`);
+            }
+            
+            if (retry === maxRetries - 1) {
+              throw new Error(`HTTP ${response.status}: ${errorText}`);
+            }
+            continue;
+          }
+
+          return await response.json();
+
+        } catch (error) {
+          const isLastRetry = retry === maxRetries - 1;
+          const isLastEndpoint = endpointIndex === endpoints.length - 1;
+          
+          if (error instanceof Error) {
+            if (error.name === 'AbortError' || error.message.includes('fetch')) {
+              if (!isLastRetry || !isLastEndpoint) {
+                const delay = Math.min(1000 * Math.pow(2, retry), 10000);
+                await new Promise(resolve => setTimeout(resolve, delay));
+                continue;
+              }
+            }
+            
+            if (isLastRetry && isLastEndpoint) {
+              throw new Error(`Vision API request failed: ${error.message}`);
+            }
+          }
+        }
       }
-
-      return await response.json();
-    } catch (error) {
-      if (error instanceof Error) {
-        throw new Error(`Vision API request failed: ${error.message}`);
-      }
-      throw new Error('Vision API request failed: Unknown error');
     }
+    
+    throw new Error('Vision API request failed after multiple retries');
   }
 
   /**
@@ -64,12 +101,10 @@ export class Vision {
   ): Promise<ImageAnalysisResponse> {
     const { image_url, image_base64, file_id, prompt, model, max_tokens, temperature, detail } = params;
 
-    // Validate that at least one image input is provided
     if (!image_url && !image_base64 && !file_id) {
       throw new Error('Must provide one of: image_url, image_base64, or file_id');
     }
 
-    // Build the message content for vision
     const messageContent: MessageContent[] = [
       {
         type: 'text',
@@ -77,7 +112,6 @@ export class Vision {
       }
     ];
 
-    // Add image content based on input type
     if (image_url) {
       messageContent.push({
         type: 'image_url',
@@ -87,7 +121,6 @@ export class Vision {
         }
       });
     } else if (image_base64) {
-      // Handle base64 with proper data URL format
       const dataUrl = image_base64.startsWith('data:') 
         ? image_base64 
         : `data:image/jpeg;base64,${image_base64}`;
@@ -100,7 +133,6 @@ export class Vision {
         }
       });
     } else if (file_id) {
-      // For file_id, we'll use the existing file reference system
       messageContent.push({
         type: 'image_url',
         image_url: {
@@ -110,7 +142,6 @@ export class Vision {
       });
     }
 
-    // Create chat completion request
     const chatRequest: ChatCompletionRequest = {
       model: model || 'spec-3-turbo',
       messages: [{
@@ -122,16 +153,34 @@ export class Vision {
     };
 
     try {
-      // Use direct vision API call instead of client.chat.create
-      const response = await this.makeVisionRequest(chatRequest, options);
+      const response = await this.makeVisionRequest(chatRequest, {
+        ...options,
+        timeout: options?.timeout || 120000
+      });
       
+      const analysis = response.choices?.[0]?.message?.content;
+      if (!analysis) {
+        throw new Error('No analysis content returned from API');
+      }
+
       return {
-        analysis: response.choices?.[0]?.message?.content || 'No analysis generated',
+        analysis,
         usage: response.usage,
         _request_id: response._request_id
       };
     } catch (error) {
       const errorMessage = error instanceof Error ? error.message : 'Unknown error occurred';
+      
+      if (errorMessage.includes('504')) {
+        throw new Error(`Vision analysis failed: Gateway timeout. Please try again later.`);
+      } else if (errorMessage.includes('413')) {
+        throw new Error(`Vision analysis failed: Image too large. Please use a smaller image.`);
+      } else if (errorMessage.includes('401')) {
+        throw new Error(`Vision analysis failed: Authentication failed. Please check your API key.`);
+      } else if (errorMessage.includes('429')) {
+        throw new Error(`Vision analysis failed: Rate limit exceeded. Please wait before retrying.`);
+      }
+      
       throw new Error(`Vision analysis failed: ${errorMessage}`);
     }
   }
@@ -264,7 +313,6 @@ export class Vision {
     };
 
     try {
-      // Use direct vision API call instead of client.chat.create  
       const response = await this.makeVisionRequest(chatRequest);
       
       return {
@@ -425,8 +473,6 @@ export class Vision {
 
     for (const [index, image] of images.entries()) {
       try {
-        console.log(`Processing image ${index + 1}/${images.length}...`);
-        
         const result = await this.analyze({
           ...image,
           model: options?.model,
@@ -440,7 +486,6 @@ export class Vision {
           usage: result.usage
         });
 
-        // Add delay between requests to respect rate limits
         if (index < images.length - 1) {
           await new Promise(resolve => setTimeout(resolve, delay));
         }
