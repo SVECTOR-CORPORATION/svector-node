@@ -1,5 +1,4 @@
 import { SVECTOR } from '../client.ts';
-import { APIConnectionTimeoutError } from '../errors.ts';
 import {
   ChatCompletionRequest,
   ImageAnalysisRequest,
@@ -32,27 +31,15 @@ export class Vision {
     };
 
     const requestBody = JSON.stringify(chatRequest);
-    // Reduce default timeout for vision requests to prevent hanging
-    const timeout = options?.timeout || 60000; // 60 seconds instead of 120
-    const maxRetries = options?.maxRetries || 2; // Allow custom retry count
-
-    console.log(`🔍 Vision API: Starting request with ${timeout}ms timeout...`);
+    const timeout = options?.timeout || 60000; // Default to 60 seconds
+    const maxRetries = 2;
 
     for (const [endpointIndex, endpoint] of endpoints.entries()) {
-      console.log(`🌐 Trying endpoint ${endpointIndex + 1}/${endpoints.length}: ${endpoint}`);
-      
       for (let retry = 0; retry < maxRetries; retry++) {
-        console.log(`🔄 Attempt ${retry + 1}/${maxRetries} for endpoint ${endpointIndex + 1}`);
-        
         try {
           const controller = new AbortController();
-          const timeoutId = setTimeout(() => {
-            console.log(`⏰ Request timeout after ${timeout}ms, aborting...`);
-            controller.abort();
-          }, timeout);
+          const timeoutId = setTimeout(() => controller.abort(), timeout);
 
-          const requestStart = Date.now();
-          
           const response = await fetch(endpoint, {
             method: 'POST',
             headers,
@@ -61,21 +48,11 @@ export class Vision {
           });
 
           clearTimeout(timeoutId);
-          const requestDuration = Date.now() - requestStart;
-          console.log(`⚡ Request completed in ${requestDuration}ms`);
 
           if (!response.ok) {
             const errorText = await response.text();
-            console.log(`❌ HTTP ${response.status}: ${errorText}`);
             
-            // Handle specific HTTP status codes
-            if (response.status === 504) {
-              throw new APIConnectionTimeoutError(`Gateway timeout: The image processing took too long. Try using a smaller image or 'low' detail setting.`);
-            } else if (response.status === 413) {
-              throw new Error(`Image too large: Please use a smaller image file or reduce the image resolution.`);
-            } else if (response.status === 429) {
-              throw new Error(`Rate limit exceeded: Please wait before making another request.`);
-            } else if (response.status >= 400 && response.status < 500) {
+            if (response.status >= 400 && response.status < 500) {
               throw new Error(`HTTP ${response.status}: ${errorText}`);
             }
             
@@ -85,54 +62,30 @@ export class Vision {
             continue;
           }
 
-          const result = await response.json();
-          console.log(`✅ Vision API request successful`);
-          return result;
+          return await response.json();
 
         } catch (error) {
           const isLastRetry = retry === maxRetries - 1;
           const isLastEndpoint = endpointIndex === endpoints.length - 1;
           
           if (error instanceof Error) {
-            console.log(`🚨 Request error: ${error.name} - ${error.message}`);
-            
-            // Handle AbortError (timeout)
-            if (error.name === 'AbortError') {
-              if (isLastRetry && isLastEndpoint) {
-                throw new APIConnectionTimeoutError(
-                  `Vision API request timed out after ${timeout}ms. This may be due to a large image or server overload. Try using a smaller image, setting detail to 'low', or increasing the timeout.`
-                );
+            if (error.name === 'AbortError' || error.message.includes('fetch')) {
+              if (!isLastRetry || !isLastEndpoint) {
+                const delay = Math.min(1000 * Math.pow(2, retry), 10000);
+                await new Promise(resolve => setTimeout(resolve, delay));
+                continue;
               }
-            }
-            
-            // Handle fetch/network errors
-            if (error.message.includes('fetch') || error.message.includes('network')) {
-              if (isLastRetry && isLastEndpoint) {
-                throw new Error(`Network error: Unable to connect to vision API. Please check your internet connection.`);
-              }
-            }
-            
-            // Re-throw timeout errors immediately
-            if (error instanceof APIConnectionTimeoutError) {
-              throw error;
             }
             
             if (isLastRetry && isLastEndpoint) {
               throw new Error(`Vision API request failed: ${error.message}`);
-            }
-            
-            // Exponential backoff for retries
-            if (!isLastRetry || !isLastEndpoint) {
-              const delay = Math.min(1000 * Math.pow(2, retry), 5000);
-              console.log(`⏳ Retrying in ${delay}ms...`);
-              await new Promise(resolve => setTimeout(resolve, delay));
             }
           }
         }
       }
     }
     
-    throw new Error('Vision API request failed after multiple retries on all endpoints');
+    throw new Error('Vision API request failed after multiple retries');
   }
 
   /**
@@ -147,15 +100,6 @@ export class Vision {
 
     if (!image_url && !image_base64 && !file_id) {
       throw new Error('Must provide one of: image_url, image_base64, or file_id');
-    }
-
-    // Log the image being processed
-    if (image_url) {
-      console.log(`Processing image from URL: ${image_url.substring(0, 80)}...`);
-    } else if (image_base64) {
-      console.log(`Processing image from base64 data (${image_base64.length} chars)`);
-    } else if (file_id) {
-      console.log(`Processing image from file ID: ${file_id}`);
     }
 
     const messageContent: MessageContent[] = [
@@ -206,47 +150,15 @@ export class Vision {
     };
 
     try {
-      const response = await this.makeVisionRequest(chatRequest, {
-        timeout: options?.timeout || 60000, // Default 60 second timeout
-        maxRetries: options?.maxRetries || 2,
-        ...options
-      });
+      const response = await this.makeVisionRequest(chatRequest, options);
       
-      const analysis = response.choices?.[0]?.message?.content;
-      if (!analysis) {
-        throw new Error('No analysis content returned from API');
-      }
-
       return {
-        analysis,
+        analysis: response.choices?.[0]?.message?.content || 'No analysis generated',
         usage: response.usage,
         _request_id: response._request_id
       };
     } catch (error) {
-      if (error instanceof APIConnectionTimeoutError) {
-        // Re-throw timeout errors with additional context
-        throw new APIConnectionTimeoutError(
-          `${error.message}\n\nTroubleshooting tips:\n` +
-          `• Try reducing image size or resolution\n` +
-          `• Use detail: 'low' instead of 'high'\n` +
-          `• Check if the image URL is accessible\n` +
-          `• Consider using a different image format`
-        );
-      }
-      
       const errorMessage = error instanceof Error ? error.message : 'Unknown error occurred';
-      
-      // More specific error handling
-      if (errorMessage.includes('504') || errorMessage.includes('Gateway timeout')) {
-        throw new APIConnectionTimeoutError(`Image processing timed out. The image may be too large or complex. Try using a smaller image or setting detail to 'low'.`);
-      } else if (errorMessage.includes('413') || errorMessage.includes('too large')) {
-        throw new Error(`Image too large. Please use a smaller image file or reduce the image resolution.`);
-      } else if (errorMessage.includes('401') || errorMessage.includes('Authentication')) {
-        throw new Error(`Authentication failed. Please check your API key.`);
-      } else if (errorMessage.includes('429') || errorMessage.includes('Rate limit')) {
-        throw new Error(`Rate limit exceeded. Please wait before retrying.`);
-      }
-      
       throw new Error(`Vision analysis failed: ${errorMessage}`);
     }
   }
@@ -262,19 +174,12 @@ export class Vision {
       max_tokens?: number;
       temperature?: number;
       detail?: 'low' | 'high' | 'auto';
-      timeout?: number;
-      maxRetries?: number;
     }
   ): Promise<ImageAnalysisResponse> {
-    const { timeout, maxRetries, ...analysisOptions } = options || {};
-    
     return this.analyze({
       image_url: imageUrl,
       prompt,
-      ...analysisOptions
-    }, {
-      timeout,
-      maxRetries
+      ...options
     });
   }
 
@@ -289,19 +194,12 @@ export class Vision {
       max_tokens?: number;
       temperature?: number;
       detail?: 'low' | 'high' | 'auto';
-      timeout?: number;
-      maxRetries?: number;
     }
   ): Promise<ImageAnalysisResponse> {
-    const { timeout, maxRetries, ...analysisOptions } = options || {};
-    
     return this.analyze({
       image_base64: base64Data,
       prompt,
-      ...analysisOptions
-    }, {
-      timeout,
-      maxRetries
+      ...options
     });
   }
 
@@ -316,19 +214,12 @@ export class Vision {
       max_tokens?: number;
       temperature?: number;
       detail?: 'low' | 'high' | 'auto';
-      timeout?: number;
-      maxRetries?: number;
     }
   ): Promise<ImageAnalysisResponse> {
-    const { timeout, maxRetries, ...analysisOptions } = options || {};
-    
     return this.analyze({
       file_id: fileId,
       prompt,
-      ...analysisOptions
-    }, {
-      timeout,
-      maxRetries
+      ...options
     });
   }
 
