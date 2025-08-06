@@ -429,7 +429,7 @@ export class Vision {
     
     // Extract confidence score if present
     const confidenceMatch = result.analysis.match(/\[Confidence:\s*(\d+)%\]/);
-    const confidence = confidenceMatch ? parseInt(confidenceMatch[1]) : undefined;
+    const confidence = confidenceMatch ? parseInt(confidenceMatch[1]!, 10) : undefined;
     
     // Remove confidence notation from analysis
     const cleanAnalysis = result.analysis.replace(/\[Confidence:\s*\d+%\]/, '').trim();
