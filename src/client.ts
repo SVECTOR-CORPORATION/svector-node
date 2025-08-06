@@ -3,17 +3,16 @@ import { Conversations } from './api/conversations';
 import { Files } from './api/files';
 import { Knowledge } from './api/knowledge';
 import { Models } from './api/models';
-import { Vision } from './api/vision';
 import {
-  APIConnectionError,
-  APIConnectionTimeoutError,
-  APIError,
-  AuthenticationError,
-  InternalServerError,
-  NotFoundError,
-  PermissionDeniedError,
-  RateLimitError,
-  UnprocessableEntityError
+    APIConnectionError,
+    APIConnectionTimeoutError,
+    APIError,
+    AuthenticationError,
+    InternalServerError,
+    NotFoundError,
+    PermissionDeniedError,
+    RateLimitError,
+    UnprocessableEntityError
 } from './errors';
 import { RequestOptions, SVECTOROptions } from './types';
 
@@ -62,11 +61,10 @@ export class SVECTOR {
   public models: Models;
   public files: Files;
   public knowledge: Knowledge;
-  public vision: Vision;
 
   constructor(options: SVECTOROptions = {}) {
     this.apiKey = options.apiKey || this.getApiKeyFromEnv();
-    this.baseURL = options.baseURL?.replace(/\/+$/, '') || 'https://api.svector.co.in';
+    this.baseURL = options.baseURL?.replace(/\/+$/, '') || 'https://spec-chat.tech';
     this.maxRetries = options.maxRetries ?? 2;
     this.timeout = options.timeout ?? 10 * 60 * 1000; // 10 minutes
     this.fetch = options.fetch || this.getDefaultFetch();
@@ -87,7 +85,6 @@ export class SVECTOR {
     this.models = new Models(this);
     this.files = new Files(this);
     this.knowledge = new Knowledge(this);
-    this.vision = new Vision(this);
   }
 
   private getApiKeyFromEnv(): string {

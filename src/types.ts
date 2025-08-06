@@ -11,16 +11,7 @@ export interface SVECTOROptions {
 
 export interface ChatMessage {
   role: 'system' | 'user' | 'assistant' | 'developer';
-  content: string | MessageContent[];
-}
-
-export interface MessageContent {
-  type: 'text' | 'image_url';
-  text?: string;
-  image_url?: {
-    url: string;
-    detail?: 'low' | 'high' | 'auto';
-  };
+  content: string;
 }
 
 export interface FileReference {
@@ -119,7 +110,7 @@ export interface SVECTORRequestInit extends Omit<RequestInit, 'signal' | 'timeou
 export interface ConversationRequest {
   model: string;
   instructions?: string; // System instructions
-  input: string | MessageContent[]; // User input - now supports text or vision content
+  input: string; // User input
   max_tokens?: number;
   temperature?: number;
   stream?: boolean;
@@ -129,51 +120,6 @@ export interface ConversationRequest {
 
 export interface ConversationResponse {
   output: string;
-  usage?: {
-    prompt_tokens: number;
-    completion_tokens: number;
-    total_tokens: number;
-  };
-  _request_id?: string;
-}
-
-// Vision API specific types
-export interface VisionRequest {
-  model: string;
-  prompt: string;
-  image_url?: string;
-  image_base64?: string;
-  file_id?: string;
-  max_tokens?: number;
-  temperature?: number;
-  detail?: 'low' | 'high' | 'auto';
-}
-
-export interface VisionResponse {
-  analysis: string;
-  confidence?: number;
-  detected_objects?: string[];
-  usage?: {
-    prompt_tokens: number;
-    completion_tokens: number;
-    total_tokens: number;
-  };
-  _request_id?: string;
-}
-
-export interface ImageAnalysisRequest {
-  image_url?: string;
-  image_base64?: string;
-  file_id?: string;
-  prompt?: string;
-  model?: string;
-  max_tokens?: number;
-  temperature?: number;
-  detail?: 'low' | 'high' | 'auto';
-}
-
-export interface ImageAnalysisResponse {
-  analysis: string;
   usage?: {
     prompt_tokens: number;
     completion_tokens: number;

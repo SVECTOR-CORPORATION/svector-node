@@ -168,19 +168,11 @@ export class Conversations {
       }
     }
 
-    // Add the current user input (support both string and vision content)
-    if (typeof params.input === 'string') {
-      messages.push({
-        role: 'user',
-        content: params.input,
-      });
-    } else {
-      // Handle MessageContent[] for vision inputs
-      messages.push({
-        role: 'user',
-        content: params.input,
-      });
-    }
+    // Add the current user input
+    messages.push({
+      role: 'user',
+      content: params.input,
+    });
 
     return messages;
   }

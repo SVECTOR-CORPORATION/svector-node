@@ -16,7 +16,6 @@ export { Conversations } from './api/conversations';
 export { Files } from './api/files';
 export { Knowledge } from './api/knowledge';
 export { Models } from './api/models';
-export { Vision } from './api/vision';
 
 // Default export
 export { SVECTOR as default } from './client';

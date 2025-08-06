@@ -2,7 +2,6 @@ import { SVECTOR } from '../client';
 import {
     ChatCompletionRequest,
     ChatCompletionResponse,
-    MessageContent,
     RequestOptions,
     StreamEvent
 } from '../types';
@@ -59,13 +58,8 @@ export class ChatCompletions {
   /**
    * Normalize system content to handle various formats
    */
-  private normalizeSystemContent(content: any): string | MessageContent[] {
+  private normalizeSystemContent(content: any): string {
     if (typeof content === 'string') {
-      return content;
-    }
-    
-    if (Array.isArray(content)) {
-      // Already in MessageContent[] format
       return content;
     }
     

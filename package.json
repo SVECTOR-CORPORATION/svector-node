@@ -1,6 +1,6 @@
 {
   "name": "svector-sdk",
-  "version": "1.6.5",
+  "version": "1.6.6",
   "description": "Official JavaScript and TypeScript SDK for accessing SVECTOR APIs.",
   "main": "dist/src/index.js",
   "module": "dist/src/index.js",
@@ -30,7 +30,6 @@
     "examples:streaming": "npm run build && node dist/examples/streaming-chat.js",
     "examples:rag": "npm run build && node dist/examples/file-upload-rag.js",
     "examples:advanced": "npm run build && node dist/examples/advanced-rag.js",
-    "examples:vision": "npm run build && node dist/examples/advanced-vision.js",
     "examples:comprehensive": "npm run build && node dist/examples/comprehensive-demo.js",
     "setup:github-auth": "./scripts/setup-github-auth.sh",
     "publish:dual": "./scripts/publish-dual.sh",
