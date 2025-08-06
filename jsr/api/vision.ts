@@ -13,6 +13,46 @@ export class Vision {
   constructor(private client: SVECTOR) {}
 
   /**
+   * Make a direct API call to SVECTOR vision endpoint
+   * This bypasses any routing issues by hardcoding the correct API endpoint
+   */
+  private async makeVisionRequest(
+    chatRequest: ChatCompletionRequest,
+    options?: RequestOptions
+  ): Promise<any> {
+    const VISION_API_URL = 'https://api.svector.co.in/api/chat/completions';
+    
+    const headers = {
+      'Authorization': `Bearer ${(this.client as any).apiKey}`,
+      'Content-Type': 'application/json',
+      ...(options?.headers || {})
+    };
+
+    const requestBody = JSON.stringify(chatRequest);
+
+    try {
+      const response = await fetch(VISION_API_URL, {
+        method: 'POST',
+        headers,
+        body: requestBody,
+        signal: AbortSignal.timeout(options?.timeout || 60000)
+      });
+
+      if (!response.ok) {
+        const errorText = await response.text();
+        throw new Error(`HTTP ${response.status}: ${errorText}`);
+      }
+
+      return await response.json();
+    } catch (error) {
+      if (error instanceof Error) {
+        throw new Error(`Vision API request failed: ${error.message}`);
+      }
+      throw new Error('Vision API request failed: Unknown error');
+    }
+  }
+
+  /**
    * Analyze an image using SVECTOR's vision capabilities
    * Supports URL, base64, and file ID inputs
    */
@@ -80,10 +120,11 @@ export class Vision {
     };
 
     try {
-      const response = await this.client.chat.create(chatRequest, options);
+      // Use direct vision API call instead of client.chat.create
+      const response = await this.makeVisionRequest(chatRequest, options);
       
       return {
-        analysis: response.choices[0]?.message?.content || 'No analysis generated',
+        analysis: response.choices?.[0]?.message?.content || 'No analysis generated',
         usage: response.usage,
         _request_id: response._request_id
       };
@@ -221,10 +262,11 @@ export class Vision {
     };
 
     try {
-      const response = await this.client.chat.create(chatRequest);
+      // Use direct vision API call instead of client.chat.create  
+      const response = await this.makeVisionRequest(chatRequest);
       
       return {
-        analysis: response.choices[0]?.message?.content || 'No analysis generated',
+        analysis: response.choices?.[0]?.message?.content || 'No analysis generated',
         usage: response.usage,
         _request_id: response._request_id
       };
