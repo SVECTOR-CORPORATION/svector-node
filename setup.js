@@ -207,6 +207,20 @@ function showTroubleshooting() {
   console.log('   • Verify your API key has necessary permissions');
   console.log('');
   
+  console.log('🖼️  Vision API Server Configuration Issue:');
+  console.log('   • Error: "All endpoints route to SVECTOR Server"');
+  console.log('   • This indicates server-side routing problems');
+  console.log('   • Try using alternative endpoints or contact support');
+  console.log('   • Workaround: Use regular chat API with vision messages');
+  console.log('   • Example: client.chat.create() with image_url content');
+  console.log('');
+  
+  console.log('📦 Module Type Warning (Node.js):');
+  console.log('   • Add "type": "module" to your package.json');
+  console.log('   • Or rename files from .js to .mjs');
+  console.log('   • Or use CommonJS syntax with require()');
+  console.log('');
+  
   console.log(' Network Errors:');
   console.log('   • Check internet connectivity');
   console.log('   • Verify firewall/proxy settings');

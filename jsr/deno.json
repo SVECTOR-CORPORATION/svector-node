@@ -1,6 +1,6 @@
 {
   "name": "@svector/svector",
-  "version": "1.6.6",
+  "version": "1.6.7",
   "description": "Official TypeScript/JavaScript SDK for SVECTOR AI Models - Works with Deno, Node.js, Bun, and browsers",
   "license": "MIT",
   "exports": "./mod.ts",
@@ -21,7 +21,11 @@
     "conversation",
     "streaming",
     "rag",
-    "sdk"
+    "sdk",
+    "vision",
+    "image-analysis",
+    "ocr",
+    "computer-vision"
   ],
   "repository": "https://github.com/SVECTOR-CORPORATION/svector-node",
   "homepage": "https://www.svector.co.in",

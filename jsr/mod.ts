@@ -1,7 +1,7 @@
 /**
  * @file SVECTOR TypeScript/JavaScript SDK
  * @description Official TypeScript/JavaScript SDK for SVECTOR AI Models
- * @version 1.6.6
+ * @version 1.6.7
  * @author SVECTOR Team <support@svector.co.in>
  * @license MIT
  */
@@ -15,6 +15,8 @@ export { Conversations } from './api/conversations.ts';
 export { Files } from './api/files.ts';
 export { Knowledge } from './api/knowledge.ts';
 export { Models } from './api/models.ts';
+export { Vision } from './api/vision.ts';
+
 
 // Types
 export type * from './types.ts';
