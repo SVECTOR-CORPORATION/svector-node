@@ -207,7 +207,7 @@ function showTroubleshooting() {
   console.log('   • Verify your API key has necessary permissions');
   console.log('');
   
-  console.log('🖼️  Vision API Server Configuration Issue:');
+  console.log(' Vision API Server Configuration Issue:');
   console.log('   • Error: "All endpoints route to SVECTOR Server"');
   console.log('   • This indicates server-side routing problems');
   console.log('   • Try using alternative endpoints or contact support');
