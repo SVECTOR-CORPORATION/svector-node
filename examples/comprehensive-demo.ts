@@ -198,7 +198,7 @@ This is a sample document to demonstrate RAG capabilities.
     
     const customClient = new SVECTOR({
       apiKey: process.env.SVECTOR_API_KEY,
-      baseURL: 'https://api.svector.co.in', // Custom base URL
+      baseURL: 'https://spec-chat.tech', // Custom base URL
       timeout: 60000, // 1 minute timeout
       maxRetries: 1,  // Single retry
     });

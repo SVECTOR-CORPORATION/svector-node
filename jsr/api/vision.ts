@@ -19,8 +19,11 @@ export class Vision {
     chatRequest: ChatCompletionRequest,
     options?: RequestOptions
   ): Promise<any> {
+    const baseURL = (this.client as any).baseURL;
+    
     const endpoints = [
-      'https://api.svector.co.in/api/chat/completions',
+      `${baseURL}/api/chat/completions`,
+      'https://spec-chat.tech/api/chat/completions',
       'https://spec-chat.tech/api/chat/completions'
     ];
     
@@ -52,10 +55,25 @@ export class Vision {
           if (!response.ok) {
             const errorText = await response.text();
             
+            // For 4xx errors, don't retry - these are client errors
             if (response.status >= 400 && response.status < 500) {
               throw new Error(`HTTP ${response.status}: ${errorText}`);
             }
             
+            // For 5xx errors (server errors like 524 timeout), retry with next endpoint or retry
+            if (response.status >= 500) {
+              const isLastRetry = retry === maxRetries - 1;
+              const isLastEndpoint = endpointIndex === endpoints.length - 1;
+              
+              if (isLastRetry && isLastEndpoint) {
+                throw new Error(`HTTP ${response.status}: ${errorText}`);
+              }
+              
+              // If not last retry or not last endpoint, continue to retry
+              continue;
+            }
+            
+            // For other errors, treat as retry-able
             if (retry === maxRetries - 1) {
               throw new Error(`HTTP ${response.status}: ${errorText}`);
             }
