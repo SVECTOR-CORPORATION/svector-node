@@ -12,15 +12,17 @@ import {
 export class Vision {
   constructor(private client: SVECTOR) {}
 
-  /**
+    /**
    * Make a direct API call to SVECTOR vision endpoint
-   * This bypasses any routing issues by hardcoding the correct API endpoint
+   * Uses the client's base URL instead of hardcoded URL
    */
   private async makeVisionRequest(
     chatRequest: ChatCompletionRequest,
     options?: RequestOptions
   ): Promise<any> {
-    const VISION_API_URL = 'https://api.svector.co.in/api/chat/completions';
+    // Use the client's base URL - this will be https://spec-chat.tech by default
+    const baseURL = (this.client as any).baseURL;
+    const VISION_API_URL = `${baseURL}/api/chat/completions`;
     
     const headers = {
       'Authorization': `Bearer ${(this.client as any).apiKey}`,
@@ -31,6 +33,8 @@ export class Vision {
     const requestBody = JSON.stringify(chatRequest);
 
     try {
+      console.log(`🔍 Making vision request to: ${VISION_API_URL}`);
+      
       const response = await fetch(VISION_API_URL, {
         method: 'POST',
         headers,
@@ -262,11 +266,10 @@ export class Vision {
     };
 
     try {
-      // Use direct vision API call instead of client.chat.create  
-      const response = await this.makeVisionRequest(chatRequest);
+      const response = await this.client.chat.create(chatRequest);
       
       return {
-        analysis: response.choices?.[0]?.message?.content || 'No analysis generated',
+        analysis: response.choices[0]?.message?.content || 'No analysis generated',
         usage: response.usage,
         _request_id: response._request_id
       };
