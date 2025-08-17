@@ -1,7 +1,8 @@
 {
   "name": "@svector/svector",
-  "version": "1.7.6",
+  "version": "1.7.7",
   "description": "Official TypeScript/JavaScript SDK for SVECTOR AI Models - Works with Deno, Node.js, Bun, and browsers",
+  "type": "module",
   "license": "MIT",
   "exports": "./mod.ts",
   "imports": {
